@@ -1,0 +1,72 @@
+\documentclass[12pt]{../manual}
+%____________________________________________________________________________
+%
+%	TITLE AND TABLE OF CONTENTS
+%____________________________________________________________________________
+\begin{document}
+\makeheader{Lab 4}{Fall 2019} % Change Semester and Year as needed
+\begin{center}
+\textbf{\huge ECE 230L - LAB 4}\\~\\
+\textbf{\large ELECTRICAL CHARACTERIZATION AND PARAMETER EXTRACTION OF METAL-OXIDE-SEMICONDUCTOR FIELD-EFFECT TRANSISTORS (MOSFET)}\\~\\
+\rule{6.5in}{0.5mm}\\
+\end{center}
+
+\tableofcontents
+
+\listoffigures
+
+\newpage
+%____________________________________________________________________________
+%
+%	BODY
+%____________________________________________________________________________
+\section{Objectives of this Laboratory}
+The objectives of this laboratory session are as follows:
+\begin{itemize}
+\item to measure the NMOSFET drain-current characteristics $I_D(V_{GS},V_{DS})$ using LabVIEW,
+\item to extract the NMOSFET SPICE model parameters, and
+\item to evaluate the limitations of the electrical measurements and the simulation
+\end{itemize}
+
+\section{Electrical Characterization of the MOS Field-Effect Transistor}
+
+\section{Exploration}
+
+\section{Questions}
+%____________________________________________________________________________
+%
+%	GRADING RUBRIC
+%____________________________________________________________________________
+\newpage
+\phantomsection % needed in order to link from table of contents to here
+\section*{Grading Rubric}
+\addcontentsline{toc}{section}{Grading Rubric} % adds section*{} to table of contents
+\markboth{Grading Rubric}{Grading Rubric}
+\vfill % used to center table vertically on page
+\begin{table}[ht!]
+\caption{ECE 230L Laboratory 4 Grading Rubric}
+\centering
+\begin{tabular}{l|c} \hline
+Criteria & Points Possible \\ \hline \hline
+\textbf{Raw Lab Data} 							& \textbf{15} \\
+Circuit Diagram 								& 3 \\
+$V_{\mathrm{DS~source}}$ vs $I_{DS}$, $V_{GS}$ plot & 3 \\
+$V_{DS}$ vs $V_{\mathrm{DS~source}}$ and $V_{GS}$ vs $V_{\mathrm{DS~source}}$ plots 	& 6 \\
+$I_{DS}$ vs $V_{GS}$ plot for $V_{DS}$ = 3V 		& 3 \\ \hline
+\textbf{Question 1} 							& \textbf{10} \\ \hline
+\textbf{Question 2} 							& \textbf{10} \\ \hline
+\textbf{Question 3} 							& \textbf{10} \\ \hline
+\textbf{Question 4} 							& \textbf{10} \\ \hline
+\textbf{Question 5} 							& \textbf{15} \\
+Parameter extraction							& 10 \\ 
+\% errors										& 5 \\ \hline
+\textbf{Question 6} 							& \textbf{10} \\ \hline
+\textbf{Exploration} 							& \textbf{10} \\
+Circuit Diagrams								& 5 \\
+Reasoning behind ``mystery elements'' order		& 5 \\ \hline
+\textbf{Quality of thought/analysis} 			& \textbf{10} \\ \hline \hline
+\textbf{Total} 									& 100 \\ \hline
+\end{tabular}
+\end{table}
+\vfill % used to center table vertically on page
+\end{document}
