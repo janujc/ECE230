@@ -48,14 +48,8 @@ In this laboratory, you will measure the static current-voltage $I_D(V_{PN})$ ch
 \item JAMECO Wire box with wires (various sizes and colors)
 \item Agilent E3631A Triple Output DC Power Supply
 \item Agilent 34410A Multimeter
-\end{itemize}~\\
+\end{itemize}
 A cross-section and circuit symbol of the PN-junction diode is shown in Figure \ref{fig:diode}.
-%____________________________________________________________________________
-%
-% Could not find a satisfactory schematic cross-section for a PN-Junction 
-% Diode, so we made our own. Note, however, that this was a very hack-y way
-% of making a diagram and should not be used as a reference.
-%____________________________________________________________________________
 \begin{myfigure}[label=fig:diode]{PN-Junction Diode Schematics}{PN-Junction Diode Cross-Section and Symbol}
 \begin{tabular}{c}
 \begin{tikzpicture}[scale=2,european]
@@ -179,7 +173,7 @@ One application of a PN-junction diode is to allow only the positive-going volta
 ;\end{circuitikz}
 \end{myfigure}
 \begin{enumerate}
-\item Build a half-wave diode rectifier circuit using a Si 1N4148 diode, as shown in Fig.
+\item Build a half-wave diode rectifier circuit using a Si 1N4148 diode, as shown in Figure
 3. Use a 5 V$_{\mathrm{pp}}$ sinusoidal input waveform from the function generator. Use a
 resistor value of $\SI{1}{\kilo\ohm}$ at the output.
 \begin{itemize}
@@ -217,8 +211,15 @@ It is possible to improve upon the above circuit by using both halves of the sin
 A recent technological application of LEDs can be seen in area of new, efficient lighting. In this Exploration, you will look at exactly how much more efficient consumer LED lights really are as compared to standard incandescent light bulbs. You will need to design a phototransistor circuit and build it on a standard breadboard of testing purposes. You will also measure the I-V characteristics of an LED from the light bulb after taking apart the bulb. The I-V curve of the LED from the bulb will be compared to the Silicon 1N4148 diode you tested in the laboratory exercises.
 \begin{enumerate}
 \item First, plug the power measurement device into a standard socket in the power-strip at your lab bench. This unit will indicate how much power a device in drawing when plugged in.
-\item Obtain a standard incandescent light bulb. Screw it in to the desk lamp provided in lab. Now, plug in the lamp into the outlet with power measurement installed. Turn on the light bulb. Record how much power is being drawn.
-\item It is important to measure the luminous output of the light bulb. To do so, build a circuit using a photodiode available in lab to measure current flow when the light bulb is on. Be sure to accurately record the distance of the light source from the phototransistor.
+\item Obtain a standard incandescent light bulb. Screw it in to the desk lamp provided in lab. Now, plug in the lamp into the outlet with power measurement installed. Turn on the light bulb.
+\begin{itemize}
+\item[$\square$] Record how much power is being drawn.
+\end{itemize}
+\item It is important to measure the luminous output of the light bulb. To do so, build a circuit using a photodiode available in lab to measure current flow.
+\begin{itemize}
+\item[$\square$] Measure Current flow when light bulb is on
+\item[$\square$] Record distance of the light source from phototransistor
+\end{itemize}
 \item Repeat the above steps for the LED light bulb making sure to record power drawn from the LED light bulb when plugged in and the current flow through the photodiode circuit you designed. To make a fair comparison of luminous intensity of the LED lamp, the LED light and phototransistor should be placed at the same source distance as the incandescent light bulb was above.
 \item Be sure to take a look at the LED light bulb that has been disassembled for you. Note that the bulb consists of several LED pads arranged on a central metal shaft. This metal shaft serves the dual purpose of positioning the LEDs around the glass bulb and provides a heat-sinking mechanism. The electrical circuit that powers these LEDs produces a 220VDC voltage. The LEDs pads when observed closely consist of many individual LEDs. Several of these LED pads have been carefully removed for testing.
 \end{enumerate}
@@ -228,6 +229,7 @@ A recent technological application of LEDs can be seen in area of new, efficient
 LEDs are available in a variety of colors and wavelengths to suit the needed application. For instance, different colors may provide better feature visibility depending upon lighting conditions. Colored LEDs have been used extensively in the automotive industry, aviation, for traffic signals, and in multi-color displays. In optical applications, a precisely known spectrum allows tightly matched filters to be used to separate informative bandwidth or to reduce disturbing effects of ambient light. LEDs usually operate at comparatively low working temperatures, simplifying heat management and dissipation. This allows the use of plastic lenses, filters, and diffusers. LEDs are durable and robust lighting sources that last much longer the incandescent light sources and can operate in harsh environment. Even weather and waterproof units have been designed for use in the food, beverage, and oil industries. In this Exploration, you will look at the I-V characteristics of several colored LEDs and compare them to the Silicon diode characterized in lab: you will compare the I-V characteristics of Red, Yellow, and Green LEDs available in the laboratory to the Silicon 1N4148 diode you tested in the laboratory.
 
 Create forward-biased I-V curves for the Red, Yellow, and Green LEDs available in lab. Use the circuit set-up described in the laboratory exercise as well as the automated test and measurement scripts provided in LabVIEW to take measurements of the LEDs. Measure Red, Yellow, and Green LED I-V curves and plot them on the same graph as the Silicon 1N4148 diode measured in the laboratory exercise above. For each of the LEDs, determine 
+\renewcommand\labelitemi{$\square$}
 \begin{itemize}
 \item the `knee' voltage where the diode turns on, 
 \item the saturation current, $I_S$, 
@@ -246,8 +248,8 @@ In order to destroy an LED, you may need to use {\tt singleloop25.vi}, which all
 \item From the above log-linear plot of the I-V characteristics of the 1N4148, determine the saturation current, $I_S$, the ideality factor, $\gamma$, and the series resistance, $R_S$. (refer to the slides on Sakai)
 \item To the above plot, add the theoretical PN-junction diode $I_D(V_{PN})$ characteristic curve. Use the parameters calculated in question 3. Vary the parameters, if necessary, to match the \textbf{log-linear} portion of the experimentally measured data.
 \item Comment on the values of $I_S$ and $\gamma$ that yield the best fit to the data. How do your experimental and varied values compare with those given in the diode manufacturer data sheets? (For $R_s$ use Figure 2, curve 2, on the Vishay datasheet. $I_S$ can be found under reverse current, and $\gamma$ should be about 2.3.)
-% Add answers to exploration
 \end{enumerate}
+\textit{Finally, be sure to add the answers to all questions marked by a square ($\square$) from your chosen Exploration section.}
 
 \newpage
 \phantomsection % needed in order to link from table of contents to here
