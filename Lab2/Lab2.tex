@@ -119,6 +119,8 @@ data as a .xls file.
 \end{enumerate}
 
 \section{Theoretical Curve of CV Characteristics of PN-Junction Diode}
+Circuit simulation is an important tool in the analysis and design of microelectronic circuits. Spice is a general-purpose circuit simulation program in which nonlinear dc, nonlinear transient, and linear ac analyses of electronic circuits are carried out. Circuits may contain resistors, capacitors, inductors, mutual inductors, independent voltage and current sources, dependent sources, lossless and lossy transmission lines, switches, diodes, BJTs, JFETs, MESFETs, and MOSFETs. The version of Spice used in the ECE Department at Duke is PSpice. You will be using PSpice over the next several labs, starting next week. Below, we include an introduction to PSpice in the form of a table of model parameters for a typical PN-Junction Diode in PSpice. In the meantime, we include here a few equations used in representing a PN-junction diode.
+
 There are a large number of parameters used in the representation of a PN-junction
 diode, but only the most commonly used parameters will be considered here. The first
 two parameters are related to the representation of the diode current-voltage behavior
@@ -131,17 +133,33 @@ approximately 75 mV at room temperature, Equation (\ref{eq:ID}) reduces to
 \begin{align}
 I_D(V_{PN}) \approx I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T}\right). \label{eq:redID}
 \end{align}
-The values most commonly specified include the following: the saturation current, $I_S$, the emission coefficient, $N$, the series resistance $R_S$, the junction capacitance $C_{JO}$, the transmit time, $T_T$ (default = 0 sec), the reverse-bias breakdown voltage, $V_B$, and the reverse-bias breakdown current, $I_{B}$.
+The values most commonly specified include the following: the saturation current, $I_S$, the emission coefficient, $\gamma$, the series resistance $R_S$, the junction capacitance $C_j$, the transmit time, $\tau_0$ (default = 0 sec), the reverse-bias breakdown voltage, $V_B$, and the reverse-bias breakdown current, $I_D(V_B)$.
 
-The ideality factor $\gamma$ in the above equation may be found from the following formula:
+\begin{table}[ht!]
+\caption{Typical PN-Junction Model Parameters}
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+Parameter & Description & Nominal Value & Unit \\ \hline \hline
+$I_S$ & Diffusion Saturation Current & $1.0 \times 10^{-14}$ & A \\ \hline
+$\gamma$ & Ideality Factor & 1.0 & --- \\ \hline
+$R_S$ & Series Resistance & 0 & $\Omega$ \\ \hline
+$E_g$ & Band Gap Energy & 1.17 & eV \\ \hline
+$V_B$ & Reverse Breakdown Voltage & $\infty$ & V \\ \hline
+$I_D(V_B)$ & Current at Breakdown Voltage & $1.0 \times 10^{-3}$ & A \\ \hline
+$\tau_0$ & Minority-Carrier Lifetime & 0 & S \\ \hline
+$C_j$ & Zero-Bias Depletion Capacitance & 0 & F \\ \hline
+\end{tabular}
+\end{table}
+
+The ideality factor $\gamma$ in Equation \ref{eq:redID} may be found from the following formula:
 \begin{align}
 \gamma = \frac{V_{PN2} - V_{PN1}}{\frac{k_bT}{q}\ln\left(\frac{I_D(V_{PN2})}{I_D(V_{PN1})}\right)}
 \end{align}
 Note that the experimentally measured ideality factor $\gamma$ often ranges from 1 to 2.
 
-The third parameter is the series resistance RS. The fourth parameter is the energy gap $E_G$ which will depend on the semiconductor being used and the temperature. The fifth parameter is the reverse breakdown voltage $V_B$. The current at the breakdown voltage is $I_{BV}$, which is the sixth parameter. These first six parameters in describe the static behavior of the PN-junction diode. Both $V_B$ and $I_{BV}$ are specified as positive numbers.
+A third parameter is the series resistance $R_S$. Another parameter is the band gap energy, sometimes called the energy gap, $E_G$, which will depend on the semiconductor being used and the temperature. We also have the reverse bias breakdown voltage, $V_B$, and the current at the breakdown voltage, $I_D(V_B)$. These first six parameters describe the static behavior of the PN-junction diode. Both $V_B$ and $I_D(V_B)$ are specified as positive numbers in PSpice, but in reality have negative values.
 
-The next two parameters are the transit time $T_T$ and the zero-bias depletion capacitance $C_{JO}$. They describe the $C_{\mathrm{pn}}(V_{PN})$ characteristics of the PN-junction diode. The total capacitance $C_{\mathrm{pn}}$ of the PN-junction diode is the sum of its depletion capacitance $C_{\mathrm{pn-dep}}(V_{PN})$ and diffusion (or storage) capacitance $C_{\mathrm{pn-diff}}(V_{PN})$. If a PN-junction diode is reverse-biased, the depletion capacitance then dominates. If the PN-junction diode is forward-biased, both the depletion and diffusion capacitances are important.
+The final two parameters we will mention are transit time $\tau_0$ and the zero-bias depletion capacitance $C_j$. They describe the $C_{\mathrm{pn}}(V_{PN})$ characteristics of the PN-junction diode. The total capacitance $C_{\mathrm{pn}}$ of the PN-junction diode is the sum of its depletion capacitance $C_{\mathrm{pn-dep}}(V_{PN})$ and diffusion (or storage) capacitance $C_{\mathrm{pn-diff}}(V_{PN})$. If a PN-junction diode is reverse-biased, the depletion capacitance then dominates. If the PN-junction diode is forward-biased, both the depletion and diffusion capacitances are important.
 
 % Here, we want to add a section detailing how to extract parameters from graph
 
@@ -171,21 +189,26 @@ resistor value of $\SI{1}{\kilo\ohm}$ at the output.
 \end{itemize}
 \item Repeat the above experiment using a Ge diode.
 \end{enumerate}
-It is possible to improve upon the above circuit by using both halves of the sinusoidal input voltage. To do so, more than one diode is required. An intermediate improvement would be to add a second diode: this circuit is referred to generally as Full Wave Rectifier. A common and even better implementation of the Full Wave Rectifier utilizes four diodes: it is referred to as a Bridge Rectifier. (The reason it is even better than a common Full Wave Rectifier is because it does not require a centrally tapped DC reference point.) Figure \ref{fig:bridgeRec} shows a Bridge Rectifier circuit. To provide a new ground for the full-wave rectified circuit, a transformer between the power source and the diodes is required. This allows both the positive- and negative-going portions of the input-voltage waveform to pass to the output node. (This circuit does not need to be built in lab.)
+It is possible to improve upon the above circuit by using both halves of the sinusoidal input voltage. To do so, more than one diode is required. An intermediate improvement would be to add a second diode: this circuit is referred to generally as Full Wave Rectifier. A common and even better implementation of the Full Wave Rectifier utilizes four diodes: it is referred to as a Bridge Rectifier. (The reason it is even better than a common Full Wave Rectifier is because it does not require a centrally tapped DC reference point.) Figure \ref{fig:bridgeRec} shows a Bridge Rectifier circuit. To provide a new ground for the full-wave rectified circuit, a transformer between the power source and the diodes is required. This allows both the positive- and negative-going portions of the input-voltage waveform to pass to the output node.
 \begin{myfigure}[label=fig:bridgeRec]{PN-Junction Diode Bridge Rectifier}{PN-Junction Diode Bridge Rectifier}
 \centering
 \begin{circuitikz}
+\ctikzset{quadpoles/transformer core/inner=1, quadpoles/transformer core/width=1, quadpoles/transformer core/height=2.865}
 \draw
-(8,4) 	to[short] ++(-8,0)
-		to[battery, l^=${v_S=V_P\sin\omega t}$] ++(0,-4)
-		to[short] ++(8,0)
+(0,0)	node[transformer core, anchor=A1](T){}
+(T.base) node{$1:1$}
+(T.A1)	to[short] ++(-4,0)
+		to[battery, l^=${v_S=V_P\sin\omega t}$] (-4,|-T.A2)
+		to[short] (T.A2)
+(T.B2)	to[short] ++(4.6,0)
 		to[D*, *-*, l_=$D_4$] ++(2,2)
 		to[short] ++(1,0)
 		to[R, l^=$R_L$] ++(0,-2) node[ground] {}
-(6,2)	to[short] ++(-1,0) node[ground] {}
-(6,2)	to[D*, *-, l_=$D_1$] ++(2,-2)
-(6,2)	to[D*, -*, l^=$D_2$] ++(2,2)
+(T.B1)	to[short] ++(4.6,0)
 		to[D*, l^=$D_3$] ++(2,-2)
+(4,-2)	to[short] ++(-1,0) node[ground] {}
+(4,-2)	to[D*, -*, l^=$D_2$] ++(2,2)
+(4,-2)	to[D*, *-, l_=$D_1$] ++(2,-2)	
 ;\end{circuitikz}
 \end{myfigure}
 
@@ -205,14 +228,14 @@ A recent technological application of LEDs can be seen in area of new, efficient
 LEDs are available in a variety of colors and wavelengths to suit the needed application. For instance, different colors may provide better feature visibility depending upon lighting conditions. Colored LEDs have been used extensively in the automotive industry, aviation, for traffic signals, and in multi-color displays. In optical applications, a precisely known spectrum allows tightly matched filters to be used to separate informative bandwidth or to reduce disturbing effects of ambient light. LEDs usually operate at comparatively low working temperatures, simplifying heat management and dissipation. This allows the use of plastic lenses, filters, and diffusers. LEDs are durable and robust lighting sources that last much longer the incandescent light sources and can operate in harsh environment. Even weather and waterproof units have been designed for use in the food, beverage, and oil industries. In this Exploration, you will look at the I-V characteristics of several colored LEDs and compare them to the Silicon diode characterized in lab: you will compare the I-V characteristics of Red, Yellow, and Green LEDs available in the laboratory to the Silicon 1N4148 diode you tested in the laboratory.
 
 Create forward-biased I-V curves for the Red, Yellow, and Green LEDs available in lab. Use the circuit set-up described in the laboratory exercise as well as the automated test and measurement scripts provided in LabVIEW to take measurements of the LEDs. Measure Red, Yellow, and Green LED I-V curves and plot them on the same graph as the Silicon 1N4148 diode measured in the laboratory exercise above. For each of the LEDs, determine 
-\begin{enumerate}
+\begin{itemize}
 \item the `knee' voltage where the diode turns on, 
 \item the saturation current, $I_S$, 
 \item the ideality factor, $\gamma$,
 \item the series resistance, $R_S$,
 \item the current at which the LED begins to become damaged, and 
 \item the voltage and current when the LED completely stops functioning (i.e. blow it up---this may require as much as 10V). 
-\end{enumerate}
+\end{itemize}
 In order to destroy an LED, you may need to use {\tt singleloop25.vi}, which allows LABVIEW to control the E3631A Power Supply's $+25$ V source. After you have destroyed or damaged an LED, be sure to dispose of it to prevent it from getting mixed back in with good LEDs in the lab.
 
 \newpage
