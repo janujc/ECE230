@@ -91,13 +91,28 @@ To perform a DC analysis of the circuit, you will create a new simulation profil
 \item End Value: 10
 \item Increment: 0.01
 \end{itemize}
-Press `Apply' and `OK' to save the profile settings. Begin the simulation by selecting PSpice-> Run. To view the circuit behavior at a particular point, follow Trace-> Add Trace to select different values to plot or use the voltage and current markers indicated in Figure 1. Plot source voltage, V(R2), I(R1), and I(R2). Figure 3 shows the circuit schematic and figure 4 shows the result of DC analysis (top plot: current, bottom plot: voltage).
+Press `Apply' and `OK' to save the profile settings. Begin the simulation by selecting PSpice-> Run. To view the circuit behavior at a particular point, follow Trace-> Add Trace to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:exampleCircuit} shows the circuit schematic and figure \ref{fig:DCAnalRes} shows the result of DC analysis (top plot: current, bottom plot: voltage).
+
+\begin{myfigure}[label=fig:DCAnalRes]{Result of DC Analysis}{Result of DC Analysis}
+\centering
+\includegraphics[width=0.9\textwidth]{figures/ResultDCAnalysisCrop.PNG}
+\end{myfigure}
 
 \section{AC Analysis in PSpice}
+
+\begin{myfigure}[label=fig:ACAnalRes]{Result of AC Analysis}{Result of AC Analysis}
+\centering
+\includegraphics[width=0.9\textwidth]{figures/ResultACAnalysisCrop.PNG}
+\end{myfigure}
 
 \subsection{Trace Expressions in PSpice}
 
 \section{Transient Analysis in PSpice}
+
+\begin{myfigure}[label=fig:TransAnalRes]{Result of Transient Analysis}{Result of Transient Analysis}
+\centering
+\includegraphics[width=0.9\textwidth]{figures/ResultTransientAnalysisCrop.PNG}
+\end{myfigure}
 
 \section{Practice Example}
 
