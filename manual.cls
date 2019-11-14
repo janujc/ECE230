@@ -34,11 +34,13 @@
     urlcolor=blue,
 }
 
-\titleformat{name=\section}{\large\bfseries}{}{0pt}{\begin{tcolorbox}[nobeforeafter, boxrule=0.5mm,colframe=black]\thesection\hskip1em#1\end{tcolorbox}}
+\titleformat{name=\section}{\large\bfseries}{}{0pt}{\begin{tcolorbox}[nobeforeafter,boxrule=0.5mm,colframe=black]\thesection\hskip1em#1\end{tcolorbox}}
 
 \titleformat{name=\section,numberless}{\large\bfseries}{}{0pt}{\begin{tcolorbox}[nobeforeafter,boxrule=0.5mm,colframe=black]#1\end{tcolorbox}}
 
-\titleformat{name=\subsection}{\large\bfseries}{}{0pt}{\hskip1.5em\begin{tcolorbox}[nobeforeafter,boxrule=0.5mm,colframe=black,hbox]\thesubsection\end{tcolorbox} \hskip1em\raisebox{0.7\height}{#1}}
+\titleformat{name=\subsection}{\large\bfseries}{}{0pt}{\hskip1.5em\begin{tcolorbox}[nobeforeafter,boxrule=0.5mm,colframe=black,hbox]\thesubsection\hskip1em#1\end{tcolorbox}}
+
+\titleformat{name=\subsection,numberless}{\large\bfseries}{}{0pt}{\hskip1.5em\begin{tcolorbox}[nobeforeafter,boxrule=0.5mm,colframe=black,hbox]#1\end{tcolorbox}}
 
 \titleformat{name=\subsubsection}{\large\bfseries}{}{0pt}{\hskip3em\begin{tcolorbox}[nobeforeafter,boxrule=0.5mm,colframe=black,hbox]\thesubsubsection\end{tcolorbox} \hskip1em\raisebox{0.7\height}{#1}}
 
