@@ -1,17 +1,6 @@
 \documentclass[12pt]{../manual}
 %____________________________________________________________________________
 %
-%	READ BEFORE USING
-%____________________________________________________________________________
-%
-% This file will not compile unless all the necessary figures are in subfolder named
-% "figures" in the same directory as this file. Note that the first time you compile
-% this file in a new computer, the references to the figures will all be ???. You
-% will have to compile at least three times for all the references to be correct.
-% Lastly, take care to not change/remove anything from above this notice. There is
-% no guarantee this will compile without all of the definitions and imports above.
-%____________________________________________________________________________
-%
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
@@ -118,7 +107,7 @@ Before performing an AC analysis a new AC voltage source has to replace the DC s
 
 \begin{myfigure}[colback=white,label=fig:acCircuit]{Circuit for AC Analysis}{Circuit for AC Analysis}
 \centering
-\includegraphics[width=0.9\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
+\includegraphics[width=0.7\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
 \end{myfigure}
 
 After the voltage source properties have been changed, AC analysis can be performed. First, create a new simulation profile called `ac'. Next, select \textbf{AC Sweep/Noise} in the \textbf{Analysis Type} drop down menu and use the following parameters:
@@ -140,8 +129,7 @@ A screencap of the settings for the AC Analysis is included in Figure \ref{fig:a
 \includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
 \end{myfigure}
 
-\subsection{Trace Expressions in PSpice}
-
+\subsection*{Trace Expressions in PSpice}
 Trace expressions can be used to plot the phase of a desired value, a parameter in units of dB, or plot other useful mathematical operations on circuit parameters. Trace expressions are available under the \textbf{Trace} $\to$ \textbf{Add Trace} menu. Select \textbf{Plot} $\to$ \textbf{Add Plot to Window} and plot the value of V(R2) in dB. Use the trace expression DB(V(R1:2)). Next, add another plot to the window and plot the phase of V(R2). Use the trace expression P(V(R1:2)). The circuit for AC analysis is shown in Figure \ref{fig:acCircuit} and the resulting plots are shown in Figure \ref{fig:acAnalRes}.
 
 \begin{myfigure}[label=fig:acAnalRes]{Result of AC Analysis}{Result of AC Analysis. Top to bottom: V(R1:2), DB(V(R1:2)), P(V(R1:2)).}
@@ -152,6 +140,7 @@ Trace expressions can be used to plot the phase of a desired value, a parameter 
 %
 %	Transient Analysis
 %____________________________________________________________________________
+\newpage
 \section{Transient Analysis in PSpice}
 
 Before performing a transient analysis replace the AC source with a Pulse source (Place-> PSpice Component-> Source-> Pulse). The following parameters will be used to set up the pulse:
@@ -167,9 +156,8 @@ Before performing a transient analysis replace the AC source with a Pulse source
 
 \begin{myfigure}[colback=white,label=fig:trans]{Circuit for Transient Analysis}{Circuit for Transient Analysis}
 \centering
-\includegraphics[width=0.9\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
+\includegraphics[width=0.7\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
 \end{myfigure}
-
 
 Create a new simulation profile called ?Transient?. To analyze the example circuit, select ?Time Domain (Transient)? in the Analysis Type drop down menu and use the following parameters:
 ? Run to Time: 2u
@@ -230,19 +218,70 @@ Any linear DC circuit as seen at a pair of terminals can be reduced to a practic
 \end{myfigure}
 
 To form a Th\'evenin Equivalent circuit, two quantities must be calculated, measured, or simulated:
-\begin{enumerate}
+\begin{itemize}
 \item $v_{oc}$: The open circuit voltage drop from terminals A to B
 \item $i_{sc}$: The short circuit current from terminals A to B
-\end{enumerate}
+\end{itemize}
 Once the values for $v_{oc}$ and $i_{sc}$ have been obtained, the Th\'evenin resistance $R_{TH}$ can be determined using the relation:
 \begin{align}
-R_{TH} = \frac{v_{oc}}{i_{sc}}
+R_{TH} = \frac{v_{oc}}{i_{sc}} \label{eq:rth}
 \end{align}
 If the circuit contains no dependent sources, then $R_{TH}$ may also be found by turning off all of the independent sources and using resistance reduction at terminals A and B.
 
-\subsection{Exercise}
-You will simulate the circuit in figure 11 and form its Th\'evenin Equivalent circuit as seen at a pair of terminals.
-\subsection{Practice Exercise: Th\'evenin Equivalent Circuit}
+\newpage
+\subsection{Example Exercise}
+Simulate the circuit in Figure \ref{fig:exampleCircuit} and form its Th\'evenin Equivalent as seen from terminals A and B.
+
+\begin{myfigure}[colback=white,label=fig:exampleCircuit]{Example Circuit}{Example Circuit}
+\centering
+\includegraphics[width=0.7\textwidth]{figures/ExampleCircuitSchematicCrop.PNG}
+\end{myfigure}
+
+To find the open circuit voltage, replace resistor $R_4$ with a large ``dummy'' resistance (at least \SI{100}{\mega\ohm}). Create a new simulation profile called ``thev''. Choose \textbf{Bias Point} under the \textbf{Analysis type} menu and check the box labeled \textbf{Include Detailed Bias Point Information} under the \textbf{Output File Options} heading. Press \textbf{Apply} and \textbf{OK} to save the profile. Now, run the simulation. Once the simulation is complete, follow \textbf{PSpice} $\to$ \textbf{Bias Points} and click \textbf{Enable}. Record the voltage across terminals A and B as your open circuit voltage.
+
+\begin{myfigure}[colback=white,label=fig:openCircuit]{Open Circuit Voltage Schematic}{Open Circuit Voltage Schematic}
+\centering
+\includegraphics[width=0.7\textwidth]{figures/OpenCircuitSchematicCrop.PNG}
+\end{myfigure}
+
+To find the short circuit current, remove $R_4$ and connect terminals A and B with a wire.
+Use the same ``thev'' simulation profile that was created to find $v_{oc}$. Run the simulation. Once the simulation is complete, enable bias points. This will show the node voltages and currents throughout the circuit. Record the current between terminals A and B as your short circuit current, $i_{sc}$.
+
+\begin{myfigure}[colback=white,label=fig:shortCircuit]{Short Circuit Voltage Schematic}{Short Circuit Voltage Schematic}
+\centering
+\includegraphics[width=0.7\textwidth]{figures/ShortCircuitSchematicCrop.PNG}
+\end{myfigure}
+
+Calculate the Th\'evenin resistance using Equation \ref{eq:rth}. Now, re-create Figure \ref{fig:thev} in PSpice using your $v_{oc}$ and $R_{TH}$ values. Place $R_4$ back into your first circuit and place a resistor of equal value between terminals A and B in your Th\'evenin Equivalent. Run the simulation using the same ``thev'' profile. Once the simulation is complete, enable bias points. Check to make sure the terminal voltages and currents match for both circuits.
+
+\begin{myfigure}[colback=white,label=fig:thevCircuit]{Th\'evenin Equivalent Schematic}{Th\'evenin Equivalent Schematic}
+\centering
+\includegraphics[width=0.5\textwidth]{figures/TheveninEquivalentExampleCrop.PNG}
+\end{myfigure}
+
+
+\newpage
+\subsection{Challenge Exercise: Th\'evenin Equivalent Circuit}
+Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find its Th\'evenin Equivalent circuit as seen from nodes A and B. In your lab report, be sure to include all voltages and currents present in the Exercise Circuit and its Th\'evenin Equivalent, as well as a short explanation of each step you took in finding the Th\'evenin Equivalent.
+\begin{myfigure}[label=fig:exerciseCircuit]{Exercise Circuit}{Exercise Circuit}
+\centering
+\begin{circuitikz}
+\ctikzset{grounds/scale=1.5}
+\draw
+(0,0) 	to[short] 		++(4,0)
+		node[ground] {}
+		to[short] 		++(4,0)
+		to[R, l=$R_5$, a=\SI{500}{\ohm}]	++(0,4)
+		to[R, l=$R_3$, a=\SI{200}{\ohm}]	++(0,4)
+		to[short]		++(-8,0)
+		to[battery, a=$V_1$, l=\SI{1}{\volt}]	++(0,-8)
+(4,0)	to[R, *-, l=$R_2$, a=\SI{1}{\kilo\ohm}]			++(0,4)
+		to[R, -*, l=$R_1$, a=\SI{100}{\ohm}]			++(0,4)
+(4,4)	to[R, *-*, l=$R_4$, a=\SI{300}{\ohm}]			++(4,0)
+(3.5,4) node[] {A}
+(8.5,4) node[] {B}
+;\end{circuitikz}
+\end{myfigure}
 %____________________________________________________________________________
 %
 %	Grading Rubric
