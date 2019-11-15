@@ -1,0 +1,153 @@
+\documentclass[12pt]{../manual}
+%____________________________________________________________________________
+%
+%	TITLE AND TABLE OF CONTENTS
+%____________________________________________________________________________
+\begin{document}
+\makeheader{Lab 7}{Fall 2019} % Change Semester and Year as needed
+\begin{center}
+\textbf{\huge ECE 230L - LAB 7}\\~\\
+\textbf{\large DEVICE NON-IDEALITIES}\\~\\
+\rule{6.5in}{0.5mm}\\
+\end{center}
+
+\tableofcontents
+
+\listoffigures
+
+\newpage
+%____________________________________________________________________________
+%
+%	BODY
+%____________________________________________________________________________
+\section{Objectives of this Laboratory}
+The objectives of this laboratory session are as follows:
+\begin{itemize}
+\item To gain understanding of some of the less than ideal behavior of devices and circuits explored in previous laboratories. 
+\item To explore methods for measuring these non-idealities in a less structured lab environment using the tools presented during the course of the semester.
+\item To work with a group in the course to explore these methods.
+\item To present group findings to fellow students in the course in a lab presentation.
+\end{itemize}
+
+\section{Experimental Exploration Format}
+
+\newpage
+\section{Experimental Exploration 1:  Thermal Effects on PN junction diode \& MOSFET}
+
+\def\coord(#1){coordinate(#1)}
+\def\coord(#1){node[circle, red, draw, inner sep=1pt,pin={[red, overlay, inner sep=0.5pt, font=\tiny, pin distance=0.1cm, pin edge={red, overlay,}]45:#1}](#1){}}
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[scale=2]
+\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
+\draw
+(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
+(0,2)	to[R, l_=$R$]		++(2,0)
+		to[rmeter, t=A] ++(2,0)
+		to[D*, l_=$D$]		++(0,-2)
+		to[short]	++(-4,0)
+;\end{circuitikz}
+\caption{PN-Junction Diode Test Circuit}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[american]
+\draw (0,0) 	node[nigfete, solderdot](Q1) {};
+\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
+\draw (Q1.D) 	to[short] ++(0,2)
+				to[R, l=$R_{DS}$, i<=$I_{DS}$, a=\SI{100}{\ohm}] ++(4,0)
+				to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
+				to[short] ++(-4,0);
+\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
+				to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{GS}$] (VGS |- GND)
+				to[short] (0,-3);
+\draw (0.5,2.1)	node[] {$+$};
+\draw (Q1.east)	node[right=2mm]{$V_{DS}$};
+\draw (0.5,-2.5)node[] {$-$};
+\draw (-0.5,-0.7)	node[] {$+$};
+\draw (-0.6, -1.6)	node[] {$V_{GS}$};
+\draw (-0.5,-2.5)	node[] {$-$};
+\end{circuitikz}
+\caption{Circuit used to characterize an NMOSFET}
+\end{figure}
+
+\section{Experimental Exploration 2:  MOSFET Amplifier Gain and Load Limits}
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\draw
+(0,0) node[nmos, arrowmos](nmos1){} 
+(nmos1.B) 	to[short] ++(-2,0) coordinate(p1) 
+			to[R, a=$R_2$, l=\SI{820}{\kilo\ohm}, *-*] ++(0,-3)  
+(p1) 		to[C, a=$C_1$, l=\SI{10}{\micro\farad}] ++(-3,0)
+			to[battery, a=$v_i(t)$] ++(0,-3) node(gndl){}
+(p1) 		to[R, l=$R_1$, a=\SI{1}{\mega\ohm}, *-] ++(0,3) node(pwrl){}
+(nmos1.E) 	to[R, a=$R_4$, l=\SI{270}{\ohm}, *-*] (0,-3)
+(nmos1.E) 	to[short] ++(3,0) 
+			to[C, a=$C_2$, l=\SI{10}{\micro\farad}] (3,-3) node(gndr){}
+			to[short] (gndl)
+(nmos1.C) 	to[short, -o] ++(3,0) node[right]{$v_o(t)$}
+(nmos1.C) 	to[R, l=$R_3$, a=\SI{680}{\ohm}] (nmos1.C |- pwrl) node(pwrr){}
+			to[short] (pwrl)
+($(pwrl)!0.5!(pwrr)$) to[short, *-o] ++(0,1) node[above=2mm] {\SI{15}{\volt}}
+($(gndl)!0.5!(gndr)$) node[ground] {}
+;\end{circuitikz}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\draw
+(0,0) node[nmos, arrowmos](nmos1){} 
+(nmos1.B) 	to[short] ++(-2,0) coordinate(p1) 
+			to[R, a=$R_2$, l=\SI{820}{\kilo\ohm}, *-*] ++(0,-3)  
+(p1) 		to[C, a=$C_1$, l=\SI{10}{\micro\farad}] ++(-3,0)
+			to[battery, a=$v_i(t)$] ++(0,-3) node(gndl){}
+(p1) 		to[R, l=$R_1$, a=\SI{1}{\mega\ohm}, *-] ++(0,3) node(pwrl){}
+(nmos1.E) 	to[R, a=$R_4$, l=\SI{270}{\ohm}, *-*] (0,-3)
+(nmos1.E) 	to[short] ++(3,0) 
+			to[C, a=$C_2$, l=\SI{10}{\micro\farad}, -*] (3,-3) node(gndr){}
+(nmos1.C) 	to[short, -*] ++(6,0) node(vout) {}
+			to[C, a=$C_L$] ++ (0,-1.5)
+			to[R, a=$R_L$] (6,-3)
+			to[short] (gndl)
+(vout)		to[short, -o] ++(1,0) node[right]{$v_o(t)$}
+(nmos1.C) 	to[R, l=$R_3$, a=\SI{680}{\ohm}] (nmos1.C |- pwrl) node(pwrr){}
+			to[short] (pwrl)
+($(pwrl)!0.5!(pwrr)$) to[short, *-o] ++(0,1) node[above=2mm] {\SI{15}{\volt}}
+($(gndl)!0.5!(gndr)$) node[ground] {}
+;\end{circuitikz}
+\end{figure}
+
+\section{Experimental Exploration 3:  MOSFET Input and Output Resistance}
+
+\section{Experimental Exploration 4:  MOSFET Inverter maximum clock frequency with external capacitive load}
+
+\section{Experimental Exploration 5:  Zener diode (Reverse breakdown)}
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[scale=2]
+\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
+\draw
+(0,2) 	to[battery, l^=$V$, i=$i_D$] ++(0,-2)
+		to[short] ++(2,0) node(bot) {}
+		to[zzDo, a=$D$, *-*] ++(0,2) 
+(0,2)	to[R, l_=$R$] ++(2,0) node(top) {}
+		to[short, -o] ++(1.5,0) node[below=2mm] {$+$}
+(bot)	to[short, -o] ++(1.5,0) node[above=2mm] {$-$}
+($(top)!0.5!(bot)$) node[right=20mm] {$V_{\mathrm{out}} = V_z$}
+;\end{circuitikz}
+\end{figure}
+%____________________________________________________________________________
+%
+%	GRADING RUBRIC
+%____________________________________________________________________________
+\newpage
+\phantomsection % needed in order to link from table of contents to here
+\section*{Grading Rubric}
+\addcontentsline{toc}{section}{Grading Rubric} % adds section*{} to table of contents
+\markboth{Grading Rubric}{Grading Rubric}
+\end{document}
