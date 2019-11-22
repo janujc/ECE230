@@ -30,14 +30,27 @@ The objectives of this laboratory session are as follows:
 \end{itemize}
 
 \section{Experimental Exploration Format}
+\begin{itemize}
+\item This lab will be conducted in groups of two or three. 
+\item Each group will be assigned an exploration
+\item Complete the exploration and form a brief presentation to share with the lab section---\textit{you have one hour}
+\item Each group will present their findings to the entire lab
+\end{itemize}
 
 \newpage
-\section{Experimental Exploration 1:  Thermal Effects on PN junction diode \& MOSFET}
+\section{Experimental Explorations}
+There are five possible explorations:
+\subsection{Thermal Effects on PN-Junction Diode \& MOSFET}
+\textit{To be completed in a group of 2 or 3.}
+\subsubsection*{PN-Junction Diode}
+\begin{enumerate}
+\item Construct the following circuit on a breadboard:
+\end{enumerate}
 
 \def\coord(#1){coordinate(#1)}
 \def\coord(#1){node[circle, red, draw, inner sep=1pt,pin={[red, overlay, inner sep=0.5pt, font=\tiny, pin distance=0.1cm, pin edge={red, overlay,}]45:#1}](#1){}}
 
-\begin{figure}[ht!]
+\begin{myfigure}[label=fig:PNTest]{PN-Junction Diode Test Circuit}{PN-Junction Diode Test Circuit}
 \centering
 \begin{circuitikz}[scale=2]
 \ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
@@ -48,10 +61,19 @@ The objectives of this laboratory session are as follows:
 		to[D*, l_=$D$]		++(0,-2)
 		to[short]	++(-4,0)
 ;\end{circuitikz}
-\caption{PN-Junction Diode Test Circuit}
-\end{figure}
+\end{myfigure}
 
-\begin{figure}[ht!]
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Run the {\tt singleloop.vi} script from 0 to 6 V with 100 steps. This produces $I_D(V_D)$.
+\item Repeat the above, but with a voltmeter over the diode, to measure $V_{PN}$. Combine the results to produce the graph $I_D(V_{PN})$.
+\item Now, obtain thermal paste from your TA and apply it to the diode. Obtain a soldering iron and heat it to its lowest setting. Apply the soldering iron to the diode to allow it to heat it.
+\item Repeat steps (1) -- (3), and compare the results.
+\end{enumerate}
+
+\newpage
+\subsubsection*{MOSFET}
+\begin{myfigure}[label=fig:MOSTest]{Circuit used to characterize an NMOSFET}{Circuit used to characterize an NMOSFET}
 \centering
 \begin{circuitikz}[american]
 \draw (0,0) 	node[nigfete, solderdot](Q1) {};
@@ -70,10 +92,10 @@ The objectives of this laboratory session are as follows:
 \draw (-0.6, -1.6)	node[] {$V_{GS}$};
 \draw (-0.5,-2.5)	node[] {$-$};
 \end{circuitikz}
-\caption{Circuit used to characterize an NMOSFET}
-\end{figure}
+\end{myfigure}
 
-\section{Experimental Exploration 2:  MOSFET Amplifier Gain and Load Limits}
+\newpage
+\subsection{MOSFET Amplifier Gain and Load Limits}
 \begin{figure}[ht!]
 \centering
 \begin{circuitikz}
@@ -121,11 +143,11 @@ The objectives of this laboratory session are as follows:
 ;\end{circuitikz}
 \end{figure}
 
-\section{Experimental Exploration 3:  MOSFET Input and Output Resistance}
+\subsection{MOSFET Input and Output Resistance}
 
-\section{Experimental Exploration 4:  MOSFET Inverter maximum clock frequency with external capacitive load}
+\subsection{MOSFET Inverter maximum clock frequency with external capacitive load}
 
-\section{Experimental Exploration 5:  Zener diode (Reverse breakdown)}
+\subsection{Zener diode (Reverse breakdown)}
 
 \begin{figure}[ht!]
 \centering
