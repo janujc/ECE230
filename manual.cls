@@ -41,8 +41,8 @@
 	\fancyhead[C]{}
 	\fancyhead[R]{#2}
 	\fancyfoot[L]{Lab Manual}
-	\fancyfoot[R]{Page \thepage}
 	\fancyfoot[C]{#1}
+	\fancyfoot[R]{Page \thepage}
 }
 
 \newcommand{\incfig}[1]{
