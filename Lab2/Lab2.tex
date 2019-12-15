@@ -50,7 +50,8 @@ In this laboratory, you will measure the static current-voltage $I_D(V_{PN})$ ch
 \item Agilent 34410A Multimeter
 \end{itemize}
 A cross-section and circuit symbol of the PN-junction diode is shown in Figure \ref{fig:diode}.
-\begin{myfigure}[label=fig:diode]{PN-Junction Diode Schematics}{PN-Junction Diode Cross-Section and Symbol}
+\begin{figure}[ht!]
+\centering
 \begin{tabular}{c}
 \begin{tikzpicture}[scale=2,european]
 \ctikzset{resistors/scale=3, resistors/thickness=6}
@@ -70,7 +71,9 @@ A cross-section and circuit symbol of the PN-junction diode is shown in Figure \
 		to node[anchor=south] {Cathode} ++(0,0)
 ;\end{circuitikz}
 \end{tabular}
-\end{myfigure}
+\caption[PN-Junction Diode Schematics]{PN-Junction Diode Cross-Section and Symbol}
+\label{fig:diode}
+\end{figure}
 
 The arrow of the diode indicates the direction of the current.
 
@@ -83,7 +86,7 @@ Using the LabVIEW software installed on your laboratory workstation, obtain the 
 \item[$\square$] What is the value of the series resistor that you must choose for the 1N4148 diode (with a 200 mA maximum current) attached to this 6 V power supply?
 \end{itemize}
 
-\begin{myfigure}[label=fig:diodeTest]{PN-Junction Diode Test Circuit}{PN-Junction Diode Test Circuit}
+\begin{figure}[ht!]
 \centering
 \begin{circuitikz}[scale=2]
 \ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
@@ -94,7 +97,10 @@ Using the LabVIEW software installed on your laboratory workstation, obtain the 
 		to[D*, l_=$D$]		++(0,-2)
 		to[short]	++(-4,0)
 ;\end{circuitikz}
-\end{myfigure}
+\caption{PN-Junction Diode Test Circuit}
+\label{fig:diodeTest}
+\end{figure}
+
 \item Apply a small voltage, 0.01 V, to the test circuit; record the current through the diode.
 \item Increase the voltage to the circuit slowly and determine approximately the voltage at which the diode begins to conduct current.
 \item Sketch a plot of measured $V_{DC}$ vs. $I$ for this circuit.
@@ -161,7 +167,7 @@ The final two parameters we will mention are transit time $\tau_0$ and the zero-
 \section{Explorations}
 \subsection{PN-Junction Diode Half-Wave and Bridge Rectifiers}
 One application of a PN-junction diode is to allow only the positive-going voltages of a time-varying input-voltage signal to pass to the output. Because a PN-junction diode allows current to flow through a circuit only in the forward direction, it can be used to allow the positive-going portions of an input signal to pass to the output while blocking the negative-going portions of the waveform. This kind of circuit is called a rectifier.
-\begin{myfigure}[label=fig:halfRec]{PN-Junction Diode Half-Wave Rectifier}{PN-Junction Diode Half-Wave Rectifier}
+\begin{figure}[ht!]
 \centering
 \begin{circuitikz}[scale=2]
 \ctikzset{resistors/scale=1.5,batteries/scale=1.5,diodes/scale=1.5}
@@ -171,7 +177,9 @@ One application of a PN-junction diode is to allow only the positive-going volta
 		to[R, l_=$R$, v^=$v_o$]		++(0,-2)
 		to[short]	++(-4,0)
 ;\end{circuitikz}
-\end{myfigure}
+\caption{PN-Junction Diode Half-Wave Rectifier}
+\label{fig:halfRec}
+\end{figure}
 \begin{enumerate}
 \item Build a half-wave diode rectifier circuit using a Si 1N4148 diode, as shown in Figure
 3. Use a 5 V$_{\mathrm{pp}}$ sinusoidal input waveform from the function generator. Use a
@@ -184,7 +192,7 @@ resistor value of $\SI{1}{\kilo\ohm}$ at the output.
 \item Repeat the above experiment using a Ge diode.
 \end{enumerate}
 It is possible to improve upon the above circuit by using both halves of the sinusoidal input voltage. To do so, more than one diode is required. An intermediate improvement would be to add a second diode: this circuit is referred to generally as Full Wave Rectifier. A common and even better implementation of the Full Wave Rectifier utilizes four diodes: it is referred to as a Bridge Rectifier. (The reason it is even better than a common Full Wave Rectifier is because it does not require a centrally tapped DC reference point.) Figure \ref{fig:bridgeRec} shows a Bridge Rectifier circuit. To provide a new ground for the full-wave rectified circuit, a transformer between the power source and the diodes is required. This allows both the positive- and negative-going portions of the input-voltage waveform to pass to the output node.
-\begin{myfigure}[label=fig:bridgeRec]{PN-Junction Diode Bridge Rectifier}{PN-Junction Diode Bridge Rectifier}
+\begin{figure}[ht!]
 \centering
 \begin{circuitikz}
 \ctikzset{quadpoles/transformer core/inner=1, quadpoles/transformer core/width=1, quadpoles/transformer core/height=2.865}
@@ -204,7 +212,9 @@ It is possible to improve upon the above circuit by using both halves of the sin
 (4,-2)	to[D*, -*, l^=$D_2$] ++(2,2)
 (4,-2)	to[D*, *-, l_=$D_1$] ++(2,-2)	
 ;\end{circuitikz}
-\end{myfigure}
+\caption{PN-Junction Diode Bridge Rectifier}
+\label{fig:bridgeRec}
+\end{figure}
 
 \newpage
 \subsection{LED Lighting}
@@ -251,11 +261,10 @@ In order to destroy an LED, you may need to use {\tt singleloop25.vi}, which all
 \end{enumerate}
 \textit{Finally, be sure to add the answers to all questions marked by a square ($\square$) from your chosen Exploration section.}
 
-\newpage
-\phantomsection % needed in order to link from table of contents to here
-\section*{Grading Rubric}
-\addcontentsline{toc}{section}{Grading Rubric} % adds section*{} to table of contents
+\phantomsection
+\addcontentsline{toc}{section}{Grading Rubric}
 \markboth{Grading Rubric}{Grading Rubric}
+\hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
 \caption{ECE 230L Laboratory 2 Grading Rubric}

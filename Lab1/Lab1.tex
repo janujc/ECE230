@@ -66,7 +66,7 @@ Examine the controls on its front panel. This instrument is used to measure volt
 The Dell Personal Computer will be used to run a program written using LabVIEW to control the Agilent test instruments by software. Turn on the PC at your laboratory bench and examine the software available on it. 
  
 \subsection{Power Connection to Laboratory Bench}
-The electrical power connected to all instruments, PC, and printer is controlled by the master switch located on the front or side corner of the bench (just below the bench top). Please be sure that all instruments and the master switch have been turned off before leaving the laboratory each week. 
+The electrical power connected to all instruments, PC, and printer is controlled by the master switch located on the front or side corner of the bench (just below the bench top). Please be sure that all instruments and the master switch have been turned off before leaving the laboratory each week.
 
 \section{Experimental Exercises}
 \subsection{Practical Voltage and Current Measurements}
@@ -96,10 +96,12 @@ The tolerance band is typically either Gold or Silver. A Gold tolerance band ind
 \subsubsection{Ideal vs. Practical DC Voltmeters}
 An ideal voltmeter has an infinite series resistance, i.e., it is practically an open circuit. Although it is impossible to make a physical voltmeter with infinite resistance, a well designed voltmeter exhibits a very large internal resistance. In some experiments, it is important to take into account the finite, non-ideal internal resistance of a DC voltmeter.
 
+To determine the internal resistance of the voltmeter, set up a circuit as shown in Figure \ref{fig:voltcirc}.
+
 \begin{figure}[ht!]
 \begin{center}
-\begin{circuitikz}[american, scale=2]
-\ctikzset{resistors/scale=2, batteries/scale=2, instruments/scale=2}
+\begin{circuitikz}[american, scale=1.5]
+\ctikzset{resistors/scale=1.5, batteries/scale=1.5, instruments/scale=1.5}
 \draw 
 (0,0) -- ++(-1,0) node[currarrow, rotate=180]{} 
 to [resistor, l_=\SI{1}{M\ohm}] ++(-3,0)
@@ -112,7 +114,7 @@ to [rmeter, t=V] ++(0,2)
 \end{center}
 \end{figure}
 
-To determine the internal resistance of the voltmeter, set up a circuit as shown in Figure \ref{fig:voltcirc}. The voltmeter reads the voltage across itself, which includes its internal resistance. Because the circuit has only a single branch, the current flowing through the resistor also flows through the voltmeter. In this circuit, the source voltage $V_S = 10$ V and the DC voltage measured by the voltmeter is $V_M$. The current is given by the equation
+The voltmeter reads the voltage across itself, which includes its internal resistance. Because the circuit has only a single branch, the current flowing through the resistor also flows through the voltmeter. In this circuit, the source voltage $V_S = 10$ V and the DC voltage measured by the voltmeter is $V_M$. The current is given by the equation
 \begin{align}
 I = \frac{V_S - V_M}{R}.
 \end{align}
@@ -131,12 +133,14 @@ To determine the internal resistance of the voltmeter, carry out the following s
 \end{enumerate}
 
 \subsubsection{Ideal vs. Practical DC Ammeters}
-An ideal ammeter has zero internal resistance so that the circuit in which it has been placed is not disturbed. An ideal ammeter is a short circuit. As with the voltmeter, however, no ammeter can ever be ideal, and therefore all ammeters have some optimally small internal resistance.
+An ideal ammeter has zero internal resistance so that the circuit in which it has been placed is not disturbed. An ideal ammeter is a short circuit. As with the voltmeter, however, no ammeter is ideal. Thus, all ammeters have some optimally small internal resistance.
+
+To determine the resistance of the DC ammeter, set up a circuit as shown in Figure \ref{fig:ampcirc}.
 
 \begin{figure}[ht!]
 \begin{center}
-\begin{circuitikz}[scale = 2]
-\ctikzset{resistors/scale=2, batteries/scale=2, instruments/scale=2}
+\begin{circuitikz}[scale=1.5]
+\ctikzset{resistors/scale=1.5, batteries/scale=1.5, instruments/scale=1.5}
 \draw 
 (0,0) to [resistor, l_=\SI{100}{\ohm}] ++(-4,0)
 to [battery, l_=\SI{1}{V}] ++(0,-2)
@@ -148,7 +152,7 @@ to [rmeter, t=A] ++(0,2)
 \end{center}
 \end{figure}
 
-To determine the resistance of a DC ammeter, we will use the circuit shown in Figure \ref{fig:ampcirc}. According to Ohm's Law, the current in this circuit is given by
+According to Ohm's Law, the current in this circuit is given by
 \begin{align}
 I = \frac{V_S}{R + R_M}
 \end{align}
@@ -215,18 +219,23 @@ In the procedure that follows, we calibrate the probe.
 Now, you will full under-compensate and over-compensate the oscilloscope probe to determine the approximate value of the variable compensation capacitor $(C_{\mathrm{comp}})$ which is part of the oscilloscope's 10x probe.
 
 \begin{itemize}
-\item[4.] Measure two instances of the time constant, $\tau$---one when the oscilloscope probe is fully under-compensated and one when the oscilloscope probe is full over-compensated. (The oscilloscope waveforms should appear similar to those shown in Fig. 5.)
+\item[4.] Measure two instances of the time constant, $\tau$---one when the oscilloscope probe is fully under-compensated and one when the oscilloscope probe is full over-compensated. The oscilloscope waveforms should appear similar to those shown in Figure \ref{fig:oscdifcomp}.
 \end{itemize}
 
-How do we solve for $\tau$? First, we use the equation $\Delta V_C = \Delta V_{\mathrm{MAX}} \cdot e^{-t / RC}$. However, we must first find $\Delta V_{\mathrm{MAX}}$. This is the difference between the maximum voltage $V_{\mathrm{MAX}}$ on the left side of the wave and the stable voltage $V_{\mathrm{stable}}$ on the right side of the wave. This value should be positive for over-compensated probes and negative for under-compensated probes. Next, we find $\Delta V_C$ for an under-compensated probe using 
+To solve for $\tau = RC$, we use the equation 
 \begin{align}
-\Delta V_C &= \Delta V_{\mathrm{MAX}} \cdot e^{-t / \tau}. \\
+\Delta V_C = \Delta V_{\mathrm{max}} \cdot e^{-t / RC}.
+\end{align} 
+However, we must first find $\Delta V_{\mathrm{max}}$. This is the difference between the maximum voltage $V_{\mathrm{max}}$ on the left side of the wave and the stable voltage $V_{\mathrm{stable}}$ on the right side of the wave. This value should be positive for over-compensated probes and negative for under-compensated probes (and 0 for well-compensated probes). Next, we find $\Delta V_C$ for an under-compensated probe by using 
+\begin{align}
+\Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-t / \tau}. \label{eq:tau} \\
 \intertext{Now, we set t = $\tau$}
-\Delta V_C &= \Delta V_{\mathrm{MAX}} \cdot e^{-\tau / \tau} \\
-\Delta V_C &= \Delta V_{\mathrm{MAX}} \cdot e^{-1}
-\intertext{Since $\Delta V_{\mathrm{MAX}}$ and $\exp(-1)$ are known values, we have solved for $\Delta V_C$. Note that for an over-compensated probe, we instead use}
-\Delta V_C &= \Delta V_{\mathrm{MAX}} \cdot [1 - e^{-t / \tau}].
+\Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-\tau / \tau} \\
+\Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-1}
+\intertext{Since $\Delta V_{\mathrm{max}}$ and $e^{-1}$ are known values, we have solved for $\Delta V_C$. Note that for an over-compensated probe, we replace (\ref{eq:tau}) with}
+\Delta V_C &= \Delta V_{\mathrm{max}} \cdot [1 - e^{-t / \tau}].
 \end{align}
+
 Now, we can measure $\tau$ for both an under- and over-compensated scope. We do so by first adding $V_{\mathrm{stable}} + \Delta V_C$ to get the value of the voltage at one time constant. We'll call this value $V_{\tau = 1}$. Finally, we use the oscilloscope's \fbox{Cursor} to measure the time $\tau$ it takes for the wave and $V_{\tau = 1}$ to intersect.
  
 \textbf{Save or print out a good screen capture} to include in your laboratory assignment.
@@ -237,15 +246,14 @@ Now, we can measure $\tau$ for both an under- and over-compensated scope. We do 
 \includegraphics[width=0.31\textwidth]{figures/overcomp} & \includegraphics[width=0.31\textwidth]{figures/wellcomp} & 
 \includegraphics[width=0.31\textwidth]{figures/undercomp}
 \end{tabular}
+\end{center}
 \caption[Square waves from probes with different compensations]{Square waves from probes with different compensations. From left to right: over-compensated, well-compensated, under-compensated.}
 \label{fig:oscdifcomp}
-\end{center}
 \end{figure}
-
-% Missing in this version of the lab manual: a picture of the circuit inside the probe tip.
 
 As you can see in Figure \ref{fig:oscdifcomp}, when compensating the probe using the oscilloscope's reference signal, you can have either overshoot or undershoot on the square wave. You can attach the probe tip to the probe compensation terminal and connect the probe to an input of the scope. Viewing the square wave reference signal, make the proper adjustments on the probe using a small screw driver so that the square waves on the scope screen look square. What you are adjusting is a variable capacitor at the tip of the probe. If low-frequency adjustment is not properly made, this will result in high-frequency inaccuracies in your measurements.  It's very important to make sure this compensation capacitor is correctly adjusted.
 
+\newpage
 \section{Questions}
 \begin{enumerate}
 \item Define and differentiate between precision, accuracy, and resolution in electrical measurements. What is the ``resolution'' of a digital display? Compare the resolution of the digital display on the front panel of the DC power supply to the display on the front panel of the multimeter. Why must you use the multimeter to set the DC supply to 0.75 V? (The Agilent product manual available online for these instruments may be useful in answering this question.)
@@ -256,7 +264,7 @@ As you can see in Figure \ref{fig:oscdifcomp}, when compensating the probe using
 
 Submit the answers to these questions along with all of the other below-listed items in the rubric in your Lab 1 write-up. 
 
- \textit{Laboratory Notebooks:  There is no laboratory notebook requirement in ECE 230L, however, the use of a notebook for recording work performed in the laboratory is a very good practice and one that is encouraged.  Tips and pointers on how to maintain an excellent laboratory notebook are available on the lab site or can be obtained by speaking with your TA or instructor. It is a great idea to add comments and notes to your notebook before leaving lab---this is best done while the work is fresh in your mind!}
+\textit{Laboratory Notebooks:  There is no laboratory notebook requirement in ECE 230L, however, the use of a notebook for recording work performed in the laboratory is a very good practice and one that is encouraged.  Tips and pointers on how to maintain an excellent laboratory notebook are available on the lab site or can be obtained by speaking with your TA or instructor. It is a great idea to add comments and notes to your notebook before leaving lab---this is best done while the work is fresh in your mind!}
 %____________________________________________________________________________
 %
 %	Grading Rubric
@@ -264,7 +272,7 @@ Submit the answers to these questions along with all of the other below-listed i
 \newpage
 \phantomsection
 \addcontentsline{toc}{section}{Grading Rubric}
-\markboth{GRADING RUBRIC}{GRADING RUBRIC}
+\markboth{Grading Rubric}{Grading Rubric}
 \hspace{0pt}
 \vfill
 \begin{table}[ht!]

@@ -9,7 +9,7 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{siunitx}
-\RequirePackage{mathtools}
+\RequirePackage{mathtools,amssymb}
 \RequirePackage{caption}
 \RequirePackage{moreverb}
 \RequirePackage{parskip}
