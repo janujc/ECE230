@@ -35,128 +35,161 @@ The objectives of this laboratory session are to introduce you to the basics of 
 \section{Setting Up a Circuit Using ORCAD Capture}
 To create a circuit in a PSpice environment, one must first launch ORCAD:
 \begin{enumerate}
-\item Open ORCAD Capture CIS
-\item Create a new project by selecting {\bf File} $\to$ {\bf New} $\to$ {\bf Project}
-\item Name your project `Lab 3'
-\item Choose {\bf Analog or Mixed A/D} under the {\bf Create a New Project Using} menu
-\item Select {\bf Create a blank project} when prompted
+	\item Open ORCAD Capture CIS
+	\item Create a new project by selecting {\bf File} $\to$ {\bf New} $\to$ {\bf Project}
+	\item Name your project `Lab 3'
+	\item Choose {\bf Analog or Mixed A/D} under the {\bf Create a New Project Using} menu
+	\item Select {\bf Create a blank project} when prompted
 \end{enumerate}
 
 \begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{./figures/BlankSchematic.PNG}
-\caption{Blank Schematic}
-\label{fig:blankSchematic}
-\end{center}
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{./figures/BlankSchematic.PNG}
+	\end{center}
+	\caption{Blank Schematic}
+	\label{fig:blankSchematic}
 \end{figure}
 
 Once the new project has been created, circuit design can begin. Sources, components, ground nodes, and wires can be selected using the {\bf Place} menu.
 
-PSpice will be used to model the circuit in Figure \ref{fig:initCircuit} and perform DC, AC, and transient analysis on the circuit.
-
+PSpice will be used to model and perform analyses on the circuit in Figure \ref{fig:initCircuit}.
 \begin{figure}[ht!]
-\begin{center}
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
-\draw
-(0,0) 	to[short] 		++(2,0)
-		node[ground] {}
-		to[short] 		++(2,0)
-		to[C, l_=${C = \SI{1}{\nano\farad}}$]			++(0,2)
-		to[short]		++(-2,0)
-		to[R, l_=${R_1 = \SI{1}{\kilo\ohm}}$]			++(-2,0)
-		to[battery, l_=$v_{in}$]		++(0,-2)
-(2,0)	to[R, *-*, l_=${R_2 = \SI{1}{\kilo\ohm}}$]		++(0,2)
-;\end{circuitikz}
-\caption{Initial Circuit}
-\label{fig:initCircuit}
-\end{center}
+	\begin{center}
+		\begin{circuitikz}[scale=1.5]
+			\draw 	
+			(0,0) 	to[short] 										++(2,0)
+					node[ground] {}
+					to[short] 										++(2,0)
+					to[C, l_=${C = \SI{1}{\nano\farad}}$]			++(0,2)
+					to[short]		++(-2,0)
+					to[R, l_=${R_1 = \SI{1}{\kilo\ohm}}$]			++(-2,0)
+					to[battery, l_=$V_1$]		++(0,-2)
+			(2,0)	to[R, *-*, l_=${R_2 = \SI{1}{\kilo\ohm}}$]		++(0,2)
+		;\end{circuitikz}
+	\end{center}
+	\caption{Initial Circuit}
+	\label{fig:initCircuit}
 \end{figure}
 
-To make the circuit, 
+To create the circuit, 
 \begin{enumerate}
-\item Add a DC Voltage Source by following \fbox{Place} $\to$ \fbox{PSPice Component} $\to$ \fbox{Source} $\to$ \fbox{Voltage Source} $\to$ \fbox{DC}
+	\item Add a DC Voltage Source: Place $\to$ PSPice Component $\to$ Source $\to$ Voltage Source $\to$ DC
+	\item Insert Resistors and Capacitors: Place $\to$ PSpice Component $\to$ Passives
+	\item Insert Wires and connect circuit nodes: Place $\to$ Wire
+	\item Insert a Ground: Place $\to$ Ground $\to$ 0/SOURCE
 \end{enumerate}
 
-Add a DC voltage source to the circuit by following Place $\to$ PSpice Component $\to$ Source $\to$ Voltage Sources $\to$ DC. After adding the voltage source to the schematic, use the Place $\to$ PSpice Components $\to$ Passives menu to insert the remaining resistors and capacitors. Use Ctrl-R to rotate the components. Use Place $\to$ Wire to connect the circuit nodes. To change values of circuit elements, double click on the element and adjust the desired properties. Finally, add a ground node to the circuit schematic. Follow Place $\to$ Ground and select 0/SOURCE as your ground node.
+Note that you can use Ctrl-R to rotate the components. Also, to change values of any component, double click on the component and change the values using the pop-up menu. You may also change values by double clicking directly on the value and typing a new value.
 %____________________________________________________________________________
 %
 %	DC Analysis
 %____________________________________________________________________________
 \newpage
 \section{DC Analysis in PSpice}
-To perform a DC analysis of the circuit, you will create a new simulation profile. To create a new profile select \textbf{PSpice} $\to$ \textbf{New Simulation Profile}. Name the new profile `dc' and press \textbf{Create}. To analyze the example circuit, select \textbf{DC Sweep} in the \textbf{Analysis Type} drop down menu and use the following parameters:
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/DCAnalysisCircuitCrop.PNG}
+	\end{center}
+	\caption{Circuit for DC Analysis}
+	\label{fig:dc}
+\end{figure}
+
+To perform a DC analysis of the circuit, create a new simulation profile by selecting \textbf{PSpice} $\to$ \textbf{New Simulation Profile}. Name the new profile `dc' and press \textbf{Create}. Then,  select \textbf{DC Sweep} in the \textbf{Analysis Type} drop down menu and use the following parameters:
 \begin{itemize}
-\item Sweep variable > Voltage source: V1
+\item Sweep variable $\to$ Voltage source: V1
 \item Sweep Type: Linear
 \item Start Value: 0
 \item End Value: 10
 \item Increment: 0.01
 \end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:exampleCircuit} shows the circuit schematic and Figure \ref{fig:DCAnalRes} shows the result of DC analysis (top plot: current, bottom plot: voltage).
+
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
+
+%Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:dcAnalRes} shows the result of DC analysis.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/ResultDCAnalysisCrop.PNG}
+\caption[Result of DC Analysis]{Result of DC Analysis. Top: Current; Bottom: Voltage}
+\label{fig:dcAnalRes}
+\end{center}
+\end{figure}
 %____________________________________________________________________________
 %
 %	AC Analysis
 %____________________________________________________________________________
 \newpage
 \section{AC Analysis in PSpice}
-Before performing an AC analysis a new AC voltage source has to replace the DC source. To change the source, delete the DC source and follow \textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{AC}. We include the circuit in Figure \ref{fig:ac}. The following parameters will be used: 
+Before performing an AC analysis, a new AC voltage source has to replace the DC source. To change the source, delete the DC source and follow \textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{AC}. The following parameters will be used:
 \begin{itemize}
 \item DC Value: 10
 \item AC Amplitude: 1
 \end{itemize}
 
-%\begin{myfigure}[colback=white,label=fig:acCircuit]{Circuit for AC Analysis}{Circuit for AC Analysis}
-%\centering
-%\includegraphics[width=0.7\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
-%\end{myfigure}
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
+	\end{center}
+	\caption{Circuit for AC Analysis}
+	\label{fig:ac}
+\end{figure}
 
 After the voltage source properties have been changed, AC analysis can be performed. First, create a new simulation profile called `ac'. Next, select \textbf{AC Sweep/Noise} in the \textbf{Analysis Type} drop down menu and use the following parameters:
 \begin{itemize}
 \item AC Sweep Type: Logarithmic 
-\begin{itemize}
-\item Select \textbf{Decade} from drop down box below
-\end{itemize}
+\item Select \textbf{Decade} from drop down menu below
 \item Start Frequency: 1k
 \item Stop Frequency: 1Meg
 \item Number of Points per Decade: 10
 \end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}.
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. They should look like Figure \ref{fig:acSettings}.
 
-A screencap of the settings for the AC Analysis is included in Figure \ref{fig:acSettings}.
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
+	\end{center}
+	\caption{Settings for AC Analysis}
+	\label{fig:acSettings}
+\end{figure}
+
+Now, begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. % To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:acAnalRes} shows the result of AC analysis.
+
+\subsection*{Trace Expressions in PSpice}
+Trace expressions can be used to plot the phase of a desired value, a parameter in units of dB, or plot other useful mathematical operations on circuit parameters. Trace expressions are available under the \textbf{Trace} $\to$ \textbf{Add Trace} menu. Select \textbf{Plot} $\to$ \textbf{Add Plot to Window} and plot the value of V(R1:2) in dB. Use the trace expression DB(V(R1:2)). Next, add another plot to the window and plot the phase of V(R1:2). Use the trace expression P(V(R1:2)). The resulting plots are shown in Figure \ref{fig:acAnalRes}.
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
-\caption{Settings for AC Analysis}
-\label{fig:acSettings}
+\includegraphics[width=\textwidth]{figures/ResultACAnalysisCrop.PNG}
+\caption{Result of AC Analysis}
+\label{fig:acAnalRes}
 \end{center}
 \end{figure}
-
-\subsection*{Trace Expressions in PSpice}
-Trace expressions can be used to plot the phase of a desired value, a parameter in units of dB, or plot other useful mathematical operations on circuit parameters. Trace expressions are available under the \textbf{Trace} $\to$ \textbf{Add Trace} menu. Select \textbf{Plot} $\to$ \textbf{Add Plot to Window} and plot the value of V(R2) in dB. Use the trace expression DB(V(R1:2)). Next, add another plot to the window and plot the phase of V(R2). Use the trace expression P(V(R1:2)). The circuit for AC analysis is shown in Figure \ref{fig:acCircuit} and the resulting plots are shown in Figure \ref{fig:acAnalRes}.
-
-%\begin{myfigure}[label=fig:acAnalRes]{Result of AC Analysis}{Result of AC Analysis. Top to bottom: V(R1:2), DB(V(R1:2)), P(V(R1:2)).}
-%\centering
-%\includegraphics[width=0.9\textwidth]{figures/ResultACAnalysisCrop.PNG}
-%\end{myfigure}
 %____________________________________________________________________________
 %
 %	Transient Analysis
 %____________________________________________________________________________
 \newpage
 \section{Transient Analysis in PSpice}
-Before performing a transient analysis replace the AC source with a Pulse source (\textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{Pulse}). The following parameters will be used to set up the pulse: 
+Before performing a transient analysis, replace the AC source with a Pulse source (\textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{Pulse}). The following parameters will be used to set up the pulse: 
 \begin{itemize}
-\item V1 = 0, 
-\item V2 = 5, 
-\item TD = 10n, 
-\item TR = 20n, 
-\item TF = 20n, 
-\item PW = 500n, 
+\item V1 = 0
+\item V2 = 5 
+\item TD = 10n 
+\item TR = 20n 
+\item TF = 20n 
+\item PW = 500n 
 \item PER = 2u
 \end{itemize}
-A schematic for the transient analysis circuit can be found in the appendix.
+
+We include the circuit in Figure \ref{fig:trans}.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
+	\end{center}
+	\caption{Circuit for Transient Analysis}
+	\label{fig:trans}
+\end{figure}
 
 After creating the circuit, create a new simulation profile called ``Transient''. To analyze the new circuit, select \textbf{Time Domain (Transient)} in the \textbf{Analysis Type} drop down menu and use the following parameters:
 \begin{itemize}
@@ -164,12 +197,25 @@ After creating the circuit, create a new simulation profile called ``Transient''
 \item Start saving data after: 0
 \item Maximum step size: 10n
 \end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. Plot the source voltage, V(R1:1), and V(R1:2).
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
 
-%\begin{myfigure}[label=fig:transAnalRes]{Result of Transient Analysis}{Result of Transient Analysis}
-%\centering
-%\includegraphics[width=0.9\textwidth]{figures/ResultTransientAnalysisCrop.PNG}
-%\end{myfigure}
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/TransientAnalysisSettings.PNG}
+	\end{center}
+	\caption{Settings for Transient Analysis}
+	\label{fig:transSettings}
+\end{figure}
+
+Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. Plot the source voltage, V(R1:1), and V(R1:2).
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=\textwidth]{figures/ResultTransientAnalysisCrop.PNG}
+	\end{center}
+	\caption{Result of Transient Analysis}
+	\label{fig:transAnalRes}
+\end{figure}
 %____________________________________________________________________________
 %
 %	Practice Example
@@ -180,8 +226,8 @@ Use PSpice to simulate the circuit shown in Figure \ref{fig:practice} using DC, 
 
 \begin{figure}[ht!]
 \begin{center}
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
+\begin{circuitikz}[scale=1.5]
+%\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
 \draw
 (0,0) 	to[short, *-] 	++(0,1)
 		to[C, l=${C_1=\SI{1}{\nano\farad}}$]	++(2,0)
@@ -251,8 +297,8 @@ Any linear DC circuit as seen at a pair of terminals can be reduced to a practic
 
 \begin{figure}[ht!]
 \begin{center}
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
+\begin{circuitikz}[scale=1.5]
+%\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
 \draw
 (0,0)	to[R, *-, l=${R_{TH}}$]		++(-4,0)
 		to[battery, l=${V_{OC}}$] 	++(0,-2)
@@ -325,7 +371,7 @@ Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find i
 \begin{figure}[ht!]
 \begin{center}
 \begin{circuitikz}
-\ctikzset{grounds/scale=1.5}
+%\ctikzset{grounds/scale=1.5}
 \draw
 (0,0) 	to[short] 		++(4,0)
 		node[ground] {}
@@ -337,8 +383,8 @@ Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find i
 (4,0)	to[R, *-, l=$R_2$, a=\SI{1}{\kilo\ohm}]			++(0,4)
 		to[R, -*, l=$R_1$, a=\SI{100}{\ohm}]			++(0,4)
 (4,4)	to[R, *-*, l=$R_4$, a=\SI{300}{\ohm}]			++(4,0)
-(3.5,4) node[] {A}
-(8.5,4) node[] {B}
+(3.5,4) node[] {\textcolor{red}{A}}
+(8.5,4) node[] {\textcolor{red}{B}}
 ;\end{circuitikz}
 \caption{Exercise Circuit}
 \label{fig:exerciseCircuit}
@@ -349,10 +395,10 @@ Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find i
 %	Grading Rubric
 %____________________________________________________________________________
 \newpage
-\phantomsection % needed in order to link from table of contents to here
-\section*{Grading Rubric}
-\addcontentsline{toc}{section}{Grading Rubric} % adds section*{} to table of contents
+\phantomsection
+\addcontentsline{toc}{section}{Grading Rubric}
 \markboth{Grading Rubric}{Grading Rubric}
+\hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
 \caption{ECE 230L Laboratory 3 Grading Rubric}
@@ -385,65 +431,4 @@ Total							& 100 \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
-%____________________________________________________________________________
-%
-%	Appendix
-%____________________________________________________________________________
-\newpage
-\appendix
-\appendixpage
-\addappheadtotoc
-\section{DC Analysis}
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{figures/DCAnalysisCircuitCrop.PNG}
-\caption{Circuit for DC Analysis}
-\label{fig:dc}
-\end{center}
-\end{figure}
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{figures/ResultDCAnalysisCrop.PNG}
-\caption{Result of DC Analysis}
-\label{fig:dcAnalRes}
-\end{center}
-\end{figure}
-
-\newpage
-\section{AC Analysis}
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
-\caption{Circuit for AC Analysis}
-\label{fig:ac}
-\end{center}
-\end{figure}
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{figures/ResultACAnalysisCrop.PNG}
-\caption{Result of AC Analysis}
-\label{fig:acAnalRes}
-\end{center}
-\end{figure}
-
-\newpage
-\section{Transient Analysis}
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
-\caption{Circuit for Transient Analysis}
-\label{fig:trans}
-\end{center}
-\end{figure}
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{figures/ResultTransientAnalysisCrop.PNG}
-\caption{Result of Transient Analysis}
-\label{fig:transAnalRes}
-\end{center}
-\end{figure}
-
 \end{document}

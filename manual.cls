@@ -16,6 +16,7 @@
 \RequirePackage{multirow}
 \RequirePackage{enumerate}
 \RequirePackage{graphicx}
+\RequirePackage{xcolor}
 \RequirePackage[american,straightlabels]{circuitikz}
 \RequirePackage{fancyhdr}
 \RequirePackage[explicit]{titlesec}
