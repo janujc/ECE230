@@ -103,7 +103,7 @@ At this point, you should have 4 saved Excel files:
 \end{itemize}
 
 \section{Exploration}
-The purpose of this exploration is to build a wireless signal transmitter using the knowledge of LEDs and Field-Effect Transistors you have gained in lab. The ultimate goal of this exploration is to build a simple electronic system that transmits music from a portable music player (e.g. MP3 player, CD player, radio), through a wireless channel using light. To do so, you will build a circuit that takes the electrical signal from a music player or function generator and changes the brightness of an LED with the sound of the music. A given receiver circuit using a phototransistor will take this light signal and convert it into sound. You lab TA will provide a receiver for testing your circuit. You can also build your own receiver using the circuit in Figure \ref{fig:rec}.
+The purpose of this exploration is to build a wireless signal transmitter using the knowledge of LEDs and Field-Effect Transistors you have gained in lab. The ultimate goal of this exploration is to build a simple electronic system that transmits music from a portable music player (e.g. MP3 player, CD player, radio), through a wireless channel using light. To do so, you will build a circuit that takes the electrical signal and changes the brightness of an LED with the sound of the music. A given receiver circuit using a phototransistor will take this light signal and convert it into sound. You lab TA will provide a receiver for testing your circuit. You can also build your own receiver using the circuit in Figure \ref{fig:rec}.
 
 \subsection{Music Transmitter}
 Equipment:
@@ -117,8 +117,6 @@ Equipment:
 \item Wire with headphone plug (x1)
 \item Battery snap for 9V battery (x1)
 \item \SI{9}{\volt} battery (x1)
-\item Breadboard (x1)
-\item Jumper wires (various)
 \end{itemize}
 
 Procedure:
@@ -170,6 +168,21 @@ LEDs, and current-limiting resistors from this lab and previous labs, determine 
 \item Once the circuit is working and the LED lights up, replace the red LED with an infrared LED. Now it is time to wirelessly transmit your optical signal and convert it back into sound.
 \end{enumerate}
 
+\newpage
+\subsection{Music Receiver}
+Equipment:
+\begin{itemize}
+\item \SI{10}{\micro\farad} capacitors (x3)
+\item Phototransistor (x1)
+\item LM 386 op-amp (x1)
+\item \SI{24}{\kilo\ohm} resistor (x1)
+\item Speaker (x1)
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+\item Build the receiver circuit outlined in Figure \ref{fig:rec}. Keep in mind that the IR LED from the transmitter you just built will need to be positioned about 1/2'' from the phototransistor in this receiver circuit. 
+\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
@@ -219,6 +232,21 @@ LEDs, and current-limiting resistors from this lab and previous labs, determine 
 \caption{Music Receiver Circuit}
 \label{fig:rec}
 \end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item To test the receiver circuit, use a standard TV remote control, if there is one in lab. Most TV remotes emits IR light to signal the control box. With the receiver circuit you just built, you can ``hear'' a TV remote control signal by converting it from IR at the remote to an audible signal at your receiver's speaker. Aim a TV remote at the phototransistor on your receiver circuit and listen for the signal. Different remotes will have different signal patterns.
+\item To improve the quality of your receiver circuit, add a capacitor between ground and power (this will act as a current reservoir, for the op-amp when it rails). Also note that the receiver draws more current than the transmitter so using the HP power supply may also improve quality.
+\end{enumerate}
+
+\subsection{Wireless Transmission and Reception}
+\begin{enumerate}
+\item Position the infrared LED from your working transmitter circuit such that it is pointing at and is about 1/2'' from the phototransistor of the music receiver that you just built.
+\item You should hear music coming out of the speaker in the receiver. If you do not hear any sound from the speaker, you will need to troubleshoot your IR music transmitter-receiver system.
+\item Once the wireless transmitter and receiver and working together, you can test the limits of your system by increasing or decreasing the signal volume with the volume control on your music device (or function generator), by adjusting the potentiometer in your transmitter circuit, and by varying the distance of the IR LED from the phototransistor. Audio quality may be limited by the quality of the speaker being used---some tones may be diminished or altered. You can also interrupt the signal with your hand by preventing IR light to transmit between transmitter and receiver. The presence of external light sources may also affect the sound quality. Lastly, the IR LED is not the only LED that will transmit light that the receiver picks up. You can use a colored LED to do the same job, although it may not do as good a job as the IR light does in sending a wireless signal to the phototransistor.
+\item Your TA also has a pre-built receiver circuit. Ask your lab TA to check your transmitter with this circuit before leaving lab.
+\end{enumerate}
+{\it Record all of the circuits built and testing done for this Exploration in your laboratory notebook. Be sure to clean-up your laboratory bench and turn off all equipment before leaving.}
 
 \newpage
 \section{Questions}
