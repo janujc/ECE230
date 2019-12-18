@@ -31,7 +31,7 @@ The objectives of this laboratory session are as follows:
 
 \section{Electrical Characterization of the MOSFET}
 
-The circuit used to measure the drain-current characteristics of the NMOSFET is shown in Figure \ref{fig:MOSTest}, below. 
+The circuit used to measure the drain-current characteristics of the NMOSFET is shown in Figure \ref{fig:MOSResTest}, below. 
 
 \begin{figure}[ht!]
 	\centering
@@ -53,7 +53,7 @@ The circuit used to measure the drain-current characteristics of the NMOSFET is 
 	\draw (-0.5,-2.5)	node[] {$-$};
 	\end{circuitikz}
 	\caption{Circuit used to characterize an NMOSFET}
-	\label{fig:MOSTest}
+	\label{fig:MOSResTest}
 \end{figure}
 
 Use LabVIEW on your laboratory workstation to obtain the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ of the BS170 silicon n-channel MOS field-effect transistor. In the MOSFET characterization under static conditions, the static gate current is zero and, consequently, there are no concerns about the difference between the gate-to-source voltage set in LabVIEW and the actual gate-to-source voltage. To obtain the NMOSFET characteristics, carry out the following steps:
@@ -103,17 +103,40 @@ At this point, you should have 4 saved Excel files:
 \end{itemize}
 
 \section{Exploration}
+The purpose of this exploration is to build a wireless signal transmitter using the knowledge of LEDs and Field-Effect Transistors you have gained in lab. The ultimate goal of this exploration is to build a simple electronic system that transmits music from a portable music player (e.g. MP3 player, CD player, radio), through a wireless channel using light. To do so, you will build a circuit that takes the electrical signal from a music player or function generator and changes the brightness of an LED with the sound of the music. A given receiver circuit using a phototransistor will take this light signal and convert it into sound. You lab TA will provide a receiver for testing your circuit. You can also build your own receiver using the circuit in Figure \ref{fig:rec}.
+
+\subsection{Music Transmitter}
+Equipment:
+\begin{itemize}
+\item \SI{100}{\ohm} resistors (x5)
+\item IR LED (Light Emitting Diode) (x1)
+\item Red LED (Light Emitting Diode) (x1)
+\item BS170 MOSFET (x1)
+\item \SI{50}{\kilo\ohm} Potentiometer (x1)
+\item \SI{47}{\nano\farad} Capacitor (x1)
+\item Wire with headphone plug (x1)
+\item Battery snap for 9V battery (x1)
+\item \SI{9}{\volt} battery (x1)
+\item Breadboard (x1)
+\item Jumper wires (various)
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+\item Build the circuit shown in Figure \ref{fig:mystery}. From your knowledge of MOSFETs,
+LEDs, and current-limiting resistors from this lab and previous labs, determine in which order these 3 circuit elements (i.e. a BS170 MOSFET, a Red LED, and \SI{100}{\ohm} resistor) should be connected to produce an LED whose brightness varies with the amplitude of the input music signal or function generator time-varying signal that will be attached to the 1/8? mini headphone jack. Think about how the BS170 MOSFET should be oriented (Drain and Source pins) in order to be properly biased to turn on when a voltage at the Gate is applied.
+\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
 \begin{circuitikz}
 \draw (0,0)		to[R, a=$R_4$] ++(0,3)
-				to[european potentiometer, a=$P_1$, name=P] ++(0,3)
+				to[pR, a=$P_1$, name=P] ++(0,3)
 				to[R, a=$R_3$] ++(0,3)
 				to[short, *-] ++(-12,0)
 				to[battery, l=$V_S$, a=\SI{9}{\volt}] ++(0,-9)
 				to[short, -*] ++(12,0);	
-\draw (3,6)		node[fourport, t=?, name=A] {};
+\draw (3,6)		node[fourport, t={\bf \Huge ?}, name=A] {};
 \draw (-8,0)	to[short, *-] ++(0, 1.5)
 				to[R, a=$R_1$] ++(0,3)
 				to[C, a=$C_1$, v^<=$~$] ++(3,0)
@@ -136,6 +159,66 @@ At this point, you should have 4 saved Excel files:
 \label{fig:mystery}
 \end{figure}
 
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Once you have devised a circuit topology for the 3 unknown elements in the above circuit, test the circuit using a red LED.
+\item If you are using a portable music player, such as an iPod, first listen to it through headphones and make sure it is producing loud and clear music or speech. (If you are using a function generator as the signal source, set it to produce a small signal output in the audible \SI{20}{\hertz} to \SI{20}{\kilo\hertz} range.)
+\item Plug the headphone jack into your device (or attach it carefully to the function generator with alligator clips) to produce the signal that will serve as the circuit input.
+\item Attach the wires from the headphone jack to your circuit where the {\tt 1/8'' mini plug} is indicated in the figure.
+\item Turn up the volume on your music player (or the amplitude of the function generator). Rotate the stem of the potentiometer on the transmitter circuit. The red LED should be on.
+\item If the LED is not on, your circuit may not be designed or wired properly. Immediately disconnect one of the battery snap leads from the breadboard of the transmitter. Troubleshoot your circuit as necessary by checking all connections with an oscilloscope or multimeter.
+\item Once the circuit is working and the LED lights up, replace the red LED with an infrared LED. Now it is time to wirelessly transmit your optical signal and convert it back into sound.
+\end{enumerate}
+
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\draw (0,0)		node[dipchip, num pins=8, hide numbers, external pins width=0, name=O] {};
+\draw (0,0) 	node[op amp, xscale=0.4, yscale=0.4, name=Amp] {};
+\node [right, font=\tiny] at (O.bpin 1) {1};
+\node [right, font=\tiny] at (O.bpin 4) {4};
+\node [left, font=\tiny] at (O.bpin 6) {6};
+\node [left, font=\tiny] at (O.bpin 7) {7};
+\node [left, font=\tiny] at (O.bpin 8) {8};
+\draw (O.bpin 2) -| (Amp.-);
+\draw (O.bpin 3) -| (Amp.+);
+\draw (Amp.out)	|- (O.bpin 5);
+\draw (O.pin 1)		to[short] ++(-0.5,0) 
+					to[short] ++(0,1.5) node[name=A] {}; 
+\draw(O.pin 8)		to[short] ++(0.5,0) 
+					to[short] ++(0,1.5) 
+					to[C, a=$C_2$, v^<=$~$] (A);
+\draw (O.pin 3)		to[short] ++(-1,0)
+					to[C, a=$C_1$, -*] ++(-3,0) node[name=B] {};
+\draw (O.pin 5)		to[short] ++(1,0)
+					to[C, l=$C_3$] ++(3,0)
+					to[loudspeaker, name=L] ++(0,-3) node[name=C] {};
+\node [left] at (L.south) {SPK};
+\draw (B)			to[R, a=$R_1$] ++(0,3) node[name=D] {}
+					to[short] ++(-3,0) node[name=E] {}
+					to[battery, l=$V_S$, a=\SI{9}{\volt}] (E |- C)
+					to[short] ++(3,0) node[name=F] {}
+					to[short] (C);
+\draw (O.pin 6)		to[short] ++(1,0)
+					to[short] ++(0,4) node[name=Z] {}
+					to[short] (Z -| D)
+					to[short, -*] (D);
+\draw (O.pin 2)		to[short] ++(-1,0) 
+					to[xing] ++(0,-1.115) node[name=G] {} 
+					to[short, -*] (G |- C);
+\draw (O.pin 4)		to[short] ++(-0.5,0) node[name=H] {}
+					to[short, -*] (H |- C);
+\draw ($(F)!0.5!(B)$) node[npn, photo, name=T] {};
+\draw (T.C)			to[short] (B);
+\draw (T.E) 		to[short, -*] (F);
+\draw ($(T) - (0.18,0)$) circle [radius=20pt];
+\node [right=2mm] at (T.nobase) {Q1};
+\node [waves, scale=0.7, right] at(L.north) {};
+\end{circuitikz}
+\caption{Music Receiver Circuit}
+\label{fig:rec}
+\end{figure}
 
 \newpage
 \section{Questions}
