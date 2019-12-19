@@ -13,6 +13,7 @@
 \RequirePackage{caption}
 \RequirePackage{moreverb}
 \RequirePackage{parskip}
+\RequirePackage{array}
 \RequirePackage{multirow}
 \RequirePackage{enumerate}
 \RequirePackage{graphicx}
