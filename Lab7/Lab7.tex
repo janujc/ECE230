@@ -38,8 +38,11 @@ The objectives of this laboratory session are as follows:
 \end{itemize}
 
 \newpage
-\section{Experimental Explorations}
-There are five possible explorations:
+\setcounter{section}{3}
+\phantomsection
+\addcontentsline{toc}{section}{\protect\numberline{\thesection} Experimental Explorations}
+\markboth{Experimental Explorations}{Experimental Explorations}
+
 \subsection{Thermal Effects on PN-Junction Diode \& MOSFET}
 \textit{To be completed in a group of 2 or 3.}
 \subsubsection*{PN-Junction Diode}
@@ -47,33 +50,36 @@ There are five possible explorations:
 \item Construct the following circuit on a breadboard:
 \end{enumerate}
 
-\def\coord(#1){coordinate(#1)}
-\def\coord(#1){node[circle, red, draw, inner sep=1pt,pin={[red, overlay, inner sep=0.5pt, font=\tiny, pin distance=0.1cm, pin edge={red, overlay,}]45:#1}](#1){}}
-
-\begin{myfigure}[label=fig:PNTest]{PN-Junction Diode Test Circuit}{PN-Junction Diode Test Circuit}
+\begin{figure}[ht!]
 \centering
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
+\begin{circuitikz}
 \draw
-(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
-(0,2)	to[R, l_=$R$]		++(2,0)
-		to[rmeter, t=A] ++(2,0)
-		to[D*, l_=$D$]		++(0,-2)
-		to[short]	++(-4,0)
+(0,3) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-3)
+(0,3)	to[R, l_=$R$]		++(3,0)
+		to[rmeter, t=A] ++(3,0)
+		to[D*, l_=$D$]		++(0,-3)
+		to[short]	++(-6,0)
 ;\end{circuitikz}
-\end{myfigure}
+\caption{PN-Junction Diode Test Circuit}
+\label{fig:PNTest}
+\end{figure}
 
 \begin{enumerate}
 \setcounter{enumi}{1}
 \item Run the {\tt singleloop.vi} script from 0 to 6 V with 100 steps. This produces $I_D(V_D)$.
 \item Repeat the above, but with a voltmeter over the diode, to measure $V_{PN}$. Combine the results to produce the graph $I_D(V_{PN})$.
 \item Now, obtain thermal paste from your TA and apply it to the diode. Obtain a soldering iron and heat it to its lowest setting. Apply the soldering iron to the diode to allow it to heat it.
-\item Repeat steps (1) -- (3), and compare the results.
+\item Repeat steps (2) and (3) and compare the results.
 \end{enumerate}
 
 \newpage
 \subsubsection*{MOSFET}
-\begin{myfigure}[label=fig:MOSTest]{Circuit used to characterize an NMOSFET}{Circuit used to characterize an NMOSFET}
+
+\begin{enumerate}
+\item Construct the following circuit on a breadboard:
+\end{enumerate}
+
+\begin{figure}[ht!]
 \centering
 \begin{circuitikz}[american]
 \draw (0,0) 	node[nigfete, solderdot](Q1) {};
@@ -82,7 +88,7 @@ There are five possible explorations:
 				to[R, l=$R_{DS}$, i<=$I_{DS}$, a=\SI{100}{\ohm}] ++(4,0)
 				to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
 				to[short] ++(-4,0);
-\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
+\draw (Q1.G)	to[short] ++(-3,0) node[name=VGS] {}
 				to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{GS}$] (VGS |- GND)
 				to[short] (0,-3);
 \draw (0.5,2.1)	node[] {$+$};
@@ -92,16 +98,33 @@ There are five possible explorations:
 \draw (-0.6, -1.6)	node[] {$V_{GS}$};
 \draw (-0.5,-2.5)	node[] {$-$};
 \end{circuitikz}
-\end{myfigure}
+\caption{Circuit Used to Characterize an NMOSFET}
+\label{fig:MOSTest}
+\end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Run the {\tt doubleloop.vi} script with an inner voltage $V_\mathrm{DS~Source}$ from 0 to \SI{6}{\volt} with 50 steps and outer voltage $V_\mathrm{GS~Source}$ from 2.0 to \SI{3.0}{\volt} with 5 steps. This produces $I_D(V_\mathrm{DS~Source})$.
+\item Obtain thermal paste from your TA and apply to the face of the NMOSFET. Heat the
+NMOSFET with a soldering iron on its lowest heat setting. Then, repeat step (2).
+\item Analyze the results.
+\end{enumerate}
+Present your findings for both the PN junction diode and the MOSFET under temperature to the class.
 
 \newpage
 \subsection{MOSFET Amplifier Gain and Load Limits}
+\textit{To be completed in a group of 2 or 3.}
+
+\begin{enumerate}
+\item Construct the following circuit on a breadboard:
+\end{enumerate}
+
 \begin{figure}[ht!]
 \centering
 \begin{circuitikz}
 \draw
 (0,0) node[nmos, arrowmos](nmos1){} 
-(nmos1.B) 	to[short] ++(-2,0) coordinate(p1) 
+(nmos1.B) 	to[short] ++(-2,0) node(p1){}
 			to[R, a=$R_2$, l=\SI{820}{\kilo\ohm}, *-*] ++(0,-3)  
 (p1) 		to[C, a=$C_1$, l=\SI{10}{\micro\farad}] ++(-3,0)
 			to[battery, a=$v_i(t)$] ++(0,-3) node(gndl){}
@@ -110,20 +133,28 @@ There are five possible explorations:
 (nmos1.E) 	to[short] ++(3,0) 
 			to[C, a=$C_2$, l=\SI{10}{\micro\farad}] (3,-3) node(gndr){}
 			to[short] (gndl)
-(nmos1.C) 	to[short, -o] ++(3,0) node[right]{$v_o(t)$}
+(nmos1.C) 	to[short, *-o] ++(3,0) node[right]{$v_o(t)$}
 (nmos1.C) 	to[R, l=$R_3$, a=\SI{680}{\ohm}] (nmos1.C |- pwrl) node(pwrr){}
 			to[short] (pwrl)
-($(pwrl)!0.5!(pwrr)$) to[short, *-o] ++(0,1) node[above=2mm] {\SI{15}{\volt}}
+($(pwrl)!0.5!(pwrr)$) to[short, *-o] ++(0,0.5) node[above] {\SI{15}{\volt}}
 ($(gndl)!0.5!(gndr)$) node[ground] {}
 ;\end{circuitikz}
 \end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Set $v_i(t)$ to be a $\SI{100}{\milli\volt}_\mathrm{pp}$, \SI{50}{\kilo\hertz} sinusoid. 
+\item Carefully measure and record $v_o(t)$ (both AC and DC components).
+\item Based on this measurement only, determine the AC voltage gain of this amplifier.
+\item Now, attach the following load to the amplifier output. Carefully measure and record the total output voltage $v_o(t)$.
+\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
 \begin{circuitikz}
 \draw
 (0,0) node[nmos, arrowmos](nmos1){} 
-(nmos1.B) 	to[short] ++(-2,0) coordinate(p1) 
+(nmos1.B) 	to[short] ++(-2,0) node[](p1){} 
 			to[R, a=$R_2$, l=\SI{820}{\kilo\ohm}, *-*] ++(0,-3)  
 (p1) 		to[C, a=$C_1$, l=\SI{10}{\micro\farad}] ++(-3,0)
 			to[battery, a=$v_i(t)$] ++(0,-3) node(gndl){}
@@ -131,45 +162,150 @@ There are five possible explorations:
 (nmos1.E) 	to[R, a=$R_4$, l=\SI{270}{\ohm}, *-*] (0,-3)
 (nmos1.E) 	to[short] ++(3,0) 
 			to[C, a=$C_2$, l=\SI{10}{\micro\farad}, -*] (3,-3) node(gndr){}
-(nmos1.C) 	to[short, -*] ++(6,0) node(vout) {}
+(nmos1.C) 	to[short, *-*] ++(6,0) node(vout) {}
 			to[C, a=$C_L$] ++ (0,-1.5)
 			to[R, a=$R_L$] (6,-3)
 			to[short] (gndl)
 (vout)		to[short, -o] ++(1,0) node[right]{$v_o(t)$}
 (nmos1.C) 	to[R, l=$R_3$, a=\SI{680}{\ohm}] (nmos1.C |- pwrl) node(pwrr){}
 			to[short] (pwrl)
-($(pwrl)!0.5!(pwrr)$) to[short, *-o] ++(0,1) node[above=2mm] {\SI{15}{\volt}}
+($(pwrl)!0.5!(pwrr)$) to[short, *-o] ++(0,0.5) node[above] {\SI{15}{\volt}}
 ($(gndl)!0.5!(gndr)$) node[ground] {}
 ;\end{circuitikz}
 \end{figure}
 
+\begin{enumerate}
+\setcounter{enumi}{5}
+\item Now attach the following load to the amplifier output. In the first instance, CL and RL equals \SI{1}{\micro\F} and \SI{100}{\ohm}. Carefully measure and record the total output voltage vout.
+\item Based on this measurement only, determine the voltage gain Vout/Vin with this output load applied.
+\item Now increase the magnitude of input Vin until Vout is severely distorted (i.e. both the top and bottom of the sinewave are clipped). Carefully measure and record the output Vout (both AC and DC components).
+\item Repeat iv-vii for $C_L$ and $R_L$ equals \SI{10}{\micro\F} and \SI{680}{\ohm}, and for $C_L$ and $R_L$ equals \SI{47}{\micro\F} and \SI{10}{\kilo\ohm}.
+\end{enumerate}
+{\it At what voltage values did the output signal clip, and why?}
+
+{\it Comment on the effect of a capacitive load on this circuit.}
+
+{\it Comment on the effect of increasing the magnitude of the input voltage on the circuit.}
+
+{\it Comment on the effect of increasing the capacitive load values.}
+
+Present your findings to the class.
+
+\newpage
 \subsection{MOSFET Input and Output Resistance}
+\textit{To be completed in a group of 2.}
 
-\subsection{MOSFET Inverter maximum clock frequency with external capacitive load}
+The Inverter circuit from Lab 6 is often referred to as a Buffer circuit. One of the benefits of using a MOSFET between stages of a system is that the MOSFET has a very high input resistance and a very low output resistance. A high input resistance means that not much current enters into the device; a low output resistance means that the device does not affect the loading of the system it is attached to. A MOSFET Buffer, as in Lab 6, has both of these advantages. Hence, in a system, it can ``buffer'' the stages from one other so that the stages acts more or less independently of one another.
 
-\subsection{Zener diode (Reverse breakdown)}
+\begin{enumerate}
+\item For the MOSFET Inverter from Lab 6, devise a way to determine the input resistance and the output resistance of the circuit (note that the input and output resistances can be modeled as the Th\'evenin equivalent resistances at the input and output terminals, respectively).
+
+\item Conduct your experiment by measuring input and output voltages and currents, respectively. (Hint: Apply Ohm's Law to determine resistance from current and voltage measurements.)
+
+{\it What is the input resistance of the MOSFET buffer?}
+
+{\it What is the output resistance?}
+
+\item Now, explore what might change the input and output resistance values the most in this MOSFET Inverter circuit. What you explore as a group is up to you. As suggestions, the source resistor value might be changed, or the voltage supplied to the Inverter circuit could be changed, perhaps what effect adding a load resistor from source to ground has on the input and output.
+
+\item Repeat steps (1) -- (3) in PSpice.
+\end{enumerate}
+
+Present your findings to the class.
+
+\newpage
+\subsection{MOSFET Inverter Maximum Clock Frequency}
+\textit{To be completed in a group of 2 or 3.}
+
+The purpose of this experiment is to determine the effect of capacitance at the output on the maximum achievable inverter clock frequency.
+
+\begin{enumerate}
+\item Build the inverter circuit from Lab 6, shown below.
+\end{enumerate}
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[american]
+\draw (0,0)		node[nigfete, solderdot, name=N]{};
+\ctikzset{diodes/scale=0.3}
+\draw ($(N.S) + (0,0.2)$) to[short,*-] ++(0.5,0)
+			to[zzD*] ++(0,1.15)
+			to[short, -*] ++(-0.5,0);
+\draw (N) circle [radius=25pt];
+\draw ($(N) + (0.9,0)$) node[right] {BS170};
+\draw (N.S)	to[short] ++(0,-0.5) node[ground,  below] {};
+\draw (N.D) to[short, -*] ++(0,0.5) node[name=A] {}
+			to[short, -o] ++(1.5,0) node[right] {B};
+\draw (A) 	to[R, l=$R_L$, a=\SI{240}{\kilo\ohm}] ++(0,2) node[vdd] {$V_\mathrm{DD}$};
+\draw (N.G) to[short, -o] ++(-1,0) node[left] {A};
+\end{circuitikz}
+\caption{Discrete Diode Implementation Of Inverter Circuit}
+\label{fig:NOT}
+\end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Input a slow \SI{100}{\hertz}, $\SI{2}{\volt}_\mathrm{pp}$ square wave at the gate of the MOSFET and observe the output. It should look square and should be inverted from the input waveform.
+\item Increase the input square wave frequency until the output waveform is degraded. (Justify how you define a degraded square wave output. Consider whether a digital switching circuit could use the output waveform as a reliable input source.)
+\item Add a small capacitance (\SI{10}{\nano\F}) to the inverter output from the drain to the ground and repeat step (2).
+\item  Now, continue to replace capacitors at the output and repeat step (2), above. Repeat
+with \SI{0.1}{\micro\F}, \SI{1}{\micro\F}, \SI{10}{\micro\F}, and \SI{47}{\micro\F}.
+\item Plot the frequency of the input waveform where the output was considered to be
+degraded (this is the maximum output frequency f$_\mathrm{max}$) vs. capacitance.
+\end{enumerate}
+
+{\it What can you conclude from your plot?}
+
+{\it How does maximum clock frequency relate to load capacitance? Why might this be important in applications?}
+
+Present your results to the class.
+
+\newpage
+\subsection{Zener Diode (Reverse breakdown)}
+\textit{To be completed in a group of 2.}
+
+One of the parameters that was not measured in Lab 2 was the reverse breakdown voltage of a diode. This is because most diodes have very large reverse bias breakdown voltages, on the order of 100's of Volts. However, some diodes are specifically manufactured to be used in the reverse bias breakdown region. These diodes are called Zener diodes.
+
+{\bf Warning}: Diodes can get hot when supplying a forward bias to them.
+
+The purpose of this experiment is to showcase the use of Reverse breakdown in a practical circuits and to show a circuit using the Zener diode to demonstrate voltage clamping.
+
+\begin{enumerate}
+\item Simulate the following circuit in PSpice using a \SI{5.5}{\volt} Zener diode found in the standard PSpice parts library, a \SI{6}{\volt} DC source, and a \SI{100}{\ohm} resistor.
+\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
+\begin{circuitikz}
 \draw
-(0,2) 	to[battery, l^=$V$, i=$i_D$] ++(0,-2)
-		to[short] ++(2,0) node(bot) {}
-		to[zzDo, a=$D$, *-*] ++(0,2) 
-(0,2)	to[R, l_=$R$] ++(2,0) node(top) {}
-		to[short, -o] ++(1.5,0) node[below=2mm] {$+$}
-(bot)	to[short, -o] ++(1.5,0) node[above=2mm] {$-$}
-($(top)!0.5!(bot)$) node[right=20mm] {$V_{\mathrm{out}} = V_z$}
+(0,3) 	to[battery, l^=$V$, i=$i_D$] ++(0,-3)
+		to[short] ++(3,0) node(bot) {}
+		to[zzDo, a=$D$, *-*] ++(0,3) 
+(0,3)	to[R, l_=$R$] ++(3,0) node(top) {}
+		to[short, -o] ++(2,0) node[below=2mm] {$+$}
+(bot)	to[short, -o] ++(2,0) node[above=2mm] {$-$}
+($(top)!0.5!(bot)$) node[right=15mm] {$V_{\mathrm{out}} = V_z$}
 ;\end{circuitikz}
+\caption{Zener Diode Circuit}
+\label{fig:Z}
 \end{figure}
-%____________________________________________________________________________
-%
-%	GRADING RUBRIC
-%____________________________________________________________________________
-\newpage
-\phantomsection % needed in order to link from table of contents to here
-\section*{Grading Rubric}
-\addcontentsline{toc}{section}{Grading Rubric} % adds section*{} to table of contents
-\markboth{Grading Rubric}{Grading Rubric}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Verify in simulation that the output voltage, $V_\mathrm{out}$ is \SI{5.5}{\volt}. Where is the remaining \SI{0.5}{\volt} voltage drop going?
+\item Verify the current, $i_D$, through the resistor. Is this value what you expect? Why?
+\item Build the circuit in Figure \ref{fig:Z} on a breadboard. There are Zener diodes in the parts bin.
+\item Attach the \SI{6}{\volt} output source to the circuit. Supply \SI{0}{\volt} and measure $V_\mathrm{out}$.
+\item Now, increase the DC voltage up to \SI{6}{\volt}.
+\item Measure the output voltage again.
+\item Repeat steps (2) -- (4), but measure current.
+
+{\it What can you conclude about the Zener diode? How might this be of practical use in an application?}
+
+\item Now, using the {\tt singleloop.vi} script, create a plot of the Zener diode V-I curve. Be sure to take both forward biased and negative biased measurements of the Zener diode to show turn-on voltage, V-I characteristics, and reverse breakdown.
+
+{\it What differences do you notice about the Zener diode as compared to the PN junction diode observed in Lab 2?}
+\end{enumerate}
+
+Present your findings to the class.
+
 \end{document}

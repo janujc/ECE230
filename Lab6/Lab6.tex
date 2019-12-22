@@ -23,11 +23,9 @@
 \section{Objectives of this Laboratory}
 The objectives of this laboratory session are as follows:
 \begin{itemize}
-\item Measure the static and switching characteristics of discrete (transistors, resistors, and
-capacitors) MOS inverter circuits,
-\item Determine experimentally the truth tables of CMOS integrated-circuit gates,
+\item Measure the static and switching characteristics of discrete (transistors, resistors, and capacitors) MOS inverter circuits,
 \item Measure the static voltage-transfer characteristics of CMOS NOR and NAND gates,
-and
+\item Determine experimentally the truth tables of CMOS integrated-circuit gates, and
 \item Measure the switching characteristics of CMOS NOR and NAND gates
 \end{itemize}
 
@@ -122,8 +120,7 @@ An inverting function cannot be implemented with diodes and resistors alone. A t
 \begin{circuitikz}[american]
 \draw (0,0)		node[nigfete, solderdot, name=N]{};
 \ctikzset{diodes/scale=0.3}
-\draw (N.S)	to[short] ++(0,0.2)
-			to[short,*-] ++(0.5,0)
+\draw ($(N.S) + (0,0.2)$) to[short,*-] ++(0.5,0)
 			to[zzD*] ++(0,1.15)
 			to[short, -*] ++(-0.5,0);
 \draw (N) circle [radius=25pt];
@@ -227,10 +224,10 @@ The output of the Ring Oscillator should be a square wave of amplitude 0 to VDD.
 \end{enumerate}
 
 \newpage
-\subsection{(Optional) Debounce Switch or SR Latch}
+\subsection{(Optional) Debounced Switcht}
 In many applications, especially in digital circuits, you need a manual switch to
 set the logic state at some point in the circuit. The issue is that switch can often
-?bounce? upon actuation. A bouncy switch is one that produces multiple
+``bounce'' upon actuation. A bouncy switch is one that produces multiple
 switching operations in a single button press. This leads to a rapid series of
 alternating logic states for a few milliseconds while the switch contact is
 stabilizing. The bounce is due to inductive ringing rather than mechanical
@@ -245,6 +242,22 @@ assume that the signal has been latched successfully.
 toggled ``On.'' Capture an occurrence of the switch bouncing phenomenon on the oscilloscope screen and save it.
 \end{enumerate}
 
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[american]
+\draw (0,0)		node[cute spdt down arrow, rotate=90, name=A] {};
+\draw (A.in)	node[ground, below] {};
+\draw (A.out 1)	to[short, -*] ++(-1,0) node[name=B] {}
+				to[R, l=$R_1$, a=\SI{1}{\kilo\ohm}] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
+\draw (B)		to[short] (B |- A.in) node[ground, below] {};
+\draw (A.out 2)	to[short, -o] ++(3,0) node[right] {Out};
+\draw ($(A.out 2) + (1,0)$) to[R, l=$R_2$, a=\SI{1}{\kilo\ohm}, *-] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
+\end{circuitikz}
+\caption{Simple Double-Pole Single-Throw (DPST) Switch}
+\label{fig:DPST}
+\end{figure}
+
+\newpage
 The issue of switch bounce can be corrected through the use of a pair of NAND
 gates.
 
@@ -255,7 +268,29 @@ gates, build the circuit shown in Figure \ref{fig:modDPST}.
 Capture an occurrence of the switching phenomenon for this circuit on the ?scope screen and save it.
 \end{enumerate}
 
-
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[american]
+\draw (0,0)		node[cute spdt down arrow, rotate=90, name=A] {};
+\draw (4,-3)	node[american nand port, name=C] {};
+\draw (4,0.074)	node[american nand port, name=D] {};
+\draw (A.in)	node[ground, below] {};
+\draw (A.out 1)	to[short, -*] ++(-1,0) node[name=B] {}
+				to[R, l=$R_1$, a=\SI{1}{\kilo\ohm}] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
+\draw (B)		to[short] (B |- C.in 2)
+				to[short] (C.in 2);
+\draw (A.out 2)	to[short] (D.in 1);
+\draw ($(A.out 2) + (1,0)$) to[R, l=$R_2$, a=\SI{1}{\kilo\ohm}, *-] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
+\draw (C.out)	to[short] ++(0.5,0)
+				to[short] ++(0,1)
+				to[short] ++(-3,1) |- (D.in 2);	
+\draw (D.out)	to[short, -o] ++(2,0) node[right] {Out};
+\draw ($(D.out) + (0.5,0)$) to[short, *-] ++(0,-1)
+				to[short] ++(-3,-1) |- (C.in 1);
+\end{circuitikz}
+\caption{Debounced Switch Using 2 NAND Gates (SR Latch)}
+\label{fig:modDPST}
+\end{figure}
 
 \newpage
 \section{IC CMOS NOT, NOR, and NAND Gates}
@@ -274,7 +309,7 @@ The latch is the most basic memory element in digital electronics, but it is sel
 \centering
 \begin{circuitikz}[american]
 \draw (0,0)		node[american and port, name=A] {};
-\draw (0,3.5)		node[american and port, name=B] {};
+\draw (0,3.5)	node[american and port, name=B] {};
 \draw (3,0.28)	node[american nor port, name=C] {};
 \draw (3,3.22)	node[american nor port, name=D] {};
 \draw (A.in 2)	to[short, -o] ++(-2,0) node[left] {$S$};
@@ -310,22 +345,22 @@ The latch is the most basic memory element in digital electronics, but it is sel
 \hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 3 Grading Rubric}
+\caption{ECE 230L Laboratory 6 Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
 \textbf{Diode OR Gate}			& \textbf{10} \\
-Circuit Diagram 				& 1 \\
-Truth Table Verified			& 3 \\
+Circuit Diagram 				& 2 \\
+Truth Table Verified			& 2 \\
 Variable diode drop values given for different diodes & 3 \\
 Justification of whether circuit is ``better'' & 3 \\ \hline
 \textbf{Diode AND Gate}			& \textbf{8} \\
 Circuit Diagram 				& 2 \\
 Truth Table Verified			& 3 \\
 Diode Drop Value Noted			& 3 \\ \hline
-\textbf{Discrete MOS Inverter Circuit}		& \textbf{65} \\
+\textbf{Discrete MOS Inverter Circuit}		& \textbf{49} \\
 Circuit Diagram 				& 2 \\
-Truth Table Verified			& 3 \\
+Truth Table Verified			& 2 \\
 Voltage Lost Across Circuit 	& 3 \\
 $V_\mathrm{OL}$ from V-V {\tt singleloop.vi} graph 	& 5 \\
 $V_\mathrm{OH}$ from V-V {\tt singleloop.vi} graph	& 5 \\
@@ -346,7 +381,7 @@ Ring Oscillator Circuit Diagram & 3 \\
 Period of oscillator for N inverters & 3 \\
 Period of oscillator for 1 inverter & 3 \\ \hline
 {\bf Quality of thought/analysis} & {\bf 5} \\ \hline \hline
-{\bf Total}						& {\bf 100} \\ \hline
+{\bf Total}						& {\bf 84} \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
