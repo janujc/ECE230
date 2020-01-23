@@ -4,7 +4,7 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 1}{Fall 2019}
+\makeheader{Lab 1}{Duke University}
 \begin{center}
 \textbf{\huge ECE 230L - LAB 1}\\~\\
 \textbf{\large LABORATORY ORIENTATION, OPERATION OF DIGITAL INSTRUMENTS, AND BASIC MEASUREMENTS }\\~\\
@@ -261,10 +261,20 @@ As you can see in Figure \ref{fig:oscdifcomp}, when compensating the probe using
 \item Look up the internal resistances for both the voltmeter and ammeter capabilities for the Agilent 34410A Digital Multimeter used in lab. How do these values compare to the internal resistances you measured in section 3.1? Give percent errors.
 \item In section 3.3, you compensated the oscilloscope probe on the Agilent DSOX1102G oscilloscope at your laboratory bench.  Making the assumption that the 10x scope probe has a 9 M$\Omega$ series impedance (i.e. you can ignore any small probe tip capacitance), determine the maximum value of $C_{\mathrm{comp}}$ from your measurement of $\tau$, the time constant.  Report two $C_{\mathrm{comp}}$ values---one determined when the oscilloscope probe was fully under-compensated and one when the oscilloscope probe was full over-compensated.  Include in your assignment the oscilloscope waveforms you used to determine $\tau$. 
 \end{enumerate}
-
-Submit the answers to these questions along with all of the other below-listed items in the rubric in your Lab 1 write-up. 
+Submit the answers to these questions along with an extension and all of the other below-listed items in the rubric in your Lab 1 write-up in order to receive all possible points. 
 
 \textit{Laboratory Notebooks:  There is no laboratory notebook requirement in ECE 230L, however, the use of a notebook for recording work performed in the laboratory is a very good practice and one that is encouraged.  Tips and pointers on how to maintain an excellent laboratory notebook are available on the lab site or can be obtained by speaking with your TA or instructor. It is a great idea to add comments and notes to your notebook before leaving lab---this is best done while the work is fresh in your mind!}
+\newpage
+\section{Extension}
+To earn up to an additional 7 points (bringing the total possible points up to 100), you must show evidence of independent thought. This may include (but is not limited to):
+\begin{itemize}
+\item The oscilloscopes provided in the ECE 230L laboratory are high quality, expensive, state of the art devices.  However, there are even more expensive ‘scopes available.  What parameters make for a better oscilloscope and why?  Consider in particular sampling rate, speed, MHz, …
+\item When would a compensated probe be necessary when measuring time-varying waveforms?  Give extreme cases and explain how an undercompensated and overcompensated probe would adversely affect the measurement.
+\item Explain in circuit-level detail the functioning of the 10x, \SI{100}{\mega\ohm}, compensated oscilloscope probe.  Be sure to show measured signal, signal output, and the effect of the \SI{100}{\mega\ohm}.  Mention the internal capacitor and why compensation is necessary.
+\item Explore in depth another question that piqued your interest as you completed this laboratory.
+\end{itemize}
+The number of additional points awarded depends on the quality and extent of your independent contribution.
+
 %____________________________________________________________________________
 %
 %	Grading Rubric
@@ -280,26 +290,26 @@ Submit the answers to these questions along with all of the other below-listed i
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{Internal Resistance of a voltmeter}					& \multirow{4}{*}{\textbf{7}} \\
+\textbf{Internal Resistance of a Voltmeter}					& \multirow{4}{*}{\textbf{10}} \\
 Circuit Diagram												& \\
 Actual measurements for $V_M, V_S$, and $R$					& \\
 Equation and $R_M$ value									& \\ \hline
-\textbf{Ideal vs. Practical DC Ammeter}						& \multirow{4}{*}{\textbf{7}} \\
+\textbf{Ideal vs. Practical DC Ammeter}						& \multirow{4}{*}{\textbf{10}} \\
 Circuit Diagram												& \\
 Actual measurements for $V_M, V_S,$ and $R$					& \\
 Equation and $R_M$ value									& \\ \hline
-\textbf{Measurements of time-dependent sources}				& \multirow{3}{*}{\textbf{6}} \\
+\textbf{Measurements of Time-Dependent Sources}				& \multirow{3}{*}{\textbf{5}} \\
 Observed width of the waveform and its edges				& \\ 
 Image of waveform 											& \\ \hline
-\textbf{Oscilloscope probe calibration}						& \multirow{2}{*}{\textbf{5}} \\ 
+\textbf{Oscilloscope Probe Calibration}						& \multirow{2}{*}{\textbf{5}} \\ 
 Observations plus any measurements taken					& \\ \hline
 \textbf{Question 1}											& \textbf{15} \\ \hline
 \textbf{Question 2}											& \textbf{15} \\ \hline
 \textbf{Question 3}											& \textbf{15} \\ \hline
 \textbf{Question 4}											& \textbf{15} \\ \hline
-\textbf{Quality of thought/analysis}						& \textbf{15} \\ \hline
-\textbf{Lab Station left in proper order}					& \textbf{5} \\ \hline \hline
-\textbf{Total}												& \textbf{105} \\ \hline
+\textbf{Extension}											& \textbf{7} \\ \hline
+\textbf{Lab Left in Proper Order}							& \textbf{3} \\ \hline
+\textbf{Total}												& \textbf{100} \\ \hline
 \end{tabular}
 \end{table}
 \vfill
