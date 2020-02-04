@@ -29,7 +29,7 @@ The objectives of this laboratory session are as follows:
 \end{itemize}
 
 \section{ECE 230L Laboratory Introduction}
-In this section of the lab, you will familiarize yourself with the laboratory test and measurement equipment available in the ECE 230L Microelectronis Devices and Circuits laboratory.  Take a few minutes to look over the bench and its equipment and read the descriptions that follow to get acquainted with the devices you will be using all semester in lab. The benches include the following instruments:
+In this section of the lab, you will familiarize yourself with the laboratory test and measurement equipment available in the ECE 230L Microelectronic Devices and Circuits laboratory.  Take a few minutes to look over the bench and its equipment and read the descriptions that follow to get acquainted with the devices you will be using all semester in lab. The benches include the following instruments:
 \begin{itemize}
 \item Agilent E3611A DC Power Supply, 
 \item Agilent E3631A Triple Output DC Power Supply, 
@@ -103,11 +103,13 @@ To determine the internal resistance of the voltmeter, set up a circuit as shown
 \begin{circuitikz}[american, scale=1.5]
 \ctikzset{resistors/scale=1.5, batteries/scale=1.5, instruments/scale=1.5}
 \draw 
-(0,0) -- ++(-1,0) node[currarrow, rotate=180]{} 
-to [resistor, l_=\SI{1}{M\ohm}] ++(-3,0)
+(0,0) to [resistor, l_=\SI{1}{M\ohm}, *-] ++(-3,0)
 to [battery, l_=\SI{10}{V}] ++(0,-2)
-to ++(3,0) node[currarrow, rotate=180]{} -- ++(1,0)
+to [short, -*] ++(3,0)
+(0.25,-2) node[currarrow, rotate=180]{}
+to [short] ++(0.75,0)
 to [rmeter, t=V] ++(0,2)
+to [short] ++(-0.75,0) node[currarrow, rotate=180]{}
 ;\end{circuitikz}
 \caption[Circuit used to measure internal resistance of voltmeter]{Circuit used to measure the internal resistance $R_M$ of the voltmeter}
 \label{fig:voltcirc}
@@ -253,6 +255,8 @@ Now, we can measure $\tau$ for both an under- and over-compensated scope. We do 
 
 As you can see in Figure \ref{fig:oscdifcomp}, when compensating the probe using the oscilloscope's reference signal, you can have either overshoot or undershoot on the square wave. You can attach the probe tip to the probe compensation terminal and connect the probe to an input of the scope. Viewing the square wave reference signal, make the proper adjustments on the probe using a small screw driver so that the square waves on the scope screen look square. What you are adjusting is a variable capacitor at the tip of the probe. If low-frequency adjustment is not properly made, this will result in high-frequency inaccuracies in your measurements.  It's very important to make sure this compensation capacitor is correctly adjusted.
 
+Before you leave, please be sure to \textbf{clean up} the lab station where you worked, putting away all components, wires, probes, and cables as you found them. Also remember to turn off all the equipment you used. There are lab sections that follow you. Please be courteous in your practices.
+
 \newpage
 \section{Questions}
 \begin{enumerate}
@@ -290,25 +294,27 @@ The number of additional points awarded depends on the quality and extent of you
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{Internal Resistance of a Voltmeter}					& \multirow{4}{*}{\textbf{10}} \\
-Circuit Diagram												& \\
-Actual measurements for $V_M, V_S$, and $R$					& \\
-Equation and $R_M$ value									& \\ \hline
-\textbf{Ideal vs. Practical DC Ammeter}						& \multirow{4}{*}{\textbf{10}} \\
-Circuit Diagram												& \\
-Actual measurements for $V_M, V_S,$ and $R$					& \\
-Equation and $R_M$ value									& \\ \hline
-\textbf{Measurements of Time-Dependent Sources}				& \multirow{3}{*}{\textbf{5}} \\
-Observed width of the waveform and its edges				& \\ 
-Image of waveform 											& \\ \hline
-\textbf{Oscilloscope Probe Calibration}						& \multirow{2}{*}{\textbf{5}} \\ 
-Observations plus any measurements taken					& \\ \hline
-\textbf{Question 1}											& \textbf{15} \\ \hline
-\textbf{Question 2}											& \textbf{15} \\ \hline
-\textbf{Question 3}											& \textbf{15} \\ \hline
-\textbf{Question 4}											& \textbf{15} \\ \hline
+\textbf{Internal Resistance of a Voltmeter}					& \textbf{12} \\
+Circuit Diagram												& 4 \\
+Actual measurements for $V_M, V_S$, and $R$					& 4 \\
+Equation and $R_M$ value									& 4 \\ \hline
+\textbf{Ideal vs. Practical DC Ammeter}						& \textbf{12} \\
+Circuit Diagram												& 4 \\
+Actual measurements for $V_M, V_S,$ and $R$					& 4 \\
+Equation and $R_M$ value									& 4 \\ \hline
+\textbf{Measurements of Time-Dependent Sources}				& \textbf{6} \\
+Observed width of the waveform and its edges				& 3 \\
+Image of waveform 											& 3 \\ \hline
+\textbf{Oscilloscope Probe Calibration}						& \textbf{15} \\
+Measurement of $\tau$										& 12 \\
+Evidence of Over-Compensated								& 1 \\
+Evidence of Well-Compensated								& 1 \\
+Evidence of Under-Compensated								& 1 \\ \hline
+\textbf{Question 1}											& \textbf{12} \\ \hline
+\textbf{Question 2}											& \textbf{12} \\ \hline
+\textbf{Question 3}											& \textbf{12} \\ \hline
+\textbf{Question 4}											& \textbf{12} \\ \hline
 \textbf{Extension}											& \textbf{7} \\ \hline
-\textbf{Lab Left in Proper Order}							& \textbf{3} \\ \hline
 \textbf{Total}												& \textbf{100} \\ \hline
 \end{tabular}
 \end{table}
