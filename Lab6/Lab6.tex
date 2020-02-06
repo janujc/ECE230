@@ -4,9 +4,9 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 6}{Fall 2019} % Change Semester and Year as needed
+\makeheader{Lab 5}{Fall 2019} % Change Semester and Year as needed
 \begin{center}
-\textbf{\huge ECE 230L - LAB 6}\\~\\
+\textbf{\huge ECE 230L - LAB 5}\\~\\
 \textbf{\large BASIC DIGITAL CIRCUITS}\\~\\
 \rule{6.5in}{0.5mm}\\
 \end{center}
@@ -23,9 +23,11 @@
 \section{Objectives of this Laboratory}
 The objectives of this laboratory session are as follows:
 \begin{itemize}
-\item Measure the static and switching characteristics of discrete (transistors, resistors, and capacitors) MOS inverter circuits,
+\item Measure the static and switching characteristics of discrete (transistors, resistors, and
+capacitors) MOS inverter circuits,
+\item Determine experimentally the truth tables of CMOS integrated-circuit gates,
 \item Measure the static voltage-transfer characteristics of CMOS NOR and NAND gates,
-\item Determine experimentally the truth tables of CMOS integrated-circuit gates, and
+and
 \item Measure the switching characteristics of CMOS NOR and NAND gates
 \end{itemize}
 
@@ -120,7 +122,8 @@ An inverting function cannot be implemented with diodes and resistors alone. A t
 \begin{circuitikz}[american]
 \draw (0,0)		node[nigfete, solderdot, name=N]{};
 \ctikzset{diodes/scale=0.3}
-\draw ($(N.S) + (0,0.2)$) to[short,*-] ++(0.5,0)
+\draw (N.S)	to[short] ++(0,0.2)
+			to[short,*-] ++(0.5,0)
 			to[zzD*] ++(0,1.15)
 			to[short, -*] ++(-0.5,0);
 \draw (N) circle [radius=25pt];
@@ -163,12 +166,6 @@ input frequency of the square wave keeping the maximum input voltage equal to VP
 as possible.
 \end{enumerate}
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=0.7\textwidth]{staticCharInv.png}
-\caption{Static Voltage Characteristics of Inverter Circuit}
-\end{figure}
-
 \newpage
 \section{Exploration}
 In this exploration, you will use what you have learned about discrete logic circuits to complete the following:
@@ -193,7 +190,6 @@ Using a combination of the AND and NOT gates built above, build a discrete NAND 
 \label{fig:NAND}
 \end{figure}
 
-\newpage
 \subsection{Ring Oscillator}
 The propagation delay of a switching circuit is a measure of the maximum speed or minimum time
 for an input change to pass to the device?s output. Measurements in this mode are made by setting
@@ -229,11 +225,10 @@ The output of the Ring Oscillator should be a square wave of amplitude 0 to VDD.
 \item The transition or propagation time for one gate in this ring oscillator is one-third of the observed period when 3 inverters are used. Determine the transition time of one of the inverters built by dividing the total transition time by 3. (More accurate transition times can be obtained by using additional odd numbers of inverters for this measurement.)
 \end{enumerate}
 
-\newpage
-\subsection{(Optional) Debounced Switch}
+\subsection{(Optional) Debounce Switch or SR Latch}
 In many applications, especially in digital circuits, you need a manual switch to
 set the logic state at some point in the circuit. The issue is that switch can often
-``bounce'' upon actuation. A bouncy switch is one that produces multiple
+?bounce? upon actuation. A bouncy switch is one that produces multiple
 switching operations in a single button press. This leads to a rapid series of
 alternating logic states for a few milliseconds while the switch contact is
 stabilizing. The bounce is due to inductive ringing rather than mechanical
@@ -241,106 +236,9 @@ toggling. We use an SR latch to debounce the switch in hardware by latching
 the state of the switch as a digital signal. Once the ringing stops, we can safely
 assume that the signal has been latched successfully.
 
-\begin{enumerate}
-\item Place a double-pole single-throw switch on a breadboard.
-\item Construct the circuit shown in Figure \ref{fig:DPST} and power it with $+\SI{5}{\volt}$.
-\item Observe the switch output on an oscilloscope when the input switch is
-toggled ``On.'' Capture an occurrence of the switch bouncing phenomenon on the oscilloscope screen and save it.
-\end{enumerate}
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}[american]
-\draw (0,0)		node[cute spdt down arrow, rotate=90, name=A] {};
-\draw (A.in)	node[ground, below] {};
-\draw (A.out 1)	to[short, -*] ++(-1,0) node[name=B] {}
-				to[R, l=$R_1$, a=\SI{1}{\kilo\ohm}] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
-\draw (B)		to[short] (B |- A.in) node[ground, below] {};
-\draw (A.out 2)	to[short, -o] ++(3,0) node[right] {Out};
-\draw ($(A.out 2) + (1,0)$) to[R, l=$R_2$, a=\SI{1}{\kilo\ohm}, *-] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
-\end{circuitikz}
-\caption{Simple Double-Pole Single-Throw (DPST) Switch}
-\label{fig:DPST}
-\end{figure}
-
-\newpage
-The issue of switch bounce can be corrected through the use of a pair of NAND
-gates.
-
-\begin{enumerate}
-\item Using the NAND gate you built above with discrete AND and Inverter
-gates, build the circuit shown in Figure \ref{fig:modDPST}.
-\item Verify its operation. Compare its output to that of the ordinary switch.
-Capture an occurrence of the switching phenomenon for this circuit on the ?scope screen and save it.
-\end{enumerate}
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}[american]
-\draw (0,0)		node[cute spdt down arrow, rotate=90, name=A] {};
-\draw (4,-3)	node[american nand port, name=C] {};
-\draw (4,0.074)	node[american nand port, name=D] {};
-\draw (A.in)	node[ground, below] {};
-\draw (A.out 1)	to[short, -*] ++(-1,0) node[name=B] {}
-				to[R, l=$R_1$, a=\SI{1}{\kilo\ohm}] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
-\draw (B)		to[short] (B |- C.in 2)
-				to[short] (C.in 2);
-\draw (A.out 2)	to[short] (D.in 1);
-\draw ($(A.out 2) + (1,0)$) to[R, l=$R_2$, a=\SI{1}{\kilo\ohm}, *-] ++(0,3) node[vdd] {$V_\mathrm{DD}$};
-\draw (C.out)	to[short] ++(0.5,0)
-				to[short] ++(0,1)
-				to[short] ++(-3,1) |- (D.in 2);	
-\draw (D.out)	to[short, -o] ++(2,0) node[right] {Out};
-\draw ($(D.out) + (0.5,0)$) to[short, *-] ++(0,-1)
-				to[short] ++(-3,-1) |- (C.in 1);
-\end{circuitikz}
-\caption{Debounced Switch Using 2 NAND Gates (SR Latch)}
-\label{fig:modDPST}
-\end{figure}
-
 \newpage
 \section{IC CMOS NOT, NOR, and NAND Gates}
-The discrete component logic gates built in this laboratory form the building blocks of all semiconductor logic circuits built and used in industry. Because logic functions are so common, specific Integrated Circuits (ICs) have been built to the highest tolerances to perform on/off functions which are used in electronic devices. There exist common equivalents to the OR, AND, and NOT gates built in this laboratory in individual commercially available IC packages. It is most common to find the NOT versions of the OR and AND functions as ICs (in fact, the OR and AND functions themselves are usually created using a NOT plus OR gate or a NOT plus AND gate in an IC package). The common equivalent devices available commercially are as follows:
-\begin{itemize}
-\item CD4069 CMOS Inverter
-\item CD4001 CMOS NOR gate
-\item CD4011 CMOS NAND gate
-\end{itemize}
 
-As you can imagine, because these ICs are specifically built for the purpose they serve, their static voltage-transfer characteristics, static noise margins, static power-supply-current characteristics, and static power consumption are much better than the discrete version equivalents. In addition, their transient switching characteristics (measured by observing their response to a square-wave input-voltage waveform) are much faster than the discrete equivalents. For this reason, and due to the low cost of such integrated circuit devices, they are usually used in application specific integrated circuit (ASIC) designs.
-
-The latch is the most basic memory element in digital electronics, but it is seldom used by itself. Instead, digital designers generally prefer flip-flops (clocked latches) as primitive memory elements because they are less susceptible to glitches. Below is the schematic of an SR flip-flop, which is an SR latch with a gated clock input. The clock signal synchronizes any changes to occur only when the clock is high (An alternative is to use a D flip-flop, which is synchronized to a near-instantaneous clock edge.) The main point is that reducing the duration in which the memory element is transparent to changes reduces the likelihood of a glitch being incorrectly recorded into it.
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}[american]
-\draw (0,0)		node[american and port, name=A] {};
-\draw (0,3.5)	node[american and port, name=B] {};
-\draw (3,0.28)	node[american nor port, name=C] {};
-\draw (3,3.22)	node[american nor port, name=D] {};
-\draw (A.in 2)	to[short, -o] ++(-2,0) node[left] {$S$};
-\draw (B.in 1)	to[short, -o] ++(-2,0) node[left] {$R$};
-\draw (A.in 1)	to[short] ++(-1,0) node[name=E] {}
-				to[short] (E |- B.in 2) node[name=F] {}
-				to[short] (B.in 2);
-\draw ($(E)!0.5!(F)$) to[short, *-o] ++(-1,0) node[left] {$E$};
-\draw (A.out) |- (C.in 2);
-\draw (B.out) |- (D.in 1);
-\draw (C.out)	to[short, -o] ++(2,0) node[right] {$\overline{Q}$};
-\draw (D.out)	to[short, -o] ++(2,0) node[right] {$Q$};
-\draw ($(D.out) + (0.5,0)$) to[short, *-] ++(0,-1)
-				to[short] ++(-3,-1) |- (C.in 1);
-\draw ($(C.out) + (0.5,0)$) to[short, *-] ++(0,1)
-				to[short] ++(-3,1) |- (D.in 2);	
-\end{circuitikz}
-\caption{Gate-Level Diagram of a Clocked NAND-Gate SR Flip-flop}
-\label{fig:SR}
-\end{figure}
-
-\newpage
-\subsection{Extension}
-
-The Extension for this lab exercise is as follows:
 
 %____________________________________________________________________________
 %
@@ -354,22 +252,22 @@ The Extension for this lab exercise is as follows:
 \hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 6 Grading Rubric}
+\caption{ECE 230L Laboratory 3 Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
 \textbf{Diode OR Gate}			& \textbf{10} \\
-Circuit Diagram 				& 2 \\
-Truth Table Verified			& 2 \\
+Circuit Diagram 				& 1 \\
+Truth Table Verified			& 3 \\
 Variable diode drop values given for different diodes & 3 \\
 Justification of whether circuit is ``better'' & 3 \\ \hline
 \textbf{Diode AND Gate}			& \textbf{8} \\
 Circuit Diagram 				& 2 \\
 Truth Table Verified			& 3 \\
 Diode Drop Value Noted			& 3 \\ \hline
-\textbf{Discrete MOS Inverter Circuit}		& \textbf{49} \\
+\textbf{Discrete MOS Inverter Circuit}		& \textbf{65} \\
 Circuit Diagram 				& 2 \\
-Truth Table Verified			& 2 \\
+Truth Table Verified			& 3 \\
 Voltage Lost Across Circuit 	& 3 \\
 $V_\mathrm{OL}$ from V-V {\tt singleloop.vi} graph 	& 5 \\
 $V_\mathrm{OH}$ from V-V {\tt singleloop.vi} graph	& 5 \\
@@ -390,7 +288,7 @@ Ring Oscillator Circuit Diagram & 3 \\
 Period of oscillator for N inverters & 3 \\
 Period of oscillator for 1 inverter & 3 \\ \hline
 {\bf Quality of thought/analysis} & {\bf 5} \\ \hline \hline
-{\bf Total}						& {\bf 84} \\ \hline
+{\bf Total}						& {\bf 100} \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
