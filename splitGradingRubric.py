@@ -1,14 +1,13 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-filename = input("Filename: ")
+for i in range(1,8) :
+	filename = "Lab" + str(i)
+	filepath = filename + "/" + filename
 
-filepath = filename + "/" + filename + ".pdf"
-filepathOut = filename + "/" + filename + "Rubric.pdf"
+	with open(filepath + ".pdf", 'rb') as infile:
+		reader = PdfFileReader(infile)
+		writer = PdfFileWriter()
+		writer.addPage(reader.getPage(-1))
 
-with open(filepath, 'rb') as infile:
-	reader = PdfFileReader(infile)
-	writer = PdfFileWriter()
-	writer.addPage(reader.getPage(-1))
-
-	with open(filepathOut, 'wb') as outfile:
-		writer.write(outfile)
+		with open(filepath + "Rubric.pdf", 'wb') as outfile:
+			writer.write(outfile)
