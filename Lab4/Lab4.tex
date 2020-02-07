@@ -4,264 +4,395 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 4}{Spring 2019} % Change Semester and Year as needed
+\makeheader{Lab 3}{Fall 2019} % Change Semester and Year as needed
 \begin{center}
-\textbf{\huge ECE 230L - LAB 4}\\~\\
-\textbf{\large ELECTRICAL CHARACTERIZATION AND PARAMETER EXTRACTION OF METAL-OXIDE-SEMICONDUCTOR FIELD-EFFECT TRANSISTORS (MOSFET)}\\~\\
+\textbf{\huge ECE 230L - LAB 3}\\~\\
+\textbf{\large INTRODUCTION TO CIRCUIT SIMULATION USING PSPICE}\\~\\
 \rule{6.5in}{0.5mm}\\
 \end{center}
-
-\textit{Note: Lab this week includes a pre-lab. This pre-lab is to be completed before your scheduled lab section. A link to the pre-lab can be found in the Laboratory Schedule tab of the class page on Sakai.}
 
 \tableofcontents
 
 \listoffigures
+
+\newpage
 %____________________________________________________________________________
 %
 %	BODY
 %____________________________________________________________________________
-\newpage
 \section{Objectives of this Laboratory}
-The objectives of this laboratory session are as follows:
+The objectives of this laboratory session are to introduce you to the basics of PSpice by learning:
 \begin{itemize}
-\item to measure the NMOSFET drain-current characteristics $I_D(V_{GS},V_{DS})$ using LabVIEW,
-\item to extract the NMOSFET SPICE model parameters, and
-\item to evaluate the limitations of the electrical measurements and the simulation
+\item How to set-up your PSpice simulation environment,
+\item How to represent the circuit elements,
+\item How to construct the circuits, and
+\item How to simulate the circuits.
 \end{itemize}
-
-\section{Electrical Characterization of the MOSFET}
-
-The circuit used to measure the drain-current characteristics of the NMOSFET is shown in Figure \ref{fig:MOSResTest}, below. 
-
-\begin{figure}[ht!]
-	\centering
-	\begin{circuitikz}[american]
-	\draw (0,0) 	node[nigfete, solderdot](Q1) {};
-	\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
-	\draw (Q1.D) 	to[short] ++(0,2)
-					to[R, l=$R_{DS}$, i<=$I_{\mathrm{DS}}$, a=\SI{100}{\ohm}] ++(4,0)
-					to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
-					to[short] ++(-4,0);
-	\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
-					to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{\mathrm{GS}}$] (VGS |- GND)
-					to[short] (0,-3);
-	\draw (0.5,2.1)	node[] {$+$};
-	\draw (Q1.east)	node[right=2mm]{$V_{\mathrm{DS}}$};
-	\draw (0.5,-2.5)node[] {$-$};
-	\draw (-0.5,-0.7)	node[] {$+$};
-	\draw (-0.6, -1.6)	node[] {$V_{\mathrm{GS}}$};
-	\draw (-0.5,-2.5)	node[] {$-$};
-	\end{circuitikz}
-	\caption{Circuit used to characterize an NMOSFET}
-	\label{fig:MOSResTest}
-\end{figure}
-
-Use LabVIEW on your laboratory workstation to obtain the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ of the BS170 silicon n-channel MOS field-effect transistor. In the MOSFET characterization under static conditions, the static gate current is zero and, consequently, there are no concerns about the difference between the gate-to-source voltage set in LabVIEW and the actual gate-to-source voltage. To obtain the NMOSFET characteristics, carry out the following steps:
-\begin{enumerate}
-\item Obtain a BS170 NMOSFET and a \SI{100}{\ohm} resistor from the parts bins,
-\item Build a circuit using the E3631A Power Supply's \SI{6}{\volt} source (for $V_{\mathrm{DS}}$) and \SI{+25}{\volt} source (for $V_{\mathrm{GS}}$), and the 33440 Digital Multimeter used as an ammeter. Be sure to correctly identify the NMOSFET gate, drain, and source terminals using the manufacturer's data sheet.
-\item Turn on the Power Supply and Multimeter connected as an ammeter.
-\item Run the LabVIEW Virtual Instrument (VI) program called {\tt doubleloop.vi}. Set the inner-voltage ($V_{\mathrm{DS}}$, Source) loop to run from 0 to 6.0 V with 50 steps, and the outer-voltage ($V_{\mathrm{GS}}$, Source) to run from 2.0 to 3.0 V with 5 steps, to obtain a smooth $I_D$ vs $V_{\mathrm{DS}}$ of the BS170 NMOSFET.
-\item Save your output data. Check your output data with your TA to ensure that the characterizations are representative of BS170 NMOSFETs. If they are not it may be necessary to characterize at least 2 or 3 NMOSFETs. The output file is a list of numbers stepped through and measured by LabVIEW in obtaining the drain-current $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ characteristics.
-\item Repeat the above experiment for the same inner and outer loops and steps size, but this time, once to measure $V_{\mathrm{DS}}$ vs. $V_{\mathrm{DS~Source}}$ and once to measure $V_{\mathrm{GS}}$ vs. $V_{\mathrm{GS~Source}}$ using {\tt doubleloop.vi}.
-\item Remove the $R_{\mathrm{DS}}$ resistor from the circuit, as shown below. Notice that the $V_{\mathrm{DS}}$ applied at the source is now the same as the $V_{\mathrm{DS}}$ across the MOSFET:
-\end{enumerate}
-\begin{figure}[ht!]
-	\centering
-	\begin{circuitikz}[american]
-	\draw (0,0) 	node[nigfete, solderdot](Q1) {};
-	\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
-	\draw (Q1.D) 	to[short] ++(0,2)
-					to[short] ++(4,0)
-					to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
-					to[short] ++(-4,0);
-	\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
-					to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{GS}$] (VGS |- GND)
-					to[short] (0,-3);
-	\draw (0.5,2.1)	node[] {$+$};
-	\draw (Q1.east)	node[right=2mm]{$V_{DS}$};
-	\draw (0.5,-2.5)node[] {$-$};
-	\draw (-0.5,-0.7)	node[] {$+$};
-	\draw (-0.6, -1.6)	node[] {$V_{GS}$};
-	\draw (-0.5,-2.5)	node[] {$-$};
-	\end{circuitikz}
-	\caption{NMOSFET Circuit without a resistor}
-	\label{fig:MOSTest}
-\end{figure}
-
-\begin{enumerate}
-\setcounter{enumi}{7}
-\item Use {\tt singleloop.vi} to measure $I_D$ for $V_{\mathrm{GS}}$ ranging from 0 to \SI{6.0}{\volt}, with a fixed \SI{3}{V} value for $V_{\mathrm{DS}}$. This will require changing the the $V_{\mathrm{GS~Source}}$ over to the \SI{6}{\volt} output on the E3631A Power Supply, and connecting the $V_{\mathrm{DS~Source}}$ to the E3611A DC Power Supply.
-\end{enumerate}
-
-At this point, you should have 4 saved Excel files: 
-\begin{itemize}
-\item $I_D(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
-\item $V_{\mathrm{DS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
-\item $V_{\mathrm{GS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
-\item $I_D(V_{\mathrm{GS}}, V_{\mathrm{DS}} = \SI{3.0}{\volt})$
-\end{itemize}
-
-\section{Exploration}
-The purpose of this exploration is to build a wireless signal transmitter using the knowledge of LEDs and Field-Effect Transistors you have gained in lab. The ultimate goal of this exploration is to build a simple electronic system that transmits music from a portable music player (e.g. MP3 player, CD player, radio), through a wireless channel using light. To do so, you will build a circuit that takes the electrical signal and changes the brightness of an LED with the sound of the music. A given receiver circuit using a phototransistor will take this light signal and convert it into sound. You lab TA will provide a receiver for testing your circuit. You can also build your own receiver using the circuit in Figure \ref{fig:rec}.
-
-\subsection{Music Transmitter}
-Equipment:
-\begin{itemize}
-\item \SI{100}{\ohm} resistors (x5)
-\item IR LED (Light Emitting Diode) (x1)
-\item Red LED (Light Emitting Diode) (x1)
-\item BS170 MOSFET (x1)
-\item \SI{50}{\kilo\ohm} Potentiometer (x1)
-\item \SI{47}{\nano\farad} Capacitor (x1)
-\item Wire with headphone plug (x1)
-\item Battery snap for 9V battery (x1)
-\item \SI{9}{\volt} battery (x1)
-\end{itemize}
-
-Procedure:
-\begin{enumerate}
-\item Build the circuit shown in Figure \ref{fig:mystery}. From your knowledge of MOSFETs,
-LEDs, and current-limiting resistors from this lab and previous labs, determine in which order these 3 circuit elements (i.e. a BS170 MOSFET, a Red LED, and \SI{100}{\ohm} resistor) should be connected to produce an LED whose brightness varies with the amplitude of the input music signal or function generator time-varying signal that will be attached to the 1/8? mini headphone jack. Think about how the BS170 MOSFET should be oriented (Drain and Source pins) in order to be properly biased to turn on when a voltage at the Gate is applied.
-\end{enumerate}
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}
-\draw (0,0)		to[R, a=$R_4$] ++(0,3)
-				to[pR, a=$P_1$, name=P] ++(0,3)
-				to[R, a=$R_3$] ++(0,3)
-				to[short, *-] ++(-12,0)
-				to[battery, l=$V_S$, a=\SI{9}{\volt}] ++(0,-9)
-				to[short, -*] ++(12,0);	
-\draw (3,6)		node[fourport, t={\bf \Huge ?}, name=A] {};
-\draw (-8,0)	to[short, *-] ++(0, 1.5)
-				to[R, a=$R_1$] ++(0,3)
-				to[C, a=$C_1$, v^<=$~$] ++(3,0)
-				to[R, a=$R_2$] ++(3,0) -- (P.wiper);
-\draw (-1.5,4.5)to[short, *-] ++(0,1.5)
-				to[short] (A.west);
-\draw (0,9)		to[short] ++(3,0)
-				to[short] (A.north);
-\draw (0,0)		to[short] ++(3,0)
-				to[short] (A.south);
-\draw (-8,1.5)	to[short, *-o] ++(-1,0);
-\draw (-8,4.5)	to[short, *-o] ++(-1,0);
-\draw (-9,4)	node[] {$+$};
-\draw (-9,2)	node[] {$-$};
-\draw[red,thin,dashed] (-10.5,5) rectangle (-8.5,1);
-\draw (-9.5,3.25) node[] {$1/8$''};
-\draw (-9.5,2.75) node[] {mini plug};
-\end{circuitikz}
-\caption{Music Transmitter Circuit with Mystery Load Elements}
-\label{fig:mystery}
-\end{figure}
-
-\begin{enumerate}
-\setcounter{enumi}{1}
-\item Once you have devised a circuit topology for the 3 unknown elements in the above circuit, test the circuit using a red LED.
-\item If you are using a portable music player, such as an iPod, first listen to it through headphones and make sure it is producing loud and clear music or speech. (If you are using a function generator as the signal source, set it to produce a small signal output in the audible \SI{20}{\hertz} to \SI{20}{\kilo\hertz} range.)
-\item Plug the headphone jack into your device (or attach it carefully to the function generator with alligator clips) to produce the signal that will serve as the circuit input.
-\item Attach the wires from the headphone jack to your circuit where the {\tt 1/8'' mini plug} is indicated in the figure.
-\item Turn up the volume on your music player (or the amplitude of the function generator). Rotate the stem of the potentiometer on the transmitter circuit. The red LED should be on.
-\item If the LED is not on, your circuit may not be designed or wired properly. Immediately disconnect one of the battery snap leads from the breadboard of the transmitter. Troubleshoot your circuit as necessary by checking all connections with an oscilloscope or multimeter.
-\item Once the circuit is working and the LED lights up, replace the red LED with an infrared LED. Now it is time to wirelessly transmit your optical signal and convert it back into sound.
-\end{enumerate}
-
-\newpage
-\subsection{Music Receiver}
-Equipment:
-\begin{itemize}
-\item \SI{10}{\micro\farad} capacitors (x3)
-\item Phototransistor (x1)
-\item LM 386 op-amp (x1)
-\item \SI{24}{\kilo\ohm} resistor (x1)
-\item Speaker (x1)
-\end{itemize}
-
-Procedure:
-\begin{enumerate}
-\item Build the receiver circuit outlined in Figure \ref{fig:rec}. Keep in mind that the IR LED from the transmitter you just built will need to be positioned about 1/2'' from the phototransistor in this receiver circuit. 
-\end{enumerate}
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}
-\draw (0,0)		node[dipchip, num pins=8, hide numbers, external pins width=0, name=O] {};
-\draw (0,0) 	node[op amp, xscale=0.4, yscale=0.4, name=Amp] {};
-\node [right, font=\tiny] at (O.bpin 1) {1};
-\node [right, font=\tiny] at (O.bpin 4) {4};
-\node [left, font=\tiny] at (O.bpin 6) {6};
-\node [left, font=\tiny] at (O.bpin 7) {7};
-\node [left, font=\tiny] at (O.bpin 8) {8};
-\draw (O.bpin 2) -| (Amp.-);
-\draw (O.bpin 3) -| (Amp.+);
-\draw (Amp.out)	|- (O.bpin 5);
-\draw (O.pin 1)		to[short] ++(-0.5,0) 
-					to[short] ++(0,1.5) node[name=A] {}; 
-\draw(O.pin 8)		to[short] ++(0.5,0) 
-					to[short] ++(0,1.5) 
-					to[C, a=$C_2$, v^<=$~$] (A);
-\draw (O.pin 3)		to[short] ++(-1,0)
-					to[C, a=$C_1$, -*] ++(-3,0) node[name=B] {};
-\draw (O.pin 5)		to[short] ++(1,0)
-					to[C, l=$C_3$] ++(3,0)
-					to[loudspeaker, name=L] ++(0,-3) node[name=C] {};
-\node [left] at (L.south) {SPK};
-\draw (B)			to[R, a=$R_1$] ++(0,3) node[name=D] {}
-					to[short] ++(-3,0) node[name=E] {}
-					to[battery, l=$V_S$, a=\SI{9}{\volt}] (E |- C)
-					to[short] ++(3,0) node[name=F] {}
-					to[short] (C);
-\draw (O.pin 6)		to[short] ++(1,0)
-					to[short] ++(0,4) node[name=Z] {}
-					to[short] (Z -| D)
-					to[short, -*] (D);
-\draw (O.pin 2)		to[short] ++(-1,0) 
-					to[xing] ++(0,-1.115) node[name=G] {} 
-					to[short, -*] (G |- C);
-\draw (O.pin 4)		to[short] ++(-0.5,0) node[name=H] {}
-					to[short, -*] (H |- C);
-\draw ($(F)!0.5!(B)$) node[npn, photo, name=T] {};
-\draw (T.C)			to[short] (B);
-\draw (T.E) 		to[short, -*] (F);
-\draw ($(T) - (0.18,0)$) circle [radius=20pt];
-\node [right=2mm] at (T.nobase) {Q1};
-\node [waves, scale=0.7, right] at(L.north) {};
-\end{circuitikz}
-\caption{Music Receiver Circuit}
-\label{fig:rec}
-\end{figure}
-
-\begin{enumerate}
-\setcounter{enumi}{1}
-\item To test the receiver circuit, use a standard TV remote control, if there is one in lab. Most TV remotes emits IR light to signal the control box. With the receiver circuit you just built, you can ``hear'' a TV remote control signal by converting it from IR at the remote to an audible signal at your receiver's speaker. Aim a TV remote at the phototransistor on your receiver circuit and listen for the signal. Different remotes will have different signal patterns.
-\item To improve the quality of your receiver circuit, add a capacitor between ground and power (this will act as a current reservoir, for the op-amp when it rails). Also note that the receiver draws more current than the transmitter so using the HP power supply may also improve quality.
-\end{enumerate}
-
-\subsection{Wireless Transmission and Reception}
-\begin{enumerate}
-\item Position the infrared LED from your working transmitter circuit such that it is pointing at and is about 1/2'' from the phototransistor of the music receiver that you just built.
-\item You should hear music coming out of the speaker in the receiver. If you do not hear any sound from the speaker, you will need to troubleshoot your IR music transmitter-receiver system.
-\item Once the wireless transmitter and receiver and working together, you can test the limits of your system by increasing or decreasing the signal volume with the volume control on your music device (or function generator), by adjusting the potentiometer in your transmitter circuit, and by varying the distance of the IR LED from the phototransistor. Audio quality may be limited by the quality of the speaker being used---some tones may be diminished or altered. You can also interrupt the signal with your hand by preventing IR light to transmit between transmitter and receiver. The presence of external light sources may also affect the sound quality. Lastly, the IR LED is not the only LED that will transmit light that the receiver picks up. You can use a colored LED to do the same job, although it may not do as good a job as the IR light does in sending a wireless signal to the phototransistor.
-\item Your TA also has a pre-built receiver circuit. Ask your lab TA to check your transmitter with this circuit before leaving lab.
-\end{enumerate}
-{\it Record all of the circuits built and testing done for this Exploration in your laboratory notebook. Be sure to clean-up your laboratory bench and turn off all equipment before leaving.}
-
-\newpage
-\section{Questions}
-\begin{enumerate}
-\item Give the definitions of the parameters $K_N$ and the transconductance $g_m^\mathrm{sat}$ of the NMOSFET. Comment on their dependence on other NMOSFET parameters and bias voltages.
-\item Give the definition of the NMOSFET channel-length-modulation parameter $\lambda_N$. Describe how it is extracted from the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$.
-\item Plot the dependence of the drain current $I_{D \cdot N}$ on the drain-to-source bias voltage $V_{\mathrm{DS}\cdot N}$ for different values of the gate-to-source bias voltage $V_{\mathrm{GS}}$ on a linear-linear plot. Show all circuit diagrams used to measure this data. Don't forget that what was measured in lab was $I_D(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$ and $V_{\mathrm{DS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$. In order to plot $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$, you will need to do a substitution.
-\item Plot the dependence of $\sqrt{I_{D \cdot N}}$ on the gate-to-source bias voltage $ V_{\mathrm{GS} \cdot N}$ in the 0 to \SI{6}{\volt} range for a fixed value of the drain-to-source bias voltage $V_{\mathrm{DS} \cdot N}$ equal to \SI{3}{\volt}. Show all circuit diagrams used to measure this data.
-\item From the above plots, obtain the values of $K_N$, $V_{T \cdot N}$, and $\lambda_N$. Include any additional plots or calculations used to obtain these parameters. Note that the parameter extraction slides on Sakai give two methods for finding $K_N$. For any values where multiple different data sets can be used, remember to take several measurements and average the results. In a table, compare your extracted values with those listed in the manufacturer's data sheet.
-\item What are the major sources of error in the values of the extracted parameters? How can these errors be effectively reduced?
-\end{enumerate}
-\textit{Note: During the next lab period, you will simulate MOSFET behavior electronically and compare your MOSFET parameters to those of your colleagues and to manufacturer specifications. Before the next lab period, use the online survey tool that will be made available to you to post your MOSFET's $K_N$, $V_{T \cdot N}$, and $\lambda_N$ values. These posted results will be used by you and others during the next lab period.}
 %____________________________________________________________________________
 %
-%	GRADING RUBRIC
+% 	ORCAD
+%____________________________________________________________________________
+\section{Setting Up a Circuit Using ORCAD Capture}
+To create a circuit in a PSpice environment, one must first launch ORCAD:
+\begin{enumerate}
+	\item Open ORCAD Capture CIS
+	\item Create a new project by selecting {\bf File} $\to$ {\bf New} $\to$ {\bf Project}
+	\item Name your project `Lab 3'
+	\item Choose {\bf Analog or Mixed A/D} under the {\bf Create a New Project Using} menu
+	\item Select {\bf Create a blank project} when prompted
+\end{enumerate}
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{./figures/BlankSchematic.PNG}
+	\end{center}
+	\caption{Blank Schematic}
+	\label{fig:blankSchematic}
+\end{figure}
+
+Once the new project has been created, circuit design can begin. Sources, components, ground nodes, and wires can be selected using the {\bf Place} menu.
+
+PSpice will be used to model and perform analyses on the circuit in Figure \ref{fig:initCircuit}.
+\begin{figure}[ht!]
+	\begin{center}
+		\begin{circuitikz}[scale=1.5]
+			\draw 	
+			(0,0) 	to[short] 										++(2,0)
+					node[ground] {}
+					to[short] 										++(2,0)
+					to[C, l_=${C = \SI{1}{\nano\farad}}$]			++(0,2)
+					to[short]		++(-2,0)
+					to[R, l_=${R_1 = \SI{1}{\kilo\ohm}}$]			++(-2,0)
+					to[battery, l_=$V_1$]		++(0,-2)
+			(2,0)	to[R, *-*, l_=${R_2 = \SI{1}{\kilo\ohm}}$]		++(0,2)
+		;\end{circuitikz}
+	\end{center}
+	\caption{Initial Circuit}
+	\label{fig:initCircuit}
+\end{figure}
+
+To create the circuit, 
+\begin{enumerate}
+	\item Add a DC Voltage Source: Place $\to$ PSPice Component $\to$ Source $\to$ Voltage Source $\to$ DC
+	\item Insert Resistors and Capacitors: Place $\to$ PSpice Component $\to$ Passives
+	\item Insert Wires and connect circuit nodes: Place $\to$ Wire
+	\item Insert a Ground: Place $\to$ Ground $\to$ 0/SOURCE
+\end{enumerate}
+
+Note that you can use Ctrl-R to rotate the components. Also, to change values of any component, double click on the component and change the values using the pop-up menu. You may also change values by double clicking directly on the value and typing a new value.
+%____________________________________________________________________________
+%
+%	DC Analysis
+%____________________________________________________________________________
+\newpage
+\section{DC Analysis in PSpice}
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/DCAnalysisCircuitCrop.PNG}
+	\end{center}
+	\caption{Circuit for DC Analysis}
+	\label{fig:dc}
+\end{figure}
+
+To perform a DC analysis of the circuit, create a new simulation profile by selecting \textbf{PSpice} $\to$ \textbf{New Simulation Profile}. Name the new profile `dc' and press \textbf{Create}. Then,  select \textbf{DC Sweep} in the \textbf{Analysis Type} drop down menu and use the following parameters:
+\begin{itemize}
+\item Sweep variable $\to$ Voltage source: V1
+\item Sweep Type: Linear
+\item Start Value: 0
+\item End Value: 10
+\item Increment: 0.01
+\end{itemize}
+
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
+
+%Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:dcAnalRes} shows the result of DC analysis.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/ResultDCAnalysisCrop.PNG}
+\caption[Result of DC Analysis]{Result of DC Analysis. Top: Current; Bottom: Voltage}
+\label{fig:dcAnalRes}
+\end{center}
+\end{figure}
+%____________________________________________________________________________
+%
+%	AC Analysis
+%____________________________________________________________________________
+\newpage
+\section{AC Analysis in PSpice}
+Before performing an AC analysis, a new AC voltage source has to replace the DC source. To change the source, delete the DC source and follow \textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{AC}. The following parameters will be used:
+\begin{itemize}
+\item DC Value: 10
+\item AC Amplitude: 1
+\end{itemize}
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
+	\end{center}
+	\caption{Circuit for AC Analysis}
+	\label{fig:ac}
+\end{figure}
+
+After the voltage source properties have been changed, AC analysis can be performed. First, create a new simulation profile called `ac'. Next, select \textbf{AC Sweep/Noise} in the \textbf{Analysis Type} drop down menu and use the following parameters:
+\begin{itemize}
+\item AC Sweep Type: Logarithmic 
+\item Select \textbf{Decade} from drop down menu below
+\item Start Frequency: 1k
+\item Stop Frequency: 1Meg
+\item Number of Points per Decade: 10
+\end{itemize}
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. They should look like Figure \ref{fig:acSettings}.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
+	\end{center}
+	\caption{Settings for AC Analysis}
+	\label{fig:acSettings}
+\end{figure}
+
+Now, begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. % To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:acAnalRes} shows the result of AC analysis.
+
+\subsection*{Trace Expressions in PSpice}
+Trace expressions can be used to plot the phase of a desired value, a parameter in units of dB, or plot other useful mathematical operations on circuit parameters. Trace expressions are available under the \textbf{Trace} $\to$ \textbf{Add Trace} menu. Select \textbf{Plot} $\to$ \textbf{Add Plot to Window} and plot the value of V(R1:2) in dB. Use the trace expression DB(V(R1:2)). Next, add another plot to the window and plot the phase of V(R1:2). Use the trace expression P(V(R1:2)). The resulting plots are shown in Figure \ref{fig:acAnalRes}.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/ResultACAnalysisCrop.PNG}
+\caption{Result of AC Analysis}
+\label{fig:acAnalRes}
+\end{center}
+\end{figure}
+%____________________________________________________________________________
+%
+%	Transient Analysis
+%____________________________________________________________________________
+\newpage
+\section{Transient Analysis in PSpice}
+Before performing a transient analysis, replace the AC source with a Pulse source (\textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{Pulse}). The following parameters will be used to set up the pulse: 
+\begin{itemize}
+\item V1 = 0
+\item V2 = 5 
+\item TD = 10n 
+\item TR = 20n 
+\item TF = 20n 
+\item PW = 500n 
+\item PER = 2u
+\end{itemize}
+
+We include the circuit in Figure \ref{fig:trans}.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
+	\end{center}
+	\caption{Circuit for Transient Analysis}
+	\label{fig:trans}
+\end{figure}
+
+After creating the circuit, create a new simulation profile called ``Transient''. To analyze the new circuit, select \textbf{Time Domain (Transient)} in the \textbf{Analysis Type} drop down menu and use the following parameters:
+\begin{itemize}
+\item Run to Time: 2u
+\item Start saving data after: 0
+\item Maximum step size: 10n
+\end{itemize}
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{figures/TransientAnalysisSettings.PNG}
+	\end{center}
+	\caption{Settings for Transient Analysis}
+	\label{fig:transSettings}
+\end{figure}
+
+Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. Plot the source voltage, V(R1:1), and V(R1:2).
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=\textwidth]{figures/ResultTransientAnalysisCrop.PNG}
+	\end{center}
+	\caption{Result of Transient Analysis}
+	\label{fig:transAnalRes}
+\end{figure}
+%____________________________________________________________________________
+%
+%	Practice Example
+%____________________________________________________________________________
+\newpage
+\section{Practice Example}
+Use PSpice to simulate the circuit shown in Figure \ref{fig:practice} using DC, AC, and Transient analyses. Take a screencap of a plot of the voltage across capacitor $C_1$ in each analysis.
+
+\begin{figure}[ht!]
+\begin{center}
+\begin{circuitikz}[scale=1.5]
+%\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
+\draw
+(0,0) 	to[short, *-] 	++(0,1)
+		to[C, l=${C_1=\SI{1}{\nano\farad}}$]	++(2,0)
+		to[short, -*]	++(0,-1)
+		to[short]		++(1,0)
+		to[R, l=${R_{sec}=\SI{1}{\kilo\ohm}}$] 	++(0,-2)
+		to[short, -*]		++(-2,0)
+		node[ground] {}
+		to[short]		++(-2,0)
+(2,0)	to[R, l=${R_{fir}=\SI{1}{\kilo\ohm}}$] 	++(-2,0)
+		to [short] ++ (-1,0)
+		to[battery, l_=${v_1}$, i=${i_{IN}}$] 	++(0,-2)
+;\end{circuitikz}
+\caption{Practice Circuit}
+\label{fig:practice}
+\end{center}
+\end{figure}
+
+\begin{enumerate}
+\item In the DC analysis, use the following parameters:
+\begin{itemize}
+\item Sweep Type: Linear
+\item Start Value: 0
+\item End Value: 10
+\item Increment: 0.01
+\end{itemize}
+\item In the AC analysis, change the voltage source to have the following values:
+\begin{itemize}
+\item DC Value: 5
+\item AC Amplitude: 1
+\end{itemize}
+And use the following parameters:
+\begin{itemize}
+\item AC Sweep Type: Logarithmic 
+\item Start Frequency: 10
+\item Stop Frequency: 1Meg
+\item Number of Points per Decade: 10
+\end{itemize}
+\item In the transient analysis, change the voltage source to have the following values:
+\begin{itemize}
+\item V1 = 0, 
+\item V2 = 5, 
+\item TD = 100n, 
+\item TR = 40n, 
+\item TF = 40n, 
+\item PW = 500n, 
+\item PER = 2u
+\end{itemize}
+And use the following parameters:
+\begin{itemize}
+\item Run to Time: 2u
+\item Start saving data after: 50n
+\item Maximum step size: 10n
+\end{itemize}
+\end{enumerate}
+%____________________________________________________________________________
+%
+%	Exploration
+%____________________________________________________________________________
+\newpage
+\section{Exploration: Th\'evenin Equivalent Circuits}
+\subsection*{Purpose}
+The purpose of this exercise is to learn how to form a Th\'evenin Equivalent circuit by using circuit parameters obtained during simulation.
+
+\subsection*{Introduction}
+Any linear DC circuit as seen at a pair of terminals can be reduced to a practical voltage source (an ideal voltage source in series with a resistor).
+
+\begin{figure}[ht!]
+\begin{center}
+\begin{circuitikz}[scale=1.5]
+%\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
+\draw
+(0,0)	to[R, *-, l=${R_{TH}}$]		++(-4,0)
+		to[battery, l=${V_{OC}}$] 	++(0,-2)
+		to[short, -*]	++(4,0)
+(0,0.25)	node[] {A}
+(0,-1.75)	node[] {B}
+;\end{circuitikz}
+\caption{Th\'evenin Equivalent Circuit}
+\label{fig:thev}
+\end{center}
+\end{figure}
+
+To form a Th\'evenin Equivalent circuit, two quantities must be calculated, measured, or simulated:
+\begin{itemize}
+\item $v_{oc}$: The open circuit voltage drop from terminals A to B
+\item $i_{sc}$: The short circuit current from terminals A to B
+\end{itemize}
+Once the values for $v_{oc}$ and $i_{sc}$ have been obtained, the Th\'evenin resistance $R_{TH}$ can be determined using the relation:
+\begin{align}
+R_{TH} = \frac{v_{oc}}{i_{sc}} \label{eq:rth}
+\end{align}
+If the circuit contains no dependent sources, then $R_{TH}$ may also be found by turning off all of the independent sources and using resistance reduction at terminals A and B.
+
+\newpage
+\subsection{Example Exercise}
+Simulate the circuit in Figure \ref{fig:exampleCircuit} and form its Th\'evenin Equivalent as seen from terminals A and B.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{figures/ExampleCircuitSchematicCrop.PNG}
+\caption{Example Circuit}
+\label{fig:exampleCircuit}
+\end{center}
+\end{figure}
+
+To find the open circuit voltage, replace resistor $R_4$ with a large ``dummy'' resistance (at least \SI{100}{\mega\ohm}). Create a new simulation profile called ``thev''. Choose \textbf{Bias Point} under the \textbf{Analysis type} menu and check the box labeled \textbf{Include Detailed Bias Point Information} under the \textbf{Output File Options} heading. Press \textbf{Apply} and \textbf{OK} to save the profile. Now, run the simulation. Once the simulation is complete, follow \textbf{PSpice} $\to$ \textbf{Bias Points} and click \textbf{Enable}. Record the voltage across terminals A and B as your open circuit voltage.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{figures/OpenCircuitSchematicCrop.PNG}
+\caption{Open Circuit Voltage Schematic}
+\label{fig:openCircuit}
+\end{center}
+\end{figure}
+
+To find the short circuit current, remove $R_4$ and connect terminals A and B with a wire.
+Use the same ``thev'' simulation profile that was created to find $v_{oc}$. Run the simulation. Once the simulation is complete, enable bias points. This will show the node voltages and currents throughout the circuit. Record the current between terminals A and B as your short circuit current, $i_{sc}$.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{figures/ShortCircuitSchematicCrop.PNG}
+\caption{Short Circuit Voltage Schematic}
+\label{fig:shortCircuit}
+\end{center}
+\end{figure}
+
+Calculate the Th\'evenin resistance using Equation \ref{eq:rth}. Now, re-create Figure \ref{fig:thev} in PSpice using your $v_{oc}$ and $R_{TH}$ values. Place $R_4$ back into your first circuit and place a resistor of equal value between terminals A and B in your Th\'evenin Equivalent. Run the simulation using the same ``thev'' profile. Once the simulation is complete, enable bias points. Check to make sure the terminal voltages and currents match for both circuits.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{figures/TheveninEquivalentExampleCrop.PNG}
+\caption{Th\'evenin Equivalent Schematic}
+\label{fig:thevCircuit}
+\end{center}
+\end{figure}
+
+\newpage
+\subsection{Challenge Exercise: Th\'evenin Equivalent Circuit}
+Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find its Th\'evenin Equivalent circuit as seen from nodes A and B. In your lab report, be sure to include all voltages and currents present in the Exercise Circuit and its Th\'evenin Equivalent, as well as a short explanation of each step you took in finding the Th\'evenin Equivalent.
+\begin{figure}[ht!]
+\begin{center}
+\begin{circuitikz}
+%\ctikzset{grounds/scale=1.5}
+\draw
+(0,0) 	to[short] 		++(4,0)
+		node[ground] {}
+		to[short] 		++(4,0)
+		to[R, l=$R_5$, a=\SI{500}{\ohm}]	++(0,4)
+		to[R, l=$R_3$, a=\SI{200}{\ohm}]	++(0,4)
+		to[short]		++(-8,0)
+		to[battery, a=$V_1$, l=\SI{1}{\volt}]	++(0,-8)
+(4,0)	to[R, *-, l=$R_2$, a=\SI{1}{\kilo\ohm}]			++(0,4)
+		to[R, -*, l=$R_1$, a=\SI{100}{\ohm}]			++(0,4)
+(4,4)	to[R, *-*, l=$R_4$, a=\SI{300}{\ohm}]			++(4,0)
+(3.5,4) node[] {\textcolor{red}{A}}
+(8.5,4) node[] {\textcolor{red}{B}}
+;\end{circuitikz}
+\caption{Exercise Circuit}
+\label{fig:exerciseCircuit}
+\end{center}
+\end{figure}
+%____________________________________________________________________________
+%
+%	Grading Rubric
 %____________________________________________________________________________
 \newpage
 \phantomsection
@@ -270,28 +401,33 @@ Procedure:
 \hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 4 Grading Rubric}
+\caption{ECE 230L Laboratory 3 Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{Raw Lab Data} 							& \textbf{15} \\
-Circuit Diagram 								& 3 \\
-$V_{\mathrm{DS~source}}$ vs $I_{DS}$, $V_{GS}$ plot & 3 \\
-$V_{DS}$ vs $V_{\mathrm{DS~source}}$ and $V_{GS}$ vs $V_{\mathrm{DS~source}}$ plots 	& 6 \\
-$I_{DS}$ vs $V_{GS}$ plot for $V_{DS}$ = 3V 		& 3 \\ \hline
-\textbf{Question 1} 							& \textbf{10} \\ \hline
-\textbf{Question 2} 							& \textbf{10} \\ \hline
-\textbf{Question 3} 							& \textbf{10} \\ \hline
-\textbf{Question 4} 							& \textbf{10} \\ \hline
-\textbf{Question 5} 							& \textbf{15} \\
-Parameter extraction							& 10 \\ 
-\% errors										& 5 \\ \hline
-\textbf{Question 6} 							& \textbf{10} \\ \hline
-\textbf{Exploration} 							& \textbf{10} \\
-Circuit Diagrams								& 5 \\
-Reasoning behind ``mystery elements'' order		& 5 \\ \hline
-\textbf{Quality of thought/analysis} 			& \textbf{10} \\ \hline \hline
-\textbf{Total} 									& 100 \\ \hline
+\textbf{DC Analysis}			& \textbf{10} \\
+Circuit Diagram 				& 5 \\
+Waveforms 						& 5 \\ \hline
+\textbf{AC Analysis}			& \textbf{10} \\
+Circuit Diagram 				& 5 \\
+Waveforms 						& 5 \\ \hline
+\textbf{Transient Analysis}		& \textbf{10} \\
+Circuit Diagram 				& 5 \\ 
+Waveforms 						& 5 \\ \hline
+\textbf{Practice Exercise}		& \textbf{35} \\
+Circuit Diagram 				& 5 \\
+DC Analysis						& 10 \\
+AC Analysis						& 10 \\
+Transient Analysis				& 10 \\ \hline
+\textbf{Th\'evenin Equivalent Example Circuit} & \textbf{20} \\
+Circuit Diagram					& 10 \\
+$V_{OC}$ and $I_{SC}$ Labeled	& 5 \\
+Correct $R_{TH}$ Value			& 5 \\ \hline
+\textbf{Th\'evenin Equivalent Challenge Circuit} & \textbf{15} \\
+Circuit Diagram					& 5 \\
+$V_{OC}$ and $I_{SC}$ Labeled	& 5 \\
+Correct $R_{TH}$ Value			& 5 \\ \hline \hline
+Total							& 100 \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page

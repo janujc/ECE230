@@ -4,10 +4,10 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 3}{Fall 2019} % Change Semester and Year as needed
+\makeheader{Lab 2}{Fall 2019} % Change Semester and Year as needed
 \begin{center}
-\textbf{\huge ECE 230L - LAB 3}\\~\\
-\textbf{\large INTRODUCTION TO CIRCUIT SIMULATION USING PSPICE}\\~\\
+\textbf{\huge ECE 230L - LAB 2}\\~\\
+\textbf{\large ELECTRICAL CHARACTERIZATION AND PARAMETER EXTRACTION OF SILICON PN-JUNCTION DIODES}\\~\\
 \rule{6.5in}{0.5mm}\\
 \end{center}
 
@@ -21,379 +21,235 @@
 %	BODY
 %____________________________________________________________________________
 \section{Objectives of this Laboratory}
-The objectives of this laboratory session are to introduce you to the basics of PSpice by learning:
+The objectives of this laboratory session are as follows:
 \begin{itemize}
-\item How to set-up your PSpice simulation environment,
-\item How to represent the circuit elements,
-\item How to construct the circuits, and
-\item How to simulate the circuits.
+\item To measure the $I_D(V_{PN})$ current-voltage characteristics of a PN-junction diode using standard test and measurement equipment,
+\item To measure the $I_D(V_{PN})$ current-voltage characteristics of a PN-junction diode using the LabVIEW platform,
+\item To evaluate the limitations of the electrical measurements as compared to theory,
+\item To explore one technological application of PN-junction diodes in the form of either power electronics (half-wave and bridge rectifiers) or LED lighting
 \end{itemize}
-%____________________________________________________________________________
-%
-% 	ORCAD
-%____________________________________________________________________________
-\section{Setting Up a Circuit Using ORCAD Capture}
-To create a circuit in a PSpice environment, one must first launch ORCAD:
-\begin{enumerate}
-	\item Open ORCAD Capture CIS
-	\item Create a new project by selecting {\bf File} $\to$ {\bf New} $\to$ {\bf Project}
-	\item Name your project `Lab 3'
-	\item Choose {\bf Analog or Mixed A/D} under the {\bf Create a New Project Using} menu
-	\item Select {\bf Create a blank project} when prompted
-\end{enumerate}
+\textit{Note: A detailed introduction to LabVIEW can be found on Sakai.}
 
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.9\textwidth]{./figures/BlankSchematic.PNG}
-	\end{center}
-	\caption{Blank Schematic}
-	\label{fig:blankSchematic}
-\end{figure}
-
-Once the new project has been created, circuit design can begin. Sources, components, ground nodes, and wires can be selected using the {\bf Place} menu.
-
-PSpice will be used to model and perform analyses on the circuit in Figure \ref{fig:initCircuit}.
-\begin{figure}[ht!]
-	\begin{center}
-		\begin{circuitikz}[scale=1.5]
-			\draw 	
-			(0,0) 	to[short] 										++(2,0)
-					node[ground] {}
-					to[short] 										++(2,0)
-					to[C, l_=${C = \SI{1}{\nano\farad}}$]			++(0,2)
-					to[short]		++(-2,0)
-					to[R, l_=${R_1 = \SI{1}{\kilo\ohm}}$]			++(-2,0)
-					to[battery, l_=$V_1$]		++(0,-2)
-			(2,0)	to[R, *-*, l_=${R_2 = \SI{1}{\kilo\ohm}}$]		++(0,2)
-		;\end{circuitikz}
-	\end{center}
-	\caption{Initial Circuit}
-	\label{fig:initCircuit}
-\end{figure}
-
-To create the circuit, 
-\begin{enumerate}
-	\item Add a DC Voltage Source: Place $\to$ PSPice Component $\to$ Source $\to$ Voltage Source $\to$ DC
-	\item Insert Resistors and Capacitors: Place $\to$ PSpice Component $\to$ Passives
-	\item Insert Wires and connect circuit nodes: Place $\to$ Wire
-	\item Insert a Ground: Place $\to$ Ground $\to$ 0/SOURCE
-\end{enumerate}
-
-Note that you can use Ctrl-R to rotate the components. Also, to change values of any component, double click on the component and change the values using the pop-up menu. You may also change values by double clicking directly on the value and typing a new value.
-%____________________________________________________________________________
-%
-%	DC Analysis
-%____________________________________________________________________________
-\newpage
-\section{DC Analysis in PSpice}
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/DCAnalysisCircuitCrop.PNG}
-	\end{center}
-	\caption{Circuit for DC Analysis}
-	\label{fig:dc}
-\end{figure}
-
-To perform a DC analysis of the circuit, create a new simulation profile by selecting \textbf{PSpice} $\to$ \textbf{New Simulation Profile}. Name the new profile `dc' and press \textbf{Create}. Then,  select \textbf{DC Sweep} in the \textbf{Analysis Type} drop down menu and use the following parameters:
+\section{Electrical Characterization of Silicon PN-Junction Diode}
+In this laboratory, you will measure the static current-voltage $I_D(V_{PN})$ characteristics of silicon PN-junction diode 1N4148 manually with standard test and measurement equipment and using LabVIEW. The measurement set-up includes the following:
 \begin{itemize}
-\item Sweep variable $\to$ Voltage source: V1
-\item Sweep Type: Linear
-\item Start Value: 0
-\item End Value: 10
-\item Increment: 0.01
+\item JAMECO JE25 Solderless Breadboard
+\item JAMECO Wire box with wires (various sizes and colors)
+\item Agilent E3631A Triple Output DC Power Supply
+\item Agilent 34410A Multimeter
 \end{itemize}
-
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
-
-%Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:dcAnalRes} shows the result of DC analysis.
-
+A cross-section and circuit symbol of the PN-junction diode is shown in Figure \ref{fig:diode}.
 \begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=\textwidth]{figures/ResultDCAnalysisCrop.PNG}
-\caption[Result of DC Analysis]{Result of DC Analysis. Top: Current; Bottom: Voltage}
-\label{fig:dcAnalRes}
-\end{center}
-\end{figure}
-%____________________________________________________________________________
-%
-%	AC Analysis
-%____________________________________________________________________________
-\newpage
-\section{AC Analysis in PSpice}
-Before performing an AC analysis, a new AC voltage source has to replace the DC source. To change the source, delete the DC source and follow \textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{AC}. The following parameters will be used:
-\begin{itemize}
-\item DC Value: 10
-\item AC Amplitude: 1
-\end{itemize}
-
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
-	\end{center}
-	\caption{Circuit for AC Analysis}
-	\label{fig:ac}
-\end{figure}
-
-After the voltage source properties have been changed, AC analysis can be performed. First, create a new simulation profile called `ac'. Next, select \textbf{AC Sweep/Noise} in the \textbf{Analysis Type} drop down menu and use the following parameters:
-\begin{itemize}
-\item AC Sweep Type: Logarithmic 
-\item Select \textbf{Decade} from drop down menu below
-\item Start Frequency: 1k
-\item Stop Frequency: 1Meg
-\item Number of Points per Decade: 10
-\end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. They should look like Figure \ref{fig:acSettings}.
-
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
-	\end{center}
-	\caption{Settings for AC Analysis}
-	\label{fig:acSettings}
-\end{figure}
-
-Now, begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. % To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:acAnalRes} shows the result of AC analysis.
-
-\subsection*{Trace Expressions in PSpice}
-Trace expressions can be used to plot the phase of a desired value, a parameter in units of dB, or plot other useful mathematical operations on circuit parameters. Trace expressions are available under the \textbf{Trace} $\to$ \textbf{Add Trace} menu. Select \textbf{Plot} $\to$ \textbf{Add Plot to Window} and plot the value of V(R1:2) in dB. Use the trace expression DB(V(R1:2)). Next, add another plot to the window and plot the phase of V(R1:2). Use the trace expression P(V(R1:2)). The resulting plots are shown in Figure \ref{fig:acAnalRes}.
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=\textwidth]{figures/ResultACAnalysisCrop.PNG}
-\caption{Result of AC Analysis}
-\label{fig:acAnalRes}
-\end{center}
-\end{figure}
-%____________________________________________________________________________
-%
-%	Transient Analysis
-%____________________________________________________________________________
-\newpage
-\section{Transient Analysis in PSpice}
-Before performing a transient analysis, replace the AC source with a Pulse source (\textbf{Place} $\to$ \textbf{PSpice Component} $\to$ \textbf{Source} $\to$ \textbf{Pulse}). The following parameters will be used to set up the pulse: 
-\begin{itemize}
-\item V1 = 0
-\item V2 = 5 
-\item TD = 10n 
-\item TR = 20n 
-\item TF = 20n 
-\item PW = 500n 
-\item PER = 2u
-\end{itemize}
-
-We include the circuit in Figure \ref{fig:trans}.
-
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
-	\end{center}
-	\caption{Circuit for Transient Analysis}
-	\label{fig:trans}
-\end{figure}
-
-After creating the circuit, create a new simulation profile called ``Transient''. To analyze the new circuit, select \textbf{Time Domain (Transient)} in the \textbf{Analysis Type} drop down menu and use the following parameters:
-\begin{itemize}
-\item Run to Time: 2u
-\item Start saving data after: 0
-\item Maximum step size: 10n
-\end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
-
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/TransientAnalysisSettings.PNG}
-	\end{center}
-	\caption{Settings for Transient Analysis}
-	\label{fig:transSettings}
-\end{figure}
-
-Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. Plot the source voltage, V(R1:1), and V(R1:2).
-
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=\textwidth]{figures/ResultTransientAnalysisCrop.PNG}
-	\end{center}
-	\caption{Result of Transient Analysis}
-	\label{fig:transAnalRes}
-\end{figure}
-%____________________________________________________________________________
-%
-%	Practice Example
-%____________________________________________________________________________
-\newpage
-\section{Practice Example}
-Use PSpice to simulate the circuit shown in Figure \ref{fig:practice} using DC, AC, and Transient analyses. Take a screencap of a plot of the voltage across capacitor $C_1$ in each analysis.
-
-\begin{figure}[ht!]
-\begin{center}
-\begin{circuitikz}[scale=1.5]
-%\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
-\draw
-(0,0) 	to[short, *-] 	++(0,1)
-		to[C, l=${C_1=\SI{1}{\nano\farad}}$]	++(2,0)
-		to[short, -*]	++(0,-1)
-		to[short]		++(1,0)
-		to[R, l=${R_{sec}=\SI{1}{\kilo\ohm}}$] 	++(0,-2)
-		to[short, -*]		++(-2,0)
-		node[ground] {}
-		to[short]		++(-2,0)
-(2,0)	to[R, l=${R_{fir}=\SI{1}{\kilo\ohm}}$] 	++(-2,0)
-		to [short] ++ (-1,0)
-		to[battery, l_=${v_1}$, i=${i_{IN}}$] 	++(0,-2)
+\centering
+\begin{tabular}{c}
+\begin{tikzpicture}[scale=2,european]
+\ctikzset{resistors/scale=3, resistors/thickness=6}
+\draw (0,0) node[anchor=south] {Anode}
+			to[R, o-o] ++(4.5,0)
+			to node[anchor=south] {Cathode} ++(0,0);
+\fill[black] (2.25,0.33)	rectangle (2.30, -0.33);
+\draw 	(1.85,0)	node[anchor=center] {$P$}
+		(2.70,0)	node[anchor=center] {$N$}
+;\end{tikzpicture} \\
+\vspace{5mm}\\
+\begin{circuitikz}[scale=2]
+\ctikzset{diodes/scale=2, grounds/scale=2}
+\draw 
+(0,0) 	node[anchor=south] {Anode}
+		to [D*, o-o] ++(4.5,0)
+		to node[anchor=south] {Cathode} ++(0,0)
 ;\end{circuitikz}
-\caption{Practice Circuit}
-\label{fig:practice}
-\end{center}
+\end{tabular}
+\caption[PN-Junction Diode Schematics]{PN-Junction Diode Cross-Section and Symbol}
+\label{fig:diode}
 \end{figure}
 
-\begin{enumerate}
-\item In the DC analysis, use the following parameters:
-\begin{itemize}
-\item Sweep Type: Linear
-\item Start Value: 0
-\item End Value: 10
-\item Increment: 0.01
-\end{itemize}
-\item In the AC analysis, change the voltage source to have the following values:
-\begin{itemize}
-\item DC Value: 5
-\item AC Amplitude: 1
-\end{itemize}
-And use the following parameters:
-\begin{itemize}
-\item AC Sweep Type: Logarithmic 
-\item Start Frequency: 10
-\item Stop Frequency: 1Meg
-\item Number of Points per Decade: 10
-\end{itemize}
-\item In the transient analysis, change the voltage source to have the following values:
-\begin{itemize}
-\item V1 = 0, 
-\item V2 = 5, 
-\item TD = 100n, 
-\item TR = 40n, 
-\item TF = 40n, 
-\item PW = 500n, 
-\item PER = 2u
-\end{itemize}
-And use the following parameters:
-\begin{itemize}
-\item Run to Time: 2u
-\item Start saving data after: 50n
-\item Maximum step size: 10n
-\end{itemize}
-\end{enumerate}
-%____________________________________________________________________________
-%
-%	Exploration
-%____________________________________________________________________________
-\newpage
-\section{Exploration: Th\'evenin Equivalent Circuits}
-\subsection*{Purpose}
-The purpose of this exercise is to learn how to form a Th\'evenin Equivalent circuit by using circuit parameters obtained during simulation.
+The arrow of the diode indicates the direction of the current.
 
-\subsection*{Introduction}
-Any linear DC circuit as seen at a pair of terminals can be reduced to a practical voltage source (an ideal voltage source in series with a resistor).
+Using the LabVIEW software installed on your laboratory workstation, obtain the $I_D(V_{PN})$ static current-voltage characteristics of the silicon PN-junction diode 1N4148 by carrying out the following steps:
+\begin{enumerate}
+\item Obtain a 1N4148 diode from the parts bins.
+\item Build the circuit shown in Figure \ref{fig:diodeTest} using the E3631A Power Supply's +6 V source and the 34410A Digital Multimeter as an Ammeter with the diode connected in series. The maximum continuous current that the 1N4148 diode can conduct is 200 mA (see datasheet). An alternative way to protect the diode from excessive currents is to use a series resistor. Because the diode current depends exponentially on its bias voltage, if the power-supply voltage were inadvertently set to its highest voltage level (6 V for the 6 V supply used in this experiment), an excessive current could flow through the diode which would damage it permanently. The resistor prevents this condition from taking place. 
+
+\begin{itemize}
+\item[$\square$] What is the value of the series resistor that you must choose for the 1N4148 diode (with a 200 mA maximum current) attached to this 6 V power supply?
+\end{itemize}
 
 \begin{figure}[ht!]
-\begin{center}
-\begin{circuitikz}[scale=1.5]
-%\ctikzset{resistors/scale=1.5,batteries/scale=1.5,grounds/scale=2.0,diodes/scale=1.5}
+\centering
+\begin{circuitikz}[scale=2]
+\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
 \draw
-(0,0)	to[R, *-, l=${R_{TH}}$]		++(-4,0)
-		to[battery, l=${V_{OC}}$] 	++(0,-2)
-		to[short, -*]	++(4,0)
-(0,0.25)	node[] {A}
-(0,-1.75)	node[] {B}
+(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
+(0,2)	to[R, l_=$R$]		++(2,0)
+		to[rmeter, t=V] ++(2,0)
+		to[D*, l_=$D$]		++(0,-2)
+		to[short]	++(-4,0)
 ;\end{circuitikz}
-\caption{Th\'evenin Equivalent Circuit}
-\label{fig:thev}
-\end{center}
+\caption{PN-Junction Diode Test Circuit}
+\label{fig:diodeTest}
 \end{figure}
 
-To form a Th\'evenin Equivalent circuit, two quantities must be calculated, measured, or simulated:
-\begin{itemize}
-\item $v_{oc}$: The open circuit voltage drop from terminals A to B
-\item $i_{sc}$: The short circuit current from terminals A to B
-\end{itemize}
-Once the values for $v_{oc}$ and $i_{sc}$ have been obtained, the Th\'evenin resistance $R_{TH}$ can be determined using the relation:
+\item Apply a small voltage, 0.01 V, to the test circuit; record the current through the diode.
+\item Increase the voltage to the circuit slowly and determine approximately the voltage at which the diode begins to conduct current.
+\item Sketch a plot of measured $V_{DC}$ vs. $I$ for this circuit.
+\item Now, LabVIEW will be used to more accurately measure the above diode characteristics. The LabVIEW program will automatically limit the maximum value of the current that can pass through the diode. Note that no additional settings of power supply and multimeter are required. LabVIEW will be used to control these digital instruments remotely using the general-purpose interface bus (GPIB) cable connecting the computer with the measurement equipment.
+\item Run the LabVIEW Virtual Instrument (VI) called \texttt{singleloop.vi}. You will have to select the voltage start and stop points carefully, as well as the step size to obtain an accurate $I_D(V_{PN})$ curve for the diode. \textbf{You will want to have enough data so that you can see the graph curving at the end.} The 1N4148 diode data sheet should be consulted before setting the measurement. LabVIEW data can be saved by right clicking on the graph and selecting ``export data.''
+\item To account for the accuracy of your voltage source in producing its values as set by LabVIEW, it is important to measure the voltage $V_{PN}$ directly across the diode. Doing so will give you the actual voltage across the diode for each input voltage step used in LabVIEW. This voltage $V_{PN}$, will be plotted versus $I_D$ to obtain the diode I-V curve. To measure the diode voltage $V_{PN}$, you will have to run {\tt singleloop.vi} while measuring voltage in LabVIEW. Measure the voltage across the diode using the same power supply start and stop values as step sizes that you used to measure the current, $I_D$ of the 1N1418 diode. Save this file. This $V_{PN}$ file together with the $I_D$ file you saved will allow you to plot the diode current $I_D$ vs. the diode voltage $V_{PN}$. You should measure several 1N4148 diodes if you are interested in learning about the diode-to-diode variation in the $I_D(V_{PN})$ characteristics. These variations will be reflected as variations in the extracted parameters.
+\item Keep your diode in case you need to re-characterize it later. Repeat the above
+experiment to measure the reverse-bias current-voltage characteristics of your
+diode. One way to do this is to reverse the polarity of the power supply in the
+above circuit. Run {\tt singleloop.vi} in LabVIEW a few times using different start
+and stop values and step sizes until you are satisfied with the resulting $I_D(V_{PN})$
+reverse-bias diode characteristics. Once again, be sure to measure the diode
+current $I_D$ and the diode voltage $V_{PN}$ using {\tt singleloop.vi}. When you are
+satisfied with your results, save one file for later analysis. Make sure to save the
+data as a .xls file.
+\end{enumerate}
+
+\section{Theoretical Curve of CV Characteristics of PN-Junction Diode}
+Circuit simulation is an important tool in the analysis and design of microelectronic circuits. Spice is a general-purpose circuit simulation program in which nonlinear dc, nonlinear transient, and linear ac analyses of electronic circuits are carried out. Circuits may contain resistors, capacitors, inductors, mutual inductors, independent voltage and current sources, dependent sources, lossless and lossy transmission lines, switches, diodes, BJTs, JFETs, MESFETs, and MOSFETs. The version of Spice used in the ECE Department at Duke is PSpice. You will be using PSpice over the next several labs, starting next week. Below, we include an introduction to PSpice in the form of a table of model parameters for a typical PN-Junction Diode in PSpice. In the meantime, we include here a few equations used in representing a PN-junction diode.
+
+There are a large number of parameters used in the representation of a PN-junction
+diode, but only the most commonly used parameters will be considered here. The first
+two parameters are related to the representation of the diode current-voltage behavior
+assumed to be in the following form:
 \begin{align}
-R_{TH} = \frac{v_{oc}}{i_{sc}} \label{eq:rth}
+I_D(V_{PN}) = I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T} - 1\right) \label{eq:ID}
 \end{align}
-If the circuit contains no dependent sources, then $R_{TH}$ may also be found by turning off all of the independent sources and using resistance reduction at terminals A and B.
+This relationship is written to obtain an empirical fit to experimental data and was not derived from physics-based principles. For $V_{PN} > 3\frac{k_BT}{q}$, which is
+approximately 75 mV at room temperature, Equation (\ref{eq:ID}) reduces to
+\begin{align}
+I_D(V_{PN}) \approx I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T}\right). \label{eq:redID}
+\end{align}
+The values most commonly specified include the following: the saturation current, $I_S$, the emission coefficient, $\gamma$, the series resistance $R_S$, the junction capacitance $C_j$, the transmit time, $\tau_0$ (default = 0 sec), the reverse-bias breakdown voltage, $V_B$, and the reverse-bias breakdown current, $I_D(V_B)$.
+
+\begin{table}[ht!]
+\caption{Typical PN-Junction Model Parameters}
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+Parameter & Description & Nominal Value & Unit \\ \hline \hline
+$I_S$ & Diffusion Saturation Current & $1.0 \times 10^{-14}$ & A \\ \hline
+$\gamma$ & Ideality Factor & 1.0 & --- \\ \hline
+$R_S$ & Series Resistance & 0 & $\Omega$ \\ \hline
+$E_g$ & Band Gap Energy & 1.17 & eV \\ \hline
+$V_B$ & Reverse Breakdown Voltage & $\infty$ & V \\ \hline
+$I_D(V_B)$ & Current at Breakdown Voltage & $1.0 \times 10^{-3}$ & A \\ \hline
+$\tau_0$ & Minority-Carrier Lifetime & 0 & S \\ \hline
+$C_j$ & Zero-Bias Depletion Capacitance & 0 & F \\ \hline
+\end{tabular}
+\end{table}
+
+The ideality factor $\gamma$ in Equation \ref{eq:redID} may be found from the following formula:
+\begin{align}
+\gamma = \frac{V_{PN2} - V_{PN1}}{\frac{k_bT}{q}\ln\left(\frac{I_D(V_{PN2})}{I_D(V_{PN1})}\right)}
+\end{align}
+Note that the experimentally measured ideality factor $\gamma$ often ranges from 1 to 2.
+
+A third parameter is the series resistance $R_S$. Another parameter is the band gap energy, sometimes called the energy gap, $E_G$, which will depend on the semiconductor being used and the temperature. We also have the reverse bias breakdown voltage, $V_B$, and the current at the breakdown voltage, $I_D(V_B)$. These first six parameters describe the static behavior of the PN-junction diode. Both $V_B$ and $I_D(V_B)$ are specified as positive numbers in PSpice, but in reality have negative values.
+
+The final two parameters we will mention are transit time $\tau_0$ and the zero-bias depletion capacitance $C_j$. They describe the $C_{\mathrm{pn}}(V_{PN})$ characteristics of the PN-junction diode. The total capacitance $C_{\mathrm{pn}}$ of the PN-junction diode is the sum of its depletion capacitance $C_{\mathrm{pn-dep}}(V_{PN})$ and diffusion (or storage) capacitance $C_{\mathrm{pn-diff}}(V_{PN})$. If a PN-junction diode is reverse-biased, the depletion capacitance then dominates. If the PN-junction diode is forward-biased, both the depletion and diffusion capacitances are important.
+
+% Here, we want to add a section detailing how to extract parameters from graph
 
 \newpage
-\subsection{Example Exercise}
-Simulate the circuit in Figure \ref{fig:exampleCircuit} and form its Th\'evenin Equivalent as seen from terminals A and B.
-
+\section{Explorations}
+\subsection{PN-Junction Diode Half-Wave and Bridge Rectifiers}
+One application of a PN-junction diode is to allow only the positive-going voltages of a time-varying input-voltage signal to pass to the output. Because a PN-junction diode allows current to flow through a circuit only in the forward direction, it can be used to allow the positive-going portions of an input signal to pass to the output while blocking the negative-going portions of the waveform. This kind of circuit is called a rectifier.
 \begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figures/ExampleCircuitSchematicCrop.PNG}
-\caption{Example Circuit}
-\label{fig:exampleCircuit}
-\end{center}
-\end{figure}
-
-To find the open circuit voltage, replace resistor $R_4$ with a large ``dummy'' resistance (at least \SI{100}{\mega\ohm}). Create a new simulation profile called ``thev''. Choose \textbf{Bias Point} under the \textbf{Analysis type} menu and check the box labeled \textbf{Include Detailed Bias Point Information} under the \textbf{Output File Options} heading. Press \textbf{Apply} and \textbf{OK} to save the profile. Now, run the simulation. Once the simulation is complete, follow \textbf{PSpice} $\to$ \textbf{Bias Points} and click \textbf{Enable}. Record the voltage across terminals A and B as your open circuit voltage.
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figures/OpenCircuitSchematicCrop.PNG}
-\caption{Open Circuit Voltage Schematic}
-\label{fig:openCircuit}
-\end{center}
-\end{figure}
-
-To find the short circuit current, remove $R_4$ and connect terminals A and B with a wire.
-Use the same ``thev'' simulation profile that was created to find $v_{oc}$. Run the simulation. Once the simulation is complete, enable bias points. This will show the node voltages and currents throughout the circuit. Record the current between terminals A and B as your short circuit current, $i_{sc}$.
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figures/ShortCircuitSchematicCrop.PNG}
-\caption{Short Circuit Voltage Schematic}
-\label{fig:shortCircuit}
-\end{center}
-\end{figure}
-
-Calculate the Th\'evenin resistance using Equation \ref{eq:rth}. Now, re-create Figure \ref{fig:thev} in PSpice using your $v_{oc}$ and $R_{TH}$ values. Place $R_4$ back into your first circuit and place a resistor of equal value between terminals A and B in your Th\'evenin Equivalent. Run the simulation using the same ``thev'' profile. Once the simulation is complete, enable bias points. Check to make sure the terminal voltages and currents match for both circuits.
-
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=0.5\textwidth]{figures/TheveninEquivalentExampleCrop.PNG}
-\caption{Th\'evenin Equivalent Schematic}
-\label{fig:thevCircuit}
-\end{center}
-\end{figure}
-
-\newpage
-\subsection{Challenge Exercise: Th\'evenin Equivalent Circuit}
-Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find its Th\'evenin Equivalent circuit as seen from nodes A and B. In your lab report, be sure to include all voltages and currents present in the Exercise Circuit and its Th\'evenin Equivalent, as well as a short explanation of each step you took in finding the Th\'evenin Equivalent.
-\begin{figure}[ht!]
-\begin{center}
-\begin{circuitikz}
-%\ctikzset{grounds/scale=1.5}
+\centering
+\begin{circuitikz}[scale=2]
+\ctikzset{resistors/scale=1.5,batteries/scale=1.5,diodes/scale=1.5}
 \draw
-(0,0) 	to[short] 		++(4,0)
-		node[ground] {}
-		to[short] 		++(4,0)
-		to[R, l=$R_5$, a=\SI{500}{\ohm}]	++(0,4)
-		to[R, l=$R_3$, a=\SI{200}{\ohm}]	++(0,4)
-		to[short]		++(-8,0)
-		to[battery, a=$V_1$, l=\SI{1}{\volt}]	++(0,-8)
-(4,0)	to[R, *-, l=$R_2$, a=\SI{1}{\kilo\ohm}]			++(0,4)
-		to[R, -*, l=$R_1$, a=\SI{100}{\ohm}]			++(0,4)
-(4,4)	to[R, *-*, l=$R_4$, a=\SI{300}{\ohm}]			++(4,0)
-(3.5,4) node[] {\textcolor{red}{A}}
-(8.5,4) node[] {\textcolor{red}{B}}
+(0,2) 	to[battery, l^=${v_S=V_P\sin\omega t}$, i=$i_D$] ++(0,-2)
+(0,2)	to[D*, l_=$D$]		++(4,0)
+		to[R, l_=$R$, v^=$v_o$]		++(0,-2)
+		to[short]	++(-4,0)
 ;\end{circuitikz}
-\caption{Exercise Circuit}
-\label{fig:exerciseCircuit}
-\end{center}
+\caption{PN-Junction Diode Half-Wave Rectifier}
+\label{fig:halfRec}
 \end{figure}
-%____________________________________________________________________________
-%
-%	Grading Rubric
-%____________________________________________________________________________
+\begin{enumerate}
+\item Build a half-wave diode rectifier circuit using a Si 1N4148 diode, as shown in Figure
+3. Use a 5 V$_{\mathrm{pp}}$ sinusoidal input waveform from the function generator. Use a
+resistor value of $\SI{1}{\kilo\ohm}$ at the output.
+\begin{itemize}
+\item[$\square$] Observe the output voltage of the circuit as measured across the resistor on the oscilloscope. You should see that the positive-going portions of the input-voltage waveform are allowed to pass to the output node, while the negative-going portions of the waveform are not.
+\item[$\square$] Measure the peak voltage from the ground reference (GND or 0 V) on the oscilloscope screen to V$_{\mathrm{peak}}$ of the rectified waveform. What do you notice about the maximum voltage of the rectified waveform? Is it greater than or smaller than the maximum peak voltage of the input waveform? What is the difference in Volts? Is this difference value a characteristic of the diode behavior?
+\item[$\square$] Lastly, add a large capacitor (1 uF) to the output of this circuit; the capacitor should be connected from $v_o$+ to GND (i.e. in parallel with the output resistor, R). Now observe the output waveform. What has happened? How could this circuit be useful?
+\end{itemize}
+\item Repeat the above experiment using a Ge diode.
+\end{enumerate}
+It is possible to improve upon the above circuit by using both halves of the sinusoidal input voltage. To do so, more than one diode is required. An intermediate improvement would be to add a second diode: this circuit is referred to generally as Full Wave Rectifier. A common and even better implementation of the Full Wave Rectifier utilizes four diodes: it is referred to as a Bridge Rectifier. (The reason it is even better than a common Full Wave Rectifier is because it does not require a centrally tapped DC reference point.) Figure \ref{fig:bridgeRec} shows a Bridge Rectifier circuit. To provide a new ground for the full-wave rectified circuit, a transformer between the power source and the diodes is required. This allows both the positive- and negative-going portions of the input-voltage waveform to pass to the output node.
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\ctikzset{quadpoles/transformer core/inner=1, quadpoles/transformer core/width=1, quadpoles/transformer core/height=2.865}
+\draw
+(0,0)	node[transformer core, anchor=A1](T){}
+(T.base) node{$1:1$}
+(T.A1)	to[short] ++(-4,0)
+		to[battery, l^=${v_S=V_P\sin\omega t}$] (-4,|-T.A2)
+		to[short] (T.A2)
+(T.B2)	to[short] ++(4.6,0)
+		to[D*, *-*, l_=$D_4$] ++(2,2)
+		to[short] ++(1,0)
+		to[R, l^=$R_L$] ++(0,-2) node[ground] {}
+(T.B1)	to[short] ++(4.6,0)
+		to[D*, l^=$D_3$] ++(2,-2)
+(4,-2)	to[short] ++(-1,0) node[ground] {}
+(4,-2)	to[D*, -*, l^=$D_2$] ++(2,2)
+(4,-2)	to[D*, *-, l_=$D_1$] ++(2,-2)	
+;\end{circuitikz}
+\caption{PN-Junction Diode Bridge Rectifier}
+\label{fig:bridgeRec}
+\end{figure}
+
+\newpage
+\subsection{LED Lighting}
+A recent technological application of LEDs can be seen in area of new, efficient lighting. In this Exploration, you will look at exactly how much more efficient consumer LED lights really are as compared to standard incandescent light bulbs. You will need to design a phototransistor circuit and build it on a standard breadboard of testing purposes. You will also measure the I-V characteristics of an LED from the light bulb after taking apart the bulb. The I-V curve of the LED from the bulb will be compared to the Silicon 1N4148 diode you tested in the laboratory exercises.
+\begin{enumerate}
+\item First, plug the power measurement device into a standard socket in the power-strip at your lab bench. This unit will indicate how much power a device in drawing when plugged in.
+\item Obtain a standard incandescent light bulb. Screw it in to the desk lamp provided in lab. Now, plug in the lamp into the outlet with power measurement installed. Turn on the light bulb.
+\begin{itemize}
+\item[$\square$] Record how much power is being drawn.
+\end{itemize}
+\item It is important to measure the luminous output of the light bulb. To do so, build a circuit using a photodiode available in lab to measure current flow.
+\begin{itemize}
+\item[$\square$] Measure Current flow when light bulb is on
+\item[$\square$] Record distance of the light source from phototransistor
+\end{itemize}
+\item Repeat the above steps for the LED light bulb making sure to record power drawn from the LED light bulb when plugged in and the current flow through the photodiode circuit you designed. To make a fair comparison of luminous intensity of the LED lamp, the LED light and phototransistor should be placed at the same source distance as the incandescent light bulb was above.
+\item Be sure to take a look at the LED light bulb that has been disassembled for you. Note that the bulb consists of several LED pads arranged on a central metal shaft. This metal shaft serves the dual purpose of positioning the LEDs around the glass bulb and provides a heat-sinking mechanism. The electrical circuit that powers these LEDs produces a 220VDC voltage. The LEDs pads when observed closely consist of many individual LEDs. Several of these LED pads have been carefully removed for testing.
+\end{enumerate}
+
+\newpage
+\subsection{Colored LEDs}
+LEDs are available in a variety of colors and wavelengths to suit the needed application. For instance, different colors may provide better feature visibility depending upon lighting conditions. Colored LEDs have been used extensively in the automotive industry, aviation, for traffic signals, and in multi-color displays. In optical applications, a precisely known spectrum allows tightly matched filters to be used to separate informative bandwidth or to reduce disturbing effects of ambient light. LEDs usually operate at comparatively low working temperatures, simplifying heat management and dissipation. This allows the use of plastic lenses, filters, and diffusers. LEDs are durable and robust lighting sources that last much longer the incandescent light sources and can operate in harsh environment. Even weather and waterproof units have been designed for use in the food, beverage, and oil industries. In this Exploration, you will look at the I-V characteristics of several colored LEDs and compare them to the Silicon diode characterized in lab: you will compare the I-V characteristics of Red, Yellow, and Green LEDs available in the laboratory to the Silicon 1N4148 diode you tested in the laboratory.
+
+Create forward-biased I-V curves for the Red, Yellow, and Green LEDs available in lab. Use the circuit set-up described in the laboratory exercise as well as the automated test and measurement scripts provided in LabVIEW to take measurements of the LEDs. Measure Red, Yellow, and Green LED I-V curves and plot them on the same graph as the Silicon 1N4148 diode measured in the laboratory exercise above. For each of the LEDs, determine 
+\renewcommand\labelitemi{$\square$}
+\begin{itemize}
+\item the `knee' voltage where the diode turns on, 
+\item the saturation current, $I_S$, 
+\item the ideality factor, $\gamma$,
+\item the series resistance, $R_S$,
+\item the current at which the LED begins to become damaged, and 
+\item the voltage and current when the LED completely stops functioning (i.e. blow it up---this may require as much as 10V). 
+\end{itemize}
+In order to destroy an LED, you may need to use {\tt singleloop25.vi}, which allows LABVIEW to control the E3631A Power Supply's $+25$ V source. After you have destroyed or damaged an LED, be sure to dispose of it to prevent it from getting mixed back in with good LEDs in the lab.
+
+\newpage
+\section{Questions}
+\begin{enumerate}
+\item Define all parameters and variables in Equation (\ref{eq:redID}).
+\item Plot the $I_D(V_{PN})$ characteristics obtained using LabVIEW on a log-linear plot. Note that the term `log-linear' is used to describe a semi-log plot with a logarithmic scale on the y-axis and a linear scale on the x-axis. The y-axis label should read `1N4148 Diode Current, $I_D$ (A)' and the x-axis label should read `Diode Voltage, $V_{PN}$ (V).' Make sure to have enough data points to generate a smooth curve. Use the measured value of $V_{PN}$ (from your $V_{PN}$ vs $V$ plot) across the diode in this plot, i.e., do not assume that the voltages supplied by the power supply are those across the diode.
+\item From the above log-linear plot of the I-V characteristics of the 1N4148, determine the saturation current, $I_S$, the ideality factor, $\gamma$, and the series resistance, $R_S$. (refer to the slides on Sakai)
+\item To the above plot, add the theoretical PN-junction diode $I_D(V_{PN})$ characteristic curve. Use the parameters calculated in question 3. Vary the parameters, if necessary, to match the \textbf{log-linear} portion of the experimentally measured data.
+\item Comment on the values of $I_S$ and $\gamma$ that yield the best fit to the data. How do your experimental and varied values compare with those given in the diode manufacturer data sheets? (For $R_s$ use Figure 2, curve 2, on the Vishay datasheet. $I_S$ can be found under reverse current, and $\gamma$ should be about 2.3.)
+\end{enumerate}
+\textit{Finally, be sure to add the answers to all questions marked by $\square$ from your chosen Exploration section.}
+
 \newpage
 \phantomsection
 \addcontentsline{toc}{section}{Grading Rubric}
@@ -401,33 +257,22 @@ Create the schematic in Figure \ref{fig:exerciseCircuit} using PSpice and find i
 \hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 3 Grading Rubric}
+\caption{ECE 230L Laboratory 2 Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{DC Analysis}			& \textbf{10} \\
-Circuit Diagram 				& 5 \\
-Waveforms 						& 5 \\ \hline
-\textbf{AC Analysis}			& \textbf{10} \\
-Circuit Diagram 				& 5 \\
-Waveforms 						& 5 \\ \hline
-\textbf{Transient Analysis}		& \textbf{10} \\
-Circuit Diagram 				& 5 \\ 
-Waveforms 						& 5 \\ \hline
-\textbf{Practice Exercise}		& \textbf{35} \\
-Circuit Diagram 				& 5 \\
-DC Analysis						& 10 \\
-AC Analysis						& 10 \\
-Transient Analysis				& 10 \\ \hline
-\textbf{Th\'evenin Equivalent Example Circuit} & \textbf{20} \\
-Circuit Diagram					& 10 \\
-$V_{OC}$ and $I_{SC}$ Labeled	& 5 \\
-Correct $R_{TH}$ Value			& 5 \\ \hline
-\textbf{Th\'evenin Equivalent Challenge Circuit} & \textbf{15} \\
-Circuit Diagram					& 5 \\
-$V_{OC}$ and $I_{SC}$ Labeled	& 5 \\
-Correct $R_{TH}$ Value			& 5 \\ \hline \hline
-Total							& 100 \\ \hline
+Circuit Diagram (all components labeled) 			& 2 \\ \hline
+Sketch and Knee Voltage								& 4 \\ \hline
+Plots of $I_D(V_{DC})$								& 7 \\ \hline
+Series Resistor Value to Prevent Diode Damage		& 2 \\ \hline
+Question 1											& 10 \\ \hline
+Question 2											& 10 \\ \hline
+Question 3											& 10 \\ \hline
+Question 4											& 10 \\ \hline
+Question 5											& 10 \\ \hline
+Exploration											& 30 \\ \hline
+Quality of Thought/Analysis							& 5 \\ \hline \hline
+Total												& 100 \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page

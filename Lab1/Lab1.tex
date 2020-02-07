@@ -204,7 +204,7 @@ The Agilent DSOX1102G oscilloscope has a square wave reference signal available 
 
 In the procedure that follows, we calibrate the probe.
 \begin{enumerate}
-\item Attach the probe tips to the probe compensation terminal and connect the probe to an input of the scope. 
+\item Attach the probe tips to the probe compensation terminal and connect the probe to an input of the scope. Check to make sure the probe is at 10x magnification.
 \item View the square wave reference signal on the screen and make adjustments on the probe capacitance using a small screw driver so that the square waves on the scope screen look square.
 \item Probe compensation is now complete!
 \end{enumerate}
@@ -228,7 +228,7 @@ To solve for $\tau = RC$, we use the equation
 \begin{align}
 \Delta V_C = \Delta V_{\mathrm{max}} \cdot e^{-t / RC}.
 \end{align} 
-However, we must first find $\Delta V_{\mathrm{max}}$. This is the difference between the maximum voltage $V_{\mathrm{max}}$ on the left side of the wave and the stable voltage $V_{\mathrm{stable}}$ on the right side of the wave. This value should be positive for over-compensated probes and negative for under-compensated probes (and 0 for well-compensated probes). Next, we find $\Delta V_C$ for an under-compensated probe by using 
+However, we must first find $\Delta V_{\mathrm{max}}$. This is the difference between the maximum voltage $V_{\mathrm{max}}$ on the left side of the wave and the stable voltage $V_{\mathrm{stable}}$ on the right side of the wave. This value should be positive for under-compensated probes and negative for over-compensated probes (and 0 for well-compensated probes). Next, we find $\Delta V_C$ for an under-compensated probe by using 
 \begin{align}
 \Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-t / \tau}. \label{eq:tau} \\
 \intertext{Now, we set t = $\tau$}

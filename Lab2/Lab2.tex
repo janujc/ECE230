@@ -4,276 +4,164 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 2}{Fall 2019} % Change Semester and Year as needed
+\makeheader{Lab X}{Spring 2019}
 \begin{center}
-\textbf{\huge ECE 230L - LAB 2}\\~\\
-\textbf{\large ELECTRICAL CHARACTERIZATION AND PARAMETER EXTRACTION OF SILICON PN-JUNCTION DIODES}\\~\\
+\textbf{\huge ECE 230L - LAB X}\\~\\
+\textbf{\large SILICON WAFER CHARACTERIZATION \\
+RESISTIVITY, CARRIER CONCENTRATION, MOBILITY}\\~\\
 \rule{6.5in}{0.5mm}\\
 \end{center}
 
-\tableofcontents
+\textit{Note: The pre-lab for this lab should be completed before the FIRST lab section occurring the week of your scheduled lab.  This pre-lab consists of entering your average measured 4-point probe sheet resistance, sample thickness, and resistivity values for each of the 3 samples probed in the SMIF.  To complete this laboratory, the entire class data set will be used.  Type in your data at the link provided on the ECE 230L Sakai site by the due date, above using the online data entry link provided on Sakai.}
 
-\listoffigures
+\tableofcontents
 
 \newpage
 %____________________________________________________________________________
 %
 %	BODY
 %____________________________________________________________________________
+\phantomsection
+\section*{Pre-Lab: Calculate Resistivity from Probe Measurement}
+\addcontentsline{toc}{section}{Pre-Lab}
+\markboth{Pre-Lab}{Pre-Lab}
+
+The goal of this portion of the laboratory is to determine, from the sheet resistance data measured for the Silicon wafers in the SMIF, the resistivity of each of the wafers.
+
+The four-point probe Van der Pauw method that was used in the SMIF provided a sheet resistance value.  This value was calculated by the instrument by providing a small current $(I)$ through the 4 probes which are equally spaced on the sample and measured the voltage $(V)$ across the two inner probes.  The $V/I$ values reported by the instrument are in units of Ohms $(\Omega)$.  These values are called the sample's sheet resistance.  For thick semiconductor samples like the ones measured in the SMIF---where the thickness of the wafer $(W)$ is much smaller than the width and length of the sample---the resistivity of the sample is given by the equation
+\begin{align}
+\rho = \frac{V}{I} t
+\end{align}
+where $V/I$ is the sample's sheet resistance $(\Omega)$ and $t$ is the sample's thickness (cm).
+
+Calculate the resistivity of each of the wafers that you measured in the SMIF using the above equation.  Enter these values along with the sheet resistance and sample thickness for each of the wafers that you measured in the SMIF.  Enter your values by clicking \href{https://duke.qualtrics.com/jfe/form/SV_bkjCbShas8s2N13}{here} or going to the url \url{https://duke.qualtrics.com/jfe/form/SV_bkjCbShas8s2N13}.
+
+\newpage
 \section{Objectives of this Laboratory}
 The objectives of this laboratory session are as follows:
 \begin{itemize}
-\item To measure the $I_D(V_{PN})$ current-voltage characteristics of a PN-junction diode using standard test and measurement equipment,
-\item To measure the $I_D(V_{PN})$ current-voltage characteristics of a PN-junction diode using the LabVIEW platform,
-\item To evaluate the limitations of the electrical measurements as compared to theory,
-\item To explore one technological application of PN-junction diodes in the form of either power electronics (half-wave and bridge rectifiers) or LED lighting
+\item Measure the sheet resistance of several Silicon wafers using a 4-point probe Van der Pauw measurement tool
+\item Using wafer thickness, determine the resistivity of Silicon wafers
+\item Determine Carrier Concentration of Silicon Wafers
+\item Determine $\mu$ of Silicon Wafers
+\item Obtain class data and average class values
+\item Determine number and values of doped wafers used---determine $\sigma$ of each
 \end{itemize}
-\textit{Note: A detailed introduction to LabVIEW can be found on Sakai.}
-
-\section{Electrical Characterization of Silicon PN-Junction Diode}
-In this laboratory, you will measure the static current-voltage $I_D(V_{PN})$ characteristics of silicon PN-junction diode 1N4148 manually with standard test and measurement equipment and using LabVIEW. The measurement set-up includes the following:
-\begin{itemize}
-\item JAMECO JE25 Solderless Breadboard
-\item JAMECO Wire box with wires (various sizes and colors)
-\item Agilent E3631A Triple Output DC Power Supply
-\item Agilent 34410A Multimeter
-\end{itemize}
-A cross-section and circuit symbol of the PN-junction diode is shown in Figure \ref{fig:diode}.
-\begin{figure}[ht!]
-\centering
-\begin{tabular}{c}
-\begin{tikzpicture}[scale=2,european]
-\ctikzset{resistors/scale=3, resistors/thickness=6}
-\draw (0,0) node[anchor=south] {Anode}
-			to[R, o-o] ++(4.5,0)
-			to node[anchor=south] {Cathode} ++(0,0);
-\fill[black] (2.25,0.33)	rectangle (2.30, -0.33);
-\draw 	(1.85,0)	node[anchor=center] {$P$}
-		(2.70,0)	node[anchor=center] {$N$}
-;\end{tikzpicture} \\
-\vspace{5mm}\\
-\begin{circuitikz}[scale=2]
-\ctikzset{diodes/scale=2, grounds/scale=2}
-\draw 
-(0,0) 	node[anchor=south] {Anode}
-		to [D*, o-o] ++(4.5,0)
-		to node[anchor=south] {Cathode} ++(0,0)
-;\end{circuitikz}
-\end{tabular}
-\caption[PN-Junction Diode Schematics]{PN-Junction Diode Cross-Section and Symbol}
-\label{fig:diode}
-\end{figure}
-
-The arrow of the diode indicates the direction of the current.
-
-Using the LabVIEW software installed on your laboratory workstation, obtain the $I_D(V_{PN})$ static current-voltage characteristics of the silicon PN-junction diode 1N4148 by carrying out the following steps:
-\begin{enumerate}
-\item Obtain a 1N4148 diode from the parts bins.
-\item Build the circuit shown in Figure \ref{fig:diodeTest} using the E3631A Power Supply's +6 V source and the 34410A Digital Multimeter as an Ammeter with the diode connected in series. The maximum continuous current that the 1N4148 diode can conduct is 200 mA (see datasheet). An alternative way to protect the diode from excessive currents is to use a series resistor. Because the diode current depends exponentially on its bias voltage, if the power-supply voltage were inadvertently set to its highest voltage level (6 V for the 6 V supply used in this experiment), an excessive current could flow through the diode which would damage it permanently. The resistor prevents this condition from taking place. 
-
-\begin{itemize}
-\item[$\square$] What is the value of the series resistor that you must choose for the 1N4148 diode (with a 200 mA maximum current) attached to this 6 V power supply?
-\end{itemize}
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
-\draw
-(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
-(0,2)	to[R, l_=$R$]		++(2,0)
-		to[rmeter, t=V] ++(2,0)
-		to[D*, l_=$D$]		++(0,-2)
-		to[short]	++(-4,0)
-;\end{circuitikz}
-\caption{PN-Junction Diode Test Circuit}
-\label{fig:diodeTest}
-\end{figure}
-
-\item Apply a small voltage, 0.01 V, to the test circuit; record the current through the diode.
-\item Increase the voltage to the circuit slowly and determine approximately the voltage at which the diode begins to conduct current.
-\item Sketch a plot of measured $V_{DC}$ vs. $I$ for this circuit.
-\item Now, LabVIEW will be used to more accurately measure the above diode characteristics. The LabVIEW program will automatically limit the maximum value of the current that can pass through the diode. Note that no additional settings of power supply and multimeter are required. LabVIEW will be used to control these digital instruments remotely using the general-purpose interface bus (GPIB) cable connecting the computer with the measurement equipment.
-\item Run the LabVIEW Virtual Instrument (VI) called \texttt{singleloop.vi}. You will have to select the voltage start and stop points carefully, as well as the step size to obtain an accurate $I_D(V_{PN})$ curve for the diode. \textbf{You will want to have enough data so that you can see the graph curving at the end.} The 1N4148 diode data sheet should be consulted before setting the measurement. LabVIEW data can be saved by right clicking on the graph and selecting ``export data.''
-\item To account for the accuracy of your voltage source in producing its values as set by LabVIEW, it is important to measure the voltage $V_{PN}$ directly across the diode. Doing so will give you the actual voltage across the diode for each input voltage step used in LabVIEW. This voltage $V_{PN}$, will be plotted versus $I_D$ to obtain the diode I-V curve. To measure the diode voltage $V_{PN}$, you will have to run {\tt singleloop.vi} while measuring voltage in LabVIEW. Measure the voltage across the diode using the same power supply start and stop values as step sizes that you used to measure the current, $I_D$ of the 1N1418 diode. Save this file. This $V_{PN}$ file together with the $I_D$ file you saved will allow you to plot the diode current $I_D$ vs. the diode voltage $V_{PN}$. You should measure several 1N4148 diodes if you are interested in learning about the diode-to-diode variation in the $I_D(V_{PN})$ characteristics. These variations will be reflected as variations in the extracted parameters.
-\item Keep your diode in case you need to re-characterize it later. Repeat the above
-experiment to measure the reverse-bias current-voltage characteristics of your
-diode. One way to do this is to reverse the polarity of the power supply in the
-above circuit. Run {\tt singleloop.vi} in LabVIEW a few times using different start
-and stop values and step sizes until you are satisfied with the resulting $I_D(V_{PN})$
-reverse-bias diode characteristics. Once again, be sure to measure the diode
-current $I_D$ and the diode voltage $V_{PN}$ using {\tt singleloop.vi}. When you are
-satisfied with your results, save one file for later analysis. Make sure to save the
-data as a .xls file.
-\end{enumerate}
-
-\section{Theoretical Curve of CV Characteristics of PN-Junction Diode}
-Circuit simulation is an important tool in the analysis and design of microelectronic circuits. Spice is a general-purpose circuit simulation program in which nonlinear dc, nonlinear transient, and linear ac analyses of electronic circuits are carried out. Circuits may contain resistors, capacitors, inductors, mutual inductors, independent voltage and current sources, dependent sources, lossless and lossy transmission lines, switches, diodes, BJTs, JFETs, MESFETs, and MOSFETs. The version of Spice used in the ECE Department at Duke is PSpice. You will be using PSpice over the next several labs, starting next week. Below, we include an introduction to PSpice in the form of a table of model parameters for a typical PN-Junction Diode in PSpice. In the meantime, we include here a few equations used in representing a PN-junction diode.
-
-There are a large number of parameters used in the representation of a PN-junction
-diode, but only the most commonly used parameters will be considered here. The first
-two parameters are related to the representation of the diode current-voltage behavior
-assumed to be in the following form:
-\begin{align}
-I_D(V_{PN}) = I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T} - 1\right) \label{eq:ID}
-\end{align}
-This relationship is written to obtain an empirical fit to experimental data and was not derived from physics-based principles. For $V_{PN} > 3\frac{k_BT}{q}$, which is
-approximately 75 mV at room temperature, Equation (\ref{eq:ID}) reduces to
-\begin{align}
-I_D(V_{PN}) \approx I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T}\right). \label{eq:redID}
-\end{align}
-The values most commonly specified include the following: the saturation current, $I_S$, the emission coefficient, $\gamma$, the series resistance $R_S$, the junction capacitance $C_j$, the transmit time, $\tau_0$ (default = 0 sec), the reverse-bias breakdown voltage, $V_B$, and the reverse-bias breakdown current, $I_D(V_B)$.
-
+~\\ Below, we have included a table with all of the symbols used in this lab manual and their definitions for your convenience.
+\def\arraystretch{1.5}
 \begin{table}[ht!]
-\caption{Typical PN-Junction Model Parameters}
+\caption{Relevant notation used throughout lab manual}
 \centering
-\begin{tabular}{|c|c|c|c|} \hline
-Parameter & Description & Nominal Value & Unit \\ \hline \hline
-$I_S$ & Diffusion Saturation Current & $1.0 \times 10^{-14}$ & A \\ \hline
-$\gamma$ & Ideality Factor & 1.0 & --- \\ \hline
-$R_S$ & Series Resistance & 0 & $\Omega$ \\ \hline
-$E_g$ & Band Gap Energy & 1.17 & eV \\ \hline
-$V_B$ & Reverse Breakdown Voltage & $\infty$ & V \\ \hline
-$I_D(V_B)$ & Current at Breakdown Voltage & $1.0 \times 10^{-3}$ & A \\ \hline
-$\tau_0$ & Minority-Carrier Lifetime & 0 & S \\ \hline
-$C_j$ & Zero-Bias Depletion Capacitance & 0 & F \\ \hline
+\begin{tabular}{|c|l|l|} \hline
+Symbol 	& Definition							& Unit		\\ \hline
+$R$ 	& Resistance 							& $\Omega$	\\ \hline
+$L$		& Length								& cm		\\ \hline
+$A$		& Area									& cm$^2$	\\ \hline
+$t$		& Thickness								& cm		\\ \hline
+$I$		& Current								& A			\\ \hline
+$V$		& Voltage								& V			\\ \hline	
+$\rho$ 	& Sample resistivity 					& $\Omega \mbox{-cm}$ \\ \hline
+$e$ 	& Magnitude of the electronic charge 	& C 		\\ \hline
+$\mu_p$ & Hole mobility 						& cm$^2 / V_s$ \\ \hline
+$\mu_n$ & Electron mobility 					& cm$^2 / V_s$ \\ \hline
+$n,p$ 	& Carrier concentration 				& cm$^{-3}$	\\ \hline
+$N_A$	& Acceptor Concentration 				& cm$^{-3}$	\\ \hline
+$N_D$ 	& Donor Concentration 					& cm$^{-3}$	\\ \hline
+$N_I$	& Impurity Concentration 				& cm$^{-3}$	\\ \hline
 \end{tabular}
 \end{table}
 
-The ideality factor $\gamma$ in Equation \ref{eq:redID} may be found from the following formula:
+\newpage
+\section{Determining Carrier Concentration for Resistivity Data}
+
+All of the samples measured in the SMIF were p-type Boron doped.  To determine the carrier concentration, $N_A$, a few assumptions need to be made.  
+
+Assumptions:
+\begin{enumerate}
+\item $\mu_p = 480 \mbox{ cm}^2/V_s$ (see Table 5.1, pp. 158 in Neaman text)
+\item $N_D=0$
+\item Complete ionization 
+\end{enumerate}
+
+Along with these assumptions, we can use
 \begin{align}
-\gamma = \frac{V_{PN2} - V_{PN1}}{\frac{k_bT}{q}\ln\left(\frac{I_D(V_{PN2})}{I_D(V_{PN1})}\right)}
+\rho = \frac{1}{e(\mu_nn + \mu_pp)}
 \end{align}
-Note that the experimentally measured ideality factor $\gamma$ often ranges from 1 to 2.
 
-A third parameter is the series resistance $R_S$. Another parameter is the band gap energy, sometimes called the energy gap, $E_G$, which will depend on the semiconductor being used and the temperature. We also have the reverse bias breakdown voltage, $V_B$, and the current at the breakdown voltage, $I_D(V_B)$. These first six parameters describe the static behavior of the PN-junction diode. Both $V_B$ and $I_D(V_B)$ are specified as positive numbers in PSpice, but in reality have negative values.
+to determine carrier concentration. Here, $e$ is the magnitude of the electronic charge, which is always $1.6 \times 10^{-19}$ C.
 
-The final two parameters we will mention are transit time $\tau_0$ and the zero-bias depletion capacitance $C_j$. They describe the $C_{\mathrm{pn}}(V_{PN})$ characteristics of the PN-junction diode. The total capacitance $C_{\mathrm{pn}}$ of the PN-junction diode is the sum of its depletion capacitance $C_{\mathrm{pn-dep}}(V_{PN})$ and diffusion (or storage) capacitance $C_{\mathrm{pn-diff}}(V_{PN})$. If a PN-junction diode is reverse-biased, the depletion capacitance then dominates. If the PN-junction diode is forward-biased, both the depletion and diffusion capacitances are important.
+Given the above assumptions, the equation for $\rho$ reduces to
+\begin{align}
+\rho = \frac{1}{e \mu_p N_A}.
+\end{align}
 
-% Here, we want to add a section detailing how to extract parameters from graph
+\begin{itemize}
+\item[$\square$] Calculate the carrier concentration, $N_A$, for the entire class data set. Since we are assuming that $N_D = 0$, the $N_A$ value is exactly the impurity concentration, $N_I$. 
+\end{itemize}
+
+\section{Plot of Resistivity vs. Impurity Concentration}
+
+Plots of resistivity, $\rho$ versus impurity concentration, $N_I$ are called Irwin curves.  They are used to estimate the carrier concentrations of samples once the sample's resistivity is known.
+
+\begin{itemize}
+\item[$\square$] Plot on a log-log scale the resistivity, $\rho$ versus impurity concentration, $N_I$ (in this case, the same as the carrier concentration, $N_A$) for the class data set.  Your plot should resemble Figure 5.4 on pp. 165 of the Neamen text.  Remember that the SMIF samples were all p-type (Boron) doped.  This plot should have many values of $\rho$ and $N_I$ based on the class data.
+\item[$\square$] Determine a curve-fit to this data from the above plot including $\pm$ error ranges.  Justify the $\pm$ error ranges used.  Does the expected error range vary with carrier concentration?
+\end{itemize}
 
 \newpage
-\section{Explorations}
-\subsection{PN-Junction Diode Half-Wave and Bridge Rectifiers}
-One application of a PN-junction diode is to allow only the positive-going voltages of a time-varying input-voltage signal to pass to the output. Because a PN-junction diode allows current to flow through a circuit only in the forward direction, it can be used to allow the positive-going portions of an input signal to pass to the output while blocking the negative-going portions of the waveform. This kind of circuit is called a rectifier.
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}[scale=2]
-\ctikzset{resistors/scale=1.5,batteries/scale=1.5,diodes/scale=1.5}
-\draw
-(0,2) 	to[battery, l^=${v_S=V_P\sin\omega t}$, i=$i_D$] ++(0,-2)
-(0,2)	to[D*, l_=$D$]		++(4,0)
-		to[R, l_=$R$, v^=$v_o$]		++(0,-2)
-		to[short]	++(-4,0)
-;\end{circuitikz}
-\caption{PN-Junction Diode Half-Wave Rectifier}
-\label{fig:halfRec}
-\end{figure}
-\begin{enumerate}
-\item Build a half-wave diode rectifier circuit using a Si 1N4148 diode, as shown in Figure
-3. Use a 5 V$_{\mathrm{pp}}$ sinusoidal input waveform from the function generator. Use a
-resistor value of $\SI{1}{\kilo\ohm}$ at the output.
-\begin{itemize}
-\item[$\square$] Observe the output voltage of the circuit as measured across the resistor on the oscilloscope. You should see that the positive-going portions of the input-voltage waveform are allowed to pass to the output node, while the negative-going portions of the waveform are not.
-\item[$\square$] Measure the peak voltage from the ground reference (GND or 0 V) on the oscilloscope screen to V$_{\mathrm{peak}}$ of the rectified waveform. What do you notice about the maximum voltage of the rectified waveform? Is it greater than or smaller than the maximum peak voltage of the input waveform? What is the difference in Volts? Is this difference value a characteristic of the diode behavior?
-\item[$\square$] Lastly, add a large capacitor (1 uF) to the output of this circuit; the capacitor should be connected from $v_o$+ to GND (i.e. in parallel with the output resistor, R). Now observe the output waveform. What has happened? How could this circuit be useful?
-\end{itemize}
-\item Repeat the above experiment using a Ge diode.
-\end{enumerate}
-It is possible to improve upon the above circuit by using both halves of the sinusoidal input voltage. To do so, more than one diode is required. An intermediate improvement would be to add a second diode: this circuit is referred to generally as Full Wave Rectifier. A common and even better implementation of the Full Wave Rectifier utilizes four diodes: it is referred to as a Bridge Rectifier. (The reason it is even better than a common Full Wave Rectifier is because it does not require a centrally tapped DC reference point.) Figure \ref{fig:bridgeRec} shows a Bridge Rectifier circuit. To provide a new ground for the full-wave rectified circuit, a transformer between the power source and the diodes is required. This allows both the positive- and negative-going portions of the input-voltage waveform to pass to the output node.
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}
-\ctikzset{quadpoles/transformer core/inner=1, quadpoles/transformer core/width=1, quadpoles/transformer core/height=2.865}
-\draw
-(0,0)	node[transformer core, anchor=A1](T){}
-(T.base) node{$1:1$}
-(T.A1)	to[short] ++(-4,0)
-		to[battery, l^=${v_S=V_P\sin\omega t}$] (-4,|-T.A2)
-		to[short] (T.A2)
-(T.B2)	to[short] ++(4.6,0)
-		to[D*, *-*, l_=$D_4$] ++(2,2)
-		to[short] ++(1,0)
-		to[R, l^=$R_L$] ++(0,-2) node[ground] {}
-(T.B1)	to[short] ++(4.6,0)
-		to[D*, l^=$D_3$] ++(2,-2)
-(4,-2)	to[short] ++(-1,0) node[ground] {}
-(4,-2)	to[D*, -*, l^=$D_2$] ++(2,2)
-(4,-2)	to[D*, *-, l_=$D_1$] ++(2,-2)	
-;\end{circuitikz}
-\caption{PN-Junction Diode Bridge Rectifier}
-\label{fig:bridgeRec}
-\end{figure}
+\section{Estimating expected Resistivity given a Carrier Concentration}
 
-\newpage
-\subsection{LED Lighting}
-A recent technological application of LEDs can be seen in area of new, efficient lighting. In this Exploration, you will look at exactly how much more efficient consumer LED lights really are as compared to standard incandescent light bulbs. You will need to design a phototransistor circuit and build it on a standard breadboard of testing purposes. You will also measure the I-V characteristics of an LED from the light bulb after taking apart the bulb. The I-V curve of the LED from the bulb will be compared to the Silicon 1N4148 diode you tested in the laboratory exercises.
-\begin{enumerate}
-\item First, plug the power measurement device into a standard socket in the power-strip at your lab bench. This unit will indicate how much power a device in drawing when plugged in.
-\item Obtain a standard incandescent light bulb. Screw it in to the desk lamp provided in lab. Now, plug in the lamp into the outlet with power measurement installed. Turn on the light bulb.
-\begin{itemize}
-\item[$\square$] Record how much power is being drawn.
-\end{itemize}
-\item It is important to measure the luminous output of the light bulb. To do so, build a circuit using a photodiode available in lab to measure current flow.
-\begin{itemize}
-\item[$\square$] Measure Current flow when light bulb is on
-\item[$\square$] Record distance of the light source from phototransistor
-\end{itemize}
-\item Repeat the above steps for the LED light bulb making sure to record power drawn from the LED light bulb when plugged in and the current flow through the photodiode circuit you designed. To make a fair comparison of luminous intensity of the LED lamp, the LED light and phototransistor should be placed at the same source distance as the incandescent light bulb was above.
-\item Be sure to take a look at the LED light bulb that has been disassembled for you. Note that the bulb consists of several LED pads arranged on a central metal shaft. This metal shaft serves the dual purpose of positioning the LEDs around the glass bulb and provides a heat-sinking mechanism. The electrical circuit that powers these LEDs produces a 220VDC voltage. The LEDs pads when observed closely consist of many individual LEDs. Several of these LED pads have been carefully removed for testing.
-\end{enumerate}
+With a plot of resistivity, $\rho$, versus impurity concentration, $N_I$, it should be possible to extract either $\rho$ or $N_I$ given the other.
 
-\newpage
-\subsection{Colored LEDs}
-LEDs are available in a variety of colors and wavelengths to suit the needed application. For instance, different colors may provide better feature visibility depending upon lighting conditions. Colored LEDs have been used extensively in the automotive industry, aviation, for traffic signals, and in multi-color displays. In optical applications, a precisely known spectrum allows tightly matched filters to be used to separate informative bandwidth or to reduce disturbing effects of ambient light. LEDs usually operate at comparatively low working temperatures, simplifying heat management and dissipation. This allows the use of plastic lenses, filters, and diffusers. LEDs are durable and robust lighting sources that last much longer the incandescent light sources and can operate in harsh environment. Even weather and waterproof units have been designed for use in the food, beverage, and oil industries. In this Exploration, you will look at the I-V characteristics of several colored LEDs and compare them to the Silicon diode characterized in lab: you will compare the I-V characteristics of Red, Yellow, and Green LEDs available in the laboratory to the Silicon 1N4148 diode you tested in the laboratory.
-
-Create forward-biased I-V curves for the Red, Yellow, and Green LEDs available in lab. Use the circuit set-up described in the laboratory exercise as well as the automated test and measurement scripts provided in LabVIEW to take measurements of the LEDs. Measure Red, Yellow, and Green LED I-V curves and plot them on the same graph as the Silicon 1N4148 diode measured in the laboratory exercise above. For each of the LEDs, determine 
-\renewcommand\labelitemi{$\square$}
 \begin{itemize}
-\item the `knee' voltage where the diode turns on, 
-\item the saturation current, $I_S$, 
-\item the ideality factor, $\gamma$,
-\item the series resistance, $R_S$,
-\item the current at which the LED begins to become damaged, and 
-\item the voltage and current when the LED completely stops functioning (i.e. blow it up---this may require as much as 10V). 
+\item[$\square$] For a Si p-type (Boron) doped Carrier Concentration, $N_A$ of $1 \times 10^{17} \mbox{ cm}^3$, what range of Resistivity, $\rho$, values would you expect to obtain from this sample? Use your class averaged data plot and curve-fit from Section 3 to answer this question. Note that a range of resistivity is specified, so the $\pm$ error range must be used.
 \end{itemize}
-In order to destroy an LED, you may need to use {\tt singleloop25.vi}, which allows LABVIEW to control the E3631A Power Supply's $+25$ V source. After you have destroyed or damaged an LED, be sure to dispose of it to prevent it from getting mixed back in with good LEDs in the lab.
 
-\newpage
-\section{Questions}
-\begin{enumerate}
-\item Define all parameters and variables in Equation (\ref{eq:redID}).
-\item Plot the $I_D(V_{PN})$ characteristics obtained using LabVIEW on a log-linear plot. Note that the term `log-linear' is used to describe a semi-log plot with a logarithmic scale on the y-axis and a linear scale on the x-axis. The y-axis label should read `1N4148 Diode Current, $I_D$ (A)' and the x-axis label should read `Diode Voltage, $V_{PN}$ (V).' Make sure to have enough data points to generate a smooth curve. Use the measured value of $V_{PN}$ (from your $V_{PN}$ vs $V$ plot) across the diode in this plot, i.e., do not assume that the voltages supplied by the power supply are those across the diode.
-\item From the above log-linear plot of the I-V characteristics of the 1N4148, determine the saturation current, $I_S$, the ideality factor, $\gamma$, and the series resistance, $R_S$. (refer to the slides on Sakai)
-\item To the above plot, add the theoretical PN-junction diode $I_D(V_{PN})$ characteristic curve. Use the parameters calculated in question 3. Vary the parameters, if necessary, to match the \textbf{log-linear} portion of the experimentally measured data.
-\item Comment on the values of $I_S$ and $\gamma$ that yield the best fit to the data. How do your experimental and varied values compare with those given in the diode manufacturer data sheets? (For $R_s$ use Figure 2, curve 2, on the Vishay datasheet. $I_S$ can be found under reverse current, and $\gamma$ should be about 2.3.)
-\end{enumerate}
-\textit{Finally, be sure to add the answers to all questions marked by $\square$ from your chosen Exploration section.}
+\section{Device Performance based on Doping and Sample Data}
+
+The resistance, $R$, of a sample can be determined based on its resistivity, $\rho$, given the sample cross-sectional area, $A$, and length, $L$. The equation for determining Resistance from resistivity is the following (see Neaman Section 5.1.3 pp. 164):
+\begin{align}
+R = \frac{\rho L}{A}
+\end{align}
+
+\begin{itemize}
+\item[$\square$] For a die-sized portion of a wafer just like the ones measured in class, with cross-sectional area $A = 10^{-6} \mbox{ cm}^2$ and length $L = 0.001$ cm of the Si p-type (Boron) doped sample above---with Carrier Concentration $N_A$ of $1 \times 10^{15} \mbox{cm}^3$ and a resistivity range as determined in Section 4 based on class-measured data---in an applied voltage of 5 V, determine the range of expected currents that would flow through this die.
+\end{itemize}
+
+~\\Submit the answers to the questions marked by a square $(\square)$ along with all of the other below-listed items in the rubric in your Lab X write-up. 
 
 \newpage
 \phantomsection
 \addcontentsline{toc}{section}{Grading Rubric}
 \markboth{Grading Rubric}{Grading Rubric}
 \hspace{0pt}
-\vfill % used to center table vertically on page
+\vfill
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 2 Grading Rubric}
+\caption{ECE 230L Laboratory X Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-Circuit Diagram (all components labeled) 			& 2 \\ \hline
-Sketch and Knee Voltage								& 4 \\ \hline
-Plots of $I_D(V_{DC})$								& 7 \\ \hline
-Series Resistor Value to Prevent Diode Damage		& 2 \\ \hline
-Question 1											& 10 \\ \hline
-Question 2											& 10 \\ \hline
-Question 3											& 10 \\ \hline
-Question 4											& 10 \\ \hline
-Question 5											& 10 \\ \hline
-Exploration											& 30 \\ \hline
-Quality of Thought/Analysis							& 5 \\ \hline \hline
-Total												& 100 \\ \hline
+\textbf{PreLab}	& \textbf{15}\\ 
+Sheet resistances (x 3) reported & 5 \\ 
+Sample thicknesses (x 3) reported & 5 \\ 
+Resistivities calculated (x 3) & 5 \\ \hline
+\textbf{Determining Carrier Concentration for Resistivity Data} & \textbf{10} \\ 
+Data set & 10 \\ \hline
+\textbf{Plot of Resistivity vs. Impurity Concentration (Irwin curve)} & \textbf{45} \\ 
+            Plot & 10 \\ 
+            Curve-fit & 10 \\ 
+            $\pm$ error range specified & 10\\ 
+              Justification for error range	& 15 \\ \hline
+\textbf{Estimating expected Resistivity given Carrier Concentration} & \textbf{15} \\ 
+Range of resistivities specified & 15 \\ \hline
+\textbf{Device Performance based on Doping and Sample Data} & \textbf{15} \\ 
+              Current range specified from data & 15 \\ \hline \hline
+Total	& 100 \\ \hline
 \end{tabular}
 \end{table}
-\vfill % used to center table vertically on page
+\vfill
+%____________________________________________________________________________
+%
+%	End{PROBLEMS}
+%____________________________________________________________________________
 \end{document}

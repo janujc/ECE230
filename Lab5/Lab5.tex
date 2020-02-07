@@ -4,291 +4,294 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 5}{Fall 2019} % Change Semester and Year as needed
+\makeheader{Lab 4}{Spring 2019} % Change Semester and Year as needed
 \begin{center}
-\textbf{\huge ECE 230L - LAB 5}\\~\\
-\textbf{\large BASIC DIGITAL CIRCUITS}\\~\\
+\textbf{\huge ECE 230L - LAB 4}\\~\\
+\textbf{\large ELECTRICAL CHARACTERIZATION AND PARAMETER EXTRACTION OF METAL-OXIDE-SEMICONDUCTOR FIELD-EFFECT TRANSISTORS (MOSFET)}\\~\\
 \rule{6.5in}{0.5mm}\\
 \end{center}
+
+\textit{Note: Lab this week includes a pre-lab. This pre-lab is to be completed before your scheduled lab section. A link to the pre-lab can be found in the Laboratory Schedule tab of the class page on Sakai.}
 
 \tableofcontents
 
 \listoffigures
-
-\newpage
 %____________________________________________________________________________
 %
 %	BODY
 %____________________________________________________________________________
+\newpage
 \section{Objectives of this Laboratory}
 The objectives of this laboratory session are as follows:
 \begin{itemize}
-\item Measure the static and switching characteristics of discrete (transistors, resistors, and
-capacitors) MOS inverter circuits,
-\item Determine experimentally the truth tables of CMOS integrated-circuit gates,
-\item Measure the static voltage-transfer characteristics of CMOS NOR and NAND gates,
-and
-\item Measure the switching characteristics of CMOS NOR and NAND gates
+\item to measure the NMOSFET drain-current characteristics $I_D(V_{GS},V_{DS})$ using LabVIEW,
+\item to extract the NMOSFET SPICE model parameters, and
+\item to evaluate the limitations of the electrical measurements and the simulation
 \end{itemize}
 
-\section{Discrete Diode Logic OR and AND Gates}
-Diodes can be used to significantly reduce circuit cost, complexity, and save precious board space. By implementing discrete-device logic instead of using OR and AND gates, whole integrated circuits (ICs) can be replaced in a circuit. In general, ICs with 50\% or fewer gates being used stand to gain by being replaced by discrete components. Diode logic takes advantage of the diode properties to build useful circuits that can reduce component count and simplify circuits. A few simpler components can be inserted to perform the same function of large integrated circuits more cheaply and more directly. Often, it is more convenient to build a logic gate then use a pre-manufactured chip. When more than a few inputs are desired, building your own logic gates can be the only way to get the desired number. For instance, a 7-input OR gate is easily implemented just by adding more diodes to a basic 2-input gate. You may not always have the ICs that you need available, and ordering them and then waiting for the delivery takes time. You will always have resistors and diodes, and this is another reason for using logic gates made from discrete components.
+\section{Electrical Characterization of the MOSFET}
 
-\newpage
-\subsection{Diode OR Gate}
-Consider the diode as a simple switch. It is closed (ON) when the voltage on the anode or p-side is higher than that on the cathode or n-side. Current flows in the direction of the arrow in the diode's schematic symbol. The logic symbol of an OR gate and its discrete diode implementation are shown in Figure \ref{fig:OR}. In an OR gate, the output is `1' if either of the inputs are `1'. In other words, if either of the inputs has a high voltage, its diode will conduct and current will flow to the output. A high voltage will appear across the resistor, equal to the input voltage minus a voltage drop across the silicon diode. If both of the inputs are `0', then neither of the diodes will conduct and the gate?s output voltage will be zero. 
-
-\begin{itemize}
-\item[$\square$] Wire the diode OR gate using 1N4148 Si diodes on a breadboard and verify its truth table by applying 0 and \SI{5}{\volt} (4 combinations) to the inputs A and B. Measure the value of the output voltage. Note the diode voltage drop and its effect on the output voltage.
-\end{itemize}
+The circuit used to measure the drain-current characteristics of the NMOSFET is shown in Figure \ref{fig:MOSResTest}, below. 
 
 \begin{figure}[ht!]
-\centering
-\begin{tabular}{m{5cm} m{5cm}}
-\begin{circuitikz}[american]
-\draw (0,0) 	node[american or port, name=A] {};
-\draw (A.in 1) 	to[short, -o] ++(-0.5,0) node[left] {A};
-\draw (A.in 2) 	to[short, -o] ++(-0.5,0) node[left] {B};
-\draw (A.out) 	to[short, -o] ++(0.5,0) node[right] {C};
-\end{circuitikz} &
-\begin{circuitikz}[american]
-\draw (0,0) 	node[left] {A}
-				to[D*, o-*] ++(3,0) 
-				to[short, -o] ++(2,0) node[right] {C};
-\draw (3,0) 	to[short] ++(0,-1)
-				to[R, l=$R$, a=\SI{10}{\kilo\ohm}] ++(0,-2) node[ground, below] {};
-\draw (0,-1)	node[left] {B}
-				to[D*, o-*] ++(3,0);
-\end{circuitikz}
-\end{tabular}
-\caption{OR Gate Symbol and Discrete Diode Implementation}
-\label{fig:OR}
+	\centering
+	\begin{circuitikz}[american]
+	\draw (0,0) 	node[nigfete, solderdot](Q1) {};
+	\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
+	\draw (Q1.D) 	to[short] ++(0,2)
+					to[R, l=$R_{DS}$, i<=$I_{\mathrm{DS}}$, a=\SI{100}{\ohm}] ++(4,0)
+					to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
+					to[short] ++(-4,0);
+	\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
+					to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{\mathrm{GS}}$] (VGS |- GND)
+					to[short] (0,-3);
+	\draw (0.5,2.1)	node[] {$+$};
+	\draw (Q1.east)	node[right=2mm]{$V_{\mathrm{DS}}$};
+	\draw (0.5,-2.5)node[] {$-$};
+	\draw (-0.5,-0.7)	node[] {$+$};
+	\draw (-0.6, -1.6)	node[] {$V_{\mathrm{GS}}$};
+	\draw (-0.5,-2.5)	node[] {$-$};
+	\end{circuitikz}
+	\caption{Circuit used to characterize an NMOSFET}
+	\label{fig:MOSResTest}
 \end{figure}
 
-Note that `$+$' is used to represent the OR operation. Hence, in Figure \ref{fig:OR} we have 
-\begin{align}
-C = A + B.
-\end{align}
-
-\newpage
-\subsection{Diode AND Gate}
-Consider the diode AND gate shown in Figure \ref{fig:AND}. Its circuit is similar to the OR-gate circuit except that the diode connections (anodes and cathodes) are switched, and the resistor is connected to a power supply of \SI{5.0}{\volt}, instead of ground. The output of an AND gate is `1' only if both inputs are `1'. In the diode implementation, if either input is `0', then the diode will conduct and the output voltage will be effectively shorted (through the diode) to ground. If both inputs are `1' , then neither of the diodes will be conducting and the output voltage will be \SI{5.0}{\volt} (logical `1') because nearly all the voltage drops across the \SI{10}{\mega\ohm} resistor. This operation yields the desired result. Note that again, due to the voltage drop across a conducting silicon PN-junction diode, the actual `low' output voltage is higher than the `low' voltage of \SI{0}{\volt} applied at the input of the gate.
-
-\begin{itemize}
-\item[$\square$] Wire the diode AND gate using 1N4148 Si diodes on a breadboard and verify its truth table by applying 0 and \SI{5}{\volt} (4 combinations) to the inputs A and B. Measure the output voltage. Note the diode voltage drop and its effect on the output voltage.
-\end{itemize}
-
+Use LabVIEW on your laboratory workstation to obtain the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ of the BS170 silicon n-channel MOS field-effect transistor. In the MOSFET characterization under static conditions, the static gate current is zero and, consequently, there are no concerns about the difference between the gate-to-source voltage set in LabVIEW and the actual gate-to-source voltage. To obtain the NMOSFET characteristics, carry out the following steps:
+\begin{enumerate}
+\item Obtain a BS170 NMOSFET and a \SI{100}{\ohm} resistor from the parts bins,
+\item Build a circuit using the E3631A Power Supply's \SI{6}{\volt} source (for $V_{\mathrm{DS}}$) and \SI{+25}{\volt} source (for $V_{\mathrm{GS}}$), and the 33440 Digital Multimeter used as an ammeter. Be sure to correctly identify the NMOSFET gate, drain, and source terminals using the manufacturer's data sheet.
+\item Turn on the Power Supply and Multimeter connected as an ammeter.
+\item Run the LabVIEW Virtual Instrument (VI) program called {\tt doubleloop.vi}. Set the inner-voltage ($V_{\mathrm{DS}}$, Source) loop to run from 0 to 6.0 V with 50 steps, and the outer-voltage ($V_{\mathrm{GS}}$, Source) to run from 2.0 to 3.0 V with 5 steps, to obtain a smooth $I_D$ vs $V_{\mathrm{DS}}$ of the BS170 NMOSFET.
+\item Save your output data. Check your output data with your TA to ensure that the characterizations are representative of BS170 NMOSFETs. If they are not it may be necessary to characterize at least 2 or 3 NMOSFETs. The output file is a list of numbers stepped through and measured by LabVIEW in obtaining the drain-current $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ characteristics.
+\item Repeat the above experiment for the same inner and outer loops and steps size, but this time, once to measure $V_{\mathrm{DS}}$ vs. $V_{\mathrm{DS~Source}}$ and once to measure $V_{\mathrm{GS}}$ vs. $V_{\mathrm{GS~Source}}$ using {\tt doubleloop.vi}.
+\item Remove the $R_{\mathrm{DS}}$ resistor from the circuit, as shown below. Notice that the $V_{\mathrm{DS}}$ applied at the source is now the same as the $V_{\mathrm{DS}}$ across the MOSFET:
+\end{enumerate}
 \begin{figure}[ht!]
-\centering
-\begin{tabular}{m{5cm} m{5cm}}
-\begin{circuitikz}[american]
-\draw (0,0) 	node[american and port, name=A] {};
-\draw (A.in 1) 	to[short, -o] ++(-0.5,0) node[left] {A};
-\draw (A.in 2) 	to[short, -o] ++(-0.5,0) node[left] {B};
-\draw (A.out) 	to[short, -o] ++(0.5,0) node[right] {C};
-\end{circuitikz} &
-\begin{circuitikz}[american]
-\draw (0,0) 	node[left] {A}
-				to[D*, invert, o-*] ++(3,0) 
-				to[short, -o] ++(2,0) node[right] {C};
-\draw (3,0) 	to[R, a=$R_1$, l=\SI{10}{\kilo\ohm}] ++(0,2) node[vdd, above] {$V_{\mathrm{DD}}$};
-\draw (3,0) 	to[short] ++(0,-1)
-				to[R, l=$R_2$, a=\SI{10}{\mega\ohm}] ++(0,-2) node[ground, below] {};
-\draw (0,-1)	node[left] {B}
-				to[D*, invert, o-*] ++(3,0);
-\end{circuitikz}
-\end{tabular}
-\caption{AND Gate Symbol and Discrete Diode Implementation}
-\label{fig:AND}
+	\centering
+	\begin{circuitikz}[american]
+	\draw (0,0) 	node[nigfete, solderdot](Q1) {};
+	\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
+	\draw (Q1.D) 	to[short] ++(0,2)
+					to[short] ++(4,0)
+					to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
+					to[short] ++(-4,0);
+	\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
+					to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{GS}$] (VGS |- GND)
+					to[short] (0,-3);
+	\draw (0.5,2.1)	node[] {$+$};
+	\draw (Q1.east)	node[right=2mm]{$V_{DS}$};
+	\draw (0.5,-2.5)node[] {$-$};
+	\draw (-0.5,-0.7)	node[] {$+$};
+	\draw (-0.6, -1.6)	node[] {$V_{GS}$};
+	\draw (-0.5,-2.5)	node[] {$-$};
+	\end{circuitikz}
+	\caption{NMOSFET Circuit without a resistor}
+	\label{fig:MOSTest}
 \end{figure}
-
-Note that `$\cdot$' is used to represent the AND operation. Hence, in Figure \ref{fig:AND} we have 
-\begin{align}
-C = A \cdot B.
-\end{align}
-
-\newpage
-\section{Discrete MOS Inverter Circuit}
-An inverting function cannot be implemented with diodes and resistors alone. A transistor is needed to provide the inverting action. In this lab, you will use the BS170 N-type Metal Oxide Semiconductor Field Effect Transistor (NMOSFET). If the voltage present at the gate of the transistor is above \SI{0.7}{\volt} (high), the transistor will conduct, reducing the output voltage to logical `0'. If the input voltage is logical `0' (low), then the transistor does not conduct, and zero voltage drops across the load resistor which results in the output voltage being `1'. A current-limiting resistor at the gate is always needed, otherwise excessive gate current might destroy the transistor. The circuit used in the electrical characterization of the MOS inverter with a resistive load is shown in Figure \ref{fig:MOS}. Digital integrated circuits are circuits based on the principles of Boolean algebra. The binary logic variables in this algebra can assume only one of two possible values which are called the logical `0' and `1' levels. In the electronic circuit implementation of Boolean algebra, these variables correspond to the values designated by the voltages $V_\mathrm{OL}$ and $V_\mathrm{OH}$.
-
-\begin{figure}[ht!]
-\centering
-\begin{tabular}{m{5cm} m{5cm}}
-\begin{circuitikz}[american]
-\draw (0,0) 	node[american not port, name=A] {};
-\draw (A.in 1) 	to[short, -o] ++(-0.5,0) node[left] {A};
-\draw (A.out) 	to[short, -o] ++(0.5,0) node[right] {B};
-\end{circuitikz} &
-\begin{circuitikz}[american]
-\draw (0,0)		node[nigfete, solderdot, name=N]{};
-\ctikzset{diodes/scale=0.3}
-\draw (N.S)	to[short] ++(0,0.2)
-			to[short,*-] ++(0.5,0)
-			to[zzD*] ++(0,1.15)
-			to[short, -*] ++(-0.5,0);
-\draw (N) circle [radius=25pt];
-\draw ($(N) + (0.9,0)$) node[right] {BS170};
-\draw (N.S)	to[short] ++(0,-1) node[ground,  below] {};
-\draw (N.D) to[short, -*] ++(0,0.5) node[name=A] {}
-			to[short, -o] ++(1.5,0) node[right] {B};
-\draw (A) 	to[R, l=$R_L$, a=\SI{240}{\kilo\ohm}] ++(0,2) node[vdd] {$V_\mathrm{DD}$};
-\draw (N.G) to[short, -o] ++(-1,0) node[left] {A};
-\end{circuitikz}
-\end{tabular}
-\caption{Inverter Gate Symbol and Discrete Diode Implementation}
-\label{fig:MOS}
-\end{figure}
-
-We usually denote negation with a bar above a character. Hence, in Figure \ref{fig:MOS} we have 
-\begin{align}
-B = \overline{A}
-\end{align}
-
-The static voltage and switching characteristics of an inverter can be characterized and serve as a measure of the inverter's overall performance. The voltages $V_\mathrm{OL}$ and $V_\mathrm{OH}$ are always between 0 and $V_\mathrm{DD}$. The static voltage characteristics of an inverter is shown in Figure \ref{fig:stat}. The switching characteristics of an inverter is shown in Figure \ref{fig:switch}.
 
 \begin{enumerate}
-\item Wire the diode Inverter gate using a BS170 MOSFET on a breadboard and verify its
-truth table by applying 0 and 5 V (2 combinations) to the input A. Measure the value of
-the output voltage. Note the voltage drops across the inverter circuit and their effect on
-the output voltage.
-\item Using LabVIEW, measure the static voltage-transfer characteristics (SVTC)
-VOUT(VIN) for this inverter implemented with the NMOSFET BS170, RL = 240 k?,
-and VDD = 5 V. Determine VOL and VOH.
-\item Measure the static power-supply-current IDD (VIN ) when VIN = VOL and when VIN
-= VOH (both for RL = 240k) (2 cases). Calculate the static power dissipation in this
-inverter for VIN = VOL and VIN = VOH. (2 cases) (Hint: P = IV.)
-\item Measure the output-voltage waveform vOU T (t) for a square-wave input-voltage
-waveform with VPP = 5V and f = 1 kHz obtained from the function generator. Observe
-the input and output waveforms on the oscilloscope simultaneously. Determine the
-high-to-low transition time (tp.HL) and the low-to-high transition time (tp.LH). Turn up the
-input frequency of the square wave keeping the maximum input voltage equal to VPP =
-5V. At what frequency does the output waveform begin to degrade? Be as quantitative
-as possible.
+\setcounter{enumi}{7}
+\item Use {\tt singleloop.vi} to measure $I_D$ for $V_{\mathrm{GS}}$ ranging from 0 to \SI{6.0}{\volt}, with a fixed \SI{3}{V} value for $V_{\mathrm{DS}}$. This will require changing the the $V_{\mathrm{GS~Source}}$ over to the \SI{6}{\volt} output on the E3631A Power Supply, and connecting the $V_{\mathrm{DS~Source}}$ to the E3611A DC Power Supply.
 \end{enumerate}
 
-\newpage
+At this point, you should have 4 saved Excel files: 
+\begin{itemize}
+\item $I_D(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
+\item $V_{\mathrm{DS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
+\item $V_{\mathrm{GS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
+\item $I_D(V_{\mathrm{GS}}, V_{\mathrm{DS}} = \SI{3.0}{\volt})$
+\end{itemize}
+
 \section{Exploration}
-In this exploration, you will use what you have learned about discrete logic circuits to complete the following:
-\begin{enumerate}
-\item Build a NAND gate from the combination of discrete AND gates using diodes and Inverter gates using NMOSFET transistors.
-\item One very useful application of an Inverter gate is the Inverter Ring Oscillator shown in Figure \ref{fig:ring}. You will build a self-sustaining Ring Oscillator and measure its output square-wave frequency. (A similar circuit can be built using NAND gates chained together. You have all the knowledge you need to build this circuit, too. Hint: to build a Ring Oscillator with NAND gates, one of the two inputs needs be set to Ground. Most designers choose either the A or B input to be grounded for each NAND gate in the chain in this application.)
-\item (Optional) Another very useful implementation of NAND gates is the Debounced Switch or SR Latch. A Debounce Switch prevents pushbutton switching events from triggering more than On/Off occurrence in a circuit. Deboucing inputs is critical in many logic circuit applications. A Debounce Swtich or SR Latch can be completely constructed using discrete NAND gate logic when wired as shown in Figure \ref{fig:SR}. This exercise is left as an optional activity.
-\end{enumerate}
+The purpose of this exploration is to build a wireless signal transmitter using the knowledge of LEDs and Field-Effect Transistors you have gained in lab. The ultimate goal of this exploration is to build a simple electronic system that transmits music from a portable music player (e.g. MP3 player, CD player, radio), through a wireless channel using light. To do so, you will build a circuit that takes the electrical signal and changes the brightness of an LED with the sound of the music. A given receiver circuit using a phototransistor will take this light signal and convert it into sound. You lab TA will provide a receiver for testing your circuit. You can also build your own receiver using the circuit in Figure \ref{fig:rec}.
 
-\subsection{Discrete NAND Gate}
-Using a combination of the AND and NOT gates built above, build a discrete NAND gate. Draw a circuit diagram of the circuit you designed and verify the NAND gate truth table. 
+\subsection{Music Transmitter}
+Equipment:
+\begin{itemize}
+\item \SI{100}{\ohm} resistors (x5)
+\item IR LED (Light Emitting Diode) (x1)
+\item Red LED (Light Emitting Diode) (x1)
+\item BS170 MOSFET (x1)
+\item \SI{50}{\kilo\ohm} Potentiometer (x1)
+\item \SI{47}{\nano\farad} Capacitor (x1)
+\item Wire with headphone plug (x1)
+\item Battery snap for 9V battery (x1)
+\item \SI{9}{\volt} battery (x1)
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+\item Build the circuit shown in Figure \ref{fig:mystery}. From your knowledge of MOSFETs,
+LEDs, and current-limiting resistors from this lab and previous labs, determine in which order these 3 circuit elements (i.e. a BS170 MOSFET, a Red LED, and \SI{100}{\ohm} resistor) should be connected to produce an LED whose brightness varies with the amplitude of the input music signal or function generator time-varying signal that will be attached to the 1/8? mini headphone jack. Think about how the BS170 MOSFET should be oriented (Drain and Source pins) in order to be properly biased to turn on when a voltage at the Gate is applied.
+\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
-\begin{circuitikz}[american]
-\draw (0,0)		node[american nand port, name=A] {};
-\draw (A.in 1) 	to[short, -o] ++(-0.5,0) node[left] {A};
-\draw (A.in 2) 	to[short, -o] ++(-0.5,0) node[left] {B};
-\draw (A.out) 	to[short, -o] ++(0.5,0) node[right] {C};
+\begin{circuitikz}
+\draw (0,0)		to[R, a=$R_4$] ++(0,3)
+				to[pR, a=$P_1$, name=P] ++(0,3)
+				to[R, a=$R_3$] ++(0,3)
+				to[short, *-] ++(-12,0)
+				to[battery, l=$V_S$, a=\SI{9}{\volt}] ++(0,-9)
+				to[short, -*] ++(12,0);	
+\draw (3,6)		node[fourport, t={\bf \Huge ?}, name=A] {};
+\draw (-8,0)	to[short, *-] ++(0, 1.5)
+				to[R, a=$R_1$] ++(0,3)
+				to[C, a=$C_1$, v^<=$~$] ++(3,0)
+				to[R, a=$R_2$] ++(3,0) -- (P.wiper);
+\draw (-1.5,4.5)to[short, *-] ++(0,1.5)
+				to[short] (A.west);
+\draw (0,9)		to[short] ++(3,0)
+				to[short] (A.north);
+\draw (0,0)		to[short] ++(3,0)
+				to[short] (A.south);
+\draw (-8,1.5)	to[short, *-o] ++(-1,0);
+\draw (-8,4.5)	to[short, *-o] ++(-1,0);
+\draw (-9,4)	node[] {$+$};
+\draw (-9,2)	node[] {$-$};
+\draw[red,thin,dashed] (-10.5,5) rectangle (-8.5,1);
+\draw (-9.5,3.25) node[] {$1/8$''};
+\draw (-9.5,2.75) node[] {mini plug};
 \end{circuitikz}
-\caption{NAND Gate Symbol}
-\label{fig:NAND}
-\end{figure}
-
-\subsection{Ring Oscillator}
-The propagation delay of a switching circuit is a measure of the maximum speed or minimum time
-for an input change to pass to the device?s output. Measurements in this mode are made by setting
-up an odd number of inverters or inverting gates in a ring, that is, with the output of one inverter
-connected to the input of the next inverter. In this mode, a logic steady-state cannot be reached.
-The results is a passing along of the logic mismatch?a form of oscillation.
-To measure the propagation delay of the discrete inverter built above, arrange an odd number of
-inverters (at least 3) in series. No input excitation at the first inverter is needed; the circuit should
-oscillate when the inverters are on (i.e. when VDD is applied to each discrete MOSFET inverter).
-The output of the Ring Oscillator should be a square wave of amplitude 0 to VDD.
-
-\begin{figure}[ht!]
-\centering
-\begin{circuitikz}[american]
-\draw (0,0) 	node[american not port, name=A] {};
-\draw (2,0) 	node[american not port, name=B] {};
-\draw (4,0) 	node[american not port, name=C] {};
-\draw (A.out)	-- (B.in);
-\draw (B.out) 	-- (C.in);
-\draw (C.out) 	to[short, -o] ++(2,0);
-\draw ($(C.out) + (1,0)$) 	to[short, *-] ++(0,-2) node[name=D] {}
-				to[short] ($(D -| A.in) + (-1,0)$)
-				to[short] ++(0,2)
-				to[short] (A.in);
-\end{circuitikz}
-\caption{Ring Oscillator Using 3 Inverters}
-\label{fig:ring}
+\caption{Music Transmitter Circuit with Mystery Load Elements}
+\label{fig:mystery}
 \end{figure}
 
 \begin{enumerate}
-\item Build the Ring Oscillator in Figure \ref{fig:ring} using an odd number of the discrete NMOSFET BS170 Inverters shown in Figure \ref{fig:MOS}. Observe the output waveform. Notice that no input excitation at the first inverter is needed; the circuit should oscillate at a high frequency when the inverters are on (i.e. when VDD is applied to each discrete MOSFET inverter). Zoom out to view at least 4 periods of the ring oscillator output when determining its period of oscillation.
-\item Measure the period of the ring oscillator output square wave. This period is the time required for the logic transition to propagate around all three devices.
-\item The transition or propagation time for one gate in this ring oscillator is one-third of the observed period when 3 inverters are used. Determine the transition time of one of the inverters built by dividing the total transition time by 3. (More accurate transition times can be obtained by using additional odd numbers of inverters for this measurement.)
+\setcounter{enumi}{1}
+\item Once you have devised a circuit topology for the 3 unknown elements in the above circuit, test the circuit using a red LED.
+\item If you are using a portable music player, such as an iPod, first listen to it through headphones and make sure it is producing loud and clear music or speech. (If you are using a function generator as the signal source, set it to produce a small signal output in the audible \SI{20}{\hertz} to \SI{20}{\kilo\hertz} range.)
+\item Plug the headphone jack into your device (or attach it carefully to the function generator with alligator clips) to produce the signal that will serve as the circuit input.
+\item Attach the wires from the headphone jack to your circuit where the {\tt 1/8'' mini plug} is indicated in the figure.
+\item Turn up the volume on your music player (or the amplitude of the function generator). Rotate the stem of the potentiometer on the transmitter circuit. The red LED should be on.
+\item If the LED is not on, your circuit may not be designed or wired properly. Immediately disconnect one of the battery snap leads from the breadboard of the transmitter. Troubleshoot your circuit as necessary by checking all connections with an oscilloscope or multimeter.
+\item Once the circuit is working and the LED lights up, replace the red LED with an infrared LED. Now it is time to wirelessly transmit your optical signal and convert it back into sound.
 \end{enumerate}
-
-\subsection{(Optional) Debounce Switch or SR Latch}
-In many applications, especially in digital circuits, you need a manual switch to
-set the logic state at some point in the circuit. The issue is that switch can often
-?bounce? upon actuation. A bouncy switch is one that produces multiple
-switching operations in a single button press. This leads to a rapid series of
-alternating logic states for a few milliseconds while the switch contact is
-stabilizing. The bounce is due to inductive ringing rather than mechanical
-toggling. We use an SR latch to debounce the switch in hardware by latching
-the state of the switch as a digital signal. Once the ringing stops, we can safely
-assume that the signal has been latched successfully.
 
 \newpage
-\section{IC CMOS NOT, NOR, and NAND Gates}
+\subsection{Music Receiver}
+Equipment:
+\begin{itemize}
+\item \SI{10}{\micro\farad} capacitors (x3)
+\item Phototransistor (x1)
+\item LM 386 op-amp (x1)
+\item \SI{24}{\kilo\ohm} resistor (x1)
+\item Speaker (x1)
+\end{itemize}
 
+Procedure:
+\begin{enumerate}
+\item Build the receiver circuit outlined in Figure \ref{fig:rec}. Keep in mind that the IR LED from the transmitter you just built will need to be positioned about 1/2'' from the phototransistor in this receiver circuit. 
+\end{enumerate}
 
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\draw (0,0)		node[dipchip, num pins=8, hide numbers, external pins width=0, name=O] {};
+\draw (0,0) 	node[op amp, xscale=0.4, yscale=0.4, name=Amp] {};
+\node [right, font=\tiny] at (O.bpin 1) {1};
+\node [right, font=\tiny] at (O.bpin 4) {4};
+\node [left, font=\tiny] at (O.bpin 6) {6};
+\node [left, font=\tiny] at (O.bpin 7) {7};
+\node [left, font=\tiny] at (O.bpin 8) {8};
+\draw (O.bpin 2) -| (Amp.-);
+\draw (O.bpin 3) -| (Amp.+);
+\draw (Amp.out)	|- (O.bpin 5);
+\draw (O.pin 1)		to[short] ++(-0.5,0) 
+					to[short] ++(0,1.5) node[name=A] {}; 
+\draw(O.pin 8)		to[short] ++(0.5,0) 
+					to[short] ++(0,1.5) 
+					to[C, a=$C_2$, v^<=$~$] (A);
+\draw (O.pin 3)		to[short] ++(-1,0)
+					to[C, a=$C_1$, -*] ++(-3,0) node[name=B] {};
+\draw (O.pin 5)		to[short] ++(1,0)
+					to[C, l=$C_3$] ++(3,0)
+					to[loudspeaker, name=L] ++(0,-3) node[name=C] {};
+\node [left] at (L.south) {SPK};
+\draw (B)			to[R, a=$R_1$] ++(0,3) node[name=D] {}
+					to[short] ++(-3,0) node[name=E] {}
+					to[battery, l=$V_S$, a=\SI{9}{\volt}] (E |- C)
+					to[short] ++(3,0) node[name=F] {}
+					to[short] (C);
+\draw (O.pin 6)		to[short] ++(1,0)
+					to[short] ++(0,4) node[name=Z] {}
+					to[short] (Z -| D)
+					to[short, -*] (D);
+\draw (O.pin 2)		to[short] ++(-1,0) 
+					to[xing] ++(0,-1.115) node[name=G] {} 
+					to[short, -*] (G |- C);
+\draw (O.pin 4)		to[short] ++(-0.5,0) node[name=H] {}
+					to[short, -*] (H |- C);
+\draw ($(F)!0.5!(B)$) node[npn, photo, name=T] {};
+\draw (T.C)			to[short] (B);
+\draw (T.E) 		to[short, -*] (F);
+\draw ($(T) - (0.18,0)$) circle [radius=20pt];
+\node [right=2mm] at (T.nobase) {Q1};
+\node [waves, scale=0.7, right] at(L.north) {};
+\end{circuitikz}
+\caption{Music Receiver Circuit}
+\label{fig:rec}
+\end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item To test the receiver circuit, use a standard TV remote control, if there is one in lab. Most TV remotes emits IR light to signal the control box. With the receiver circuit you just built, you can ``hear'' a TV remote control signal by converting it from IR at the remote to an audible signal at your receiver's speaker. Aim a TV remote at the phototransistor on your receiver circuit and listen for the signal. Different remotes will have different signal patterns.
+\item To improve the quality of your receiver circuit, add a capacitor between ground and power (this will act as a current reservoir, for the op-amp when it rails). Also note that the receiver draws more current than the transmitter so using the HP power supply may also improve quality.
+\end{enumerate}
+
+\subsection{Wireless Transmission and Reception}
+\begin{enumerate}
+\item Position the infrared LED from your working transmitter circuit such that it is pointing at and is about 1/2'' from the phototransistor of the music receiver that you just built.
+\item You should hear music coming out of the speaker in the receiver. If you do not hear any sound from the speaker, you will need to troubleshoot your IR music transmitter-receiver system.
+\item Once the wireless transmitter and receiver and working together, you can test the limits of your system by increasing or decreasing the signal volume with the volume control on your music device (or function generator), by adjusting the potentiometer in your transmitter circuit, and by varying the distance of the IR LED from the phototransistor. Audio quality may be limited by the quality of the speaker being used---some tones may be diminished or altered. You can also interrupt the signal with your hand by preventing IR light to transmit between transmitter and receiver. The presence of external light sources may also affect the sound quality. Lastly, the IR LED is not the only LED that will transmit light that the receiver picks up. You can use a colored LED to do the same job, although it may not do as good a job as the IR light does in sending a wireless signal to the phototransistor.
+\item Your TA also has a pre-built receiver circuit. Ask your lab TA to check your transmitter with this circuit before leaving lab.
+\end{enumerate}
+{\it Record all of the circuits built and testing done for this Exploration in your laboratory notebook. Be sure to clean-up your laboratory bench and turn off all equipment before leaving.}
+
+\newpage
+\section{Questions}
+\begin{enumerate}
+\item Give the definitions of the parameters $K_N$ and the transconductance $g_m^\mathrm{sat}$ of the NMOSFET. Comment on their dependence on other NMOSFET parameters and bias voltages.
+\item Give the definition of the NMOSFET channel-length-modulation parameter $\lambda_N$. Describe how it is extracted from the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$.
+\item Plot the dependence of the drain current $I_{D \cdot N}$ on the drain-to-source bias voltage $V_{\mathrm{DS}\cdot N}$ for different values of the gate-to-source bias voltage $V_{\mathrm{GS}}$ on a linear-linear plot. Show all circuit diagrams used to measure this data. Don't forget that what was measured in lab was $I_D(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$ and $V_{\mathrm{DS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$. In order to plot $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$, you will need to do a substitution.
+\item Plot the dependence of $\sqrt{I_{D \cdot N}}$ on the gate-to-source bias voltage $ V_{\mathrm{GS} \cdot N}$ in the 0 to \SI{6}{\volt} range for a fixed value of the drain-to-source bias voltage $V_{\mathrm{DS} \cdot N}$ equal to \SI{3}{\volt}. Show all circuit diagrams used to measure this data.
+\item From the above plots, obtain the values of $K_N$, $V_{T \cdot N}$, and $\lambda_N$. Include any additional plots or calculations used to obtain these parameters. Note that the parameter extraction slides on Sakai give two methods for finding $K_N$. For any values where multiple different data sets can be used, remember to take several measurements and average the results. In a table, compare your extracted values with those listed in the manufacturer's data sheet.
+\item What are the major sources of error in the values of the extracted parameters? How can these errors be effectively reduced?
+\end{enumerate}
+\textit{Note: During the next lab period, you will simulate MOSFET behavior electronically and compare your MOSFET parameters to those of your colleagues and to manufacturer specifications. Before the next lab period, use the online survey tool that will be made available to you to post your MOSFET's $K_N$, $V_{T \cdot N}$, and $\lambda_N$ values. These posted results will be used by you and others during the next lab period.}
 %____________________________________________________________________________
 %
-%	Grading Rubric
+%	GRADING RUBRIC
 %____________________________________________________________________________
 \newpage
-\def\arraystretch{1.2}
 \phantomsection
 \addcontentsline{toc}{section}{Grading Rubric}
 \markboth{Grading Rubric}{Grading Rubric}
 \hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 3 Grading Rubric}
+\caption{ECE 230L Laboratory 4 Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{Diode OR Gate}			& \textbf{10} \\
-Circuit Diagram 				& 1 \\
-Truth Table Verified			& 3 \\
-Variable diode drop values given for different diodes & 3 \\
-Justification of whether circuit is ``better'' & 3 \\ \hline
-\textbf{Diode AND Gate}			& \textbf{8} \\
-Circuit Diagram 				& 2 \\
-Truth Table Verified			& 3 \\
-Diode Drop Value Noted			& 3 \\ \hline
-\textbf{Discrete MOS Inverter Circuit}		& \textbf{65} \\
-Circuit Diagram 				& 2 \\
-Truth Table Verified			& 3 \\
-Voltage Lost Across Circuit 	& 3 \\
-$V_\mathrm{OL}$ from V-V {\tt singleloop.vi} graph 	& 5 \\
-$V_\mathrm{OH}$ from V-V {\tt singleloop.vi} graph	& 5 \\
-$I_\mathrm{DD}(V_\mathrm{in} = V_\mathrm{OL})$ & 3 \\
-$I_\mathrm{DD}(V_\mathrm{in} = V_\mathrm{OH})$ & 3 \\
-$P(V_\mathrm{in} = V_\mathrm{OL})$ & 2 \\
-$P(V_\mathrm{in} = V_\mathrm{OH})$ & 2 \\
-Image of $V_\mathrm{out}$ when square wave is applied & 3 \\
-Degraded image of $V_\mathrm{out}$ when square wave is applied & 3 \\
-High-to-Low Transition Time $(t_\mathrm{p \cdot HL})$ & 3 \\
-Low-to-high transition time $(t_\mathrm{p \cdot LH})$ & 3 \\
-Degradation frequency with explanation & 3 \\
-Discrete NAND gate circuit diagram & 3 \\
-NAND Truth Table verified & 4 \\ \hline
-{\bf Exploration: Discrete NAND Gate w/ Applications} & {\bf 12} \\
-NAND Gate Truth Table Verified & 3 \\
-Ring Oscillator Circuit Diagram & 3 \\
-Period of oscillator for N inverters & 3 \\
-Period of oscillator for 1 inverter & 3 \\ \hline
-{\bf Quality of thought/analysis} & {\bf 5} \\ \hline \hline
-{\bf Total}						& {\bf 100} \\ \hline
+\textbf{Raw Lab Data} 							& \textbf{15} \\
+Circuit Diagram 								& 3 \\
+$V_{\mathrm{DS~source}}$ vs $I_{DS}$, $V_{GS}$ plot & 3 \\
+$V_{DS}$ vs $V_{\mathrm{DS~source}}$ and $V_{GS}$ vs $V_{\mathrm{DS~source}}$ plots 	& 6 \\
+$I_{DS}$ vs $V_{GS}$ plot for $V_{DS}$ = 3V 		& 3 \\ \hline
+\textbf{Question 1} 							& \textbf{10} \\ \hline
+\textbf{Question 2} 							& \textbf{10} \\ \hline
+\textbf{Question 3} 							& \textbf{10} \\ \hline
+\textbf{Question 4} 							& \textbf{10} \\ \hline
+\textbf{Question 5} 							& \textbf{15} \\
+Parameter extraction							& 10 \\ 
+\% errors										& 5 \\ \hline
+\textbf{Question 6} 							& \textbf{10} \\ \hline
+\textbf{Exploration} 							& \textbf{10} \\
+Circuit Diagrams								& 5 \\
+Reasoning behind ``mystery elements'' order		& 5 \\ \hline
+\textbf{Quality of thought/analysis} 			& \textbf{10} \\ \hline \hline
+\textbf{Total} 									& 100 \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
