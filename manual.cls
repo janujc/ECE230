@@ -38,10 +38,10 @@
 \renewcommand{\headrulewidth}{0.5mm}
 \renewcommand{\footrulewidth}{0.5mm}
 
-\newcommand{\makeheader}[2]{ % Takes arguments {Lab #} and {Semester Year}
+\newcommand{\makeheader}[1]{ % Takes arguments {Lab #} and {Semester Year}
 	\fancyhead[L]{ECE230L}
 	\fancyhead[C]{}
-	\fancyhead[R]{#2}
+	\fancyhead[R]{Duke University}
 	\fancyfoot[L]{Lab Manual}
 	\fancyfoot[C]{#1}
 	\fancyfoot[R]{Page \thepage}
