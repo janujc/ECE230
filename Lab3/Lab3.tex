@@ -4,9 +4,9 @@
 %	TITLE AND TABLE OF CONTENTS
 %____________________________________________________________________________
 \begin{document}
-\makeheader{Lab 2}{Fall 2019} % Change Semester and Year as needed
+\makeheader{Lab 3}{Duke University} % Change Semester and Year as needed
 \begin{center}
-\textbf{\huge ECE 230L - LAB 2}\\~\\
+\textbf{\huge ECE 230L - LAB 3}\\~\\
 \textbf{\large ELECTRICAL CHARACTERIZATION AND PARAMETER EXTRACTION OF SILICON PN-JUNCTION DIODES}\\~\\
 \rule{6.5in}{0.5mm}\\
 \end{center}
@@ -230,7 +230,7 @@ LEDs are available in a variety of colors and wavelengths to suit the needed app
 Create forward-biased I-V curves for the Red, Yellow, and Green LEDs available in lab. Use the circuit set-up described in the laboratory exercise as well as the automated test and measurement scripts provided in LabVIEW to take measurements of the LEDs. Measure Red, Yellow, and Green LED I-V curves and plot them on the same graph as the Silicon 1N4148 diode measured in the laboratory exercise above. For each of the LEDs, determine 
 \renewcommand\labelitemi{$\square$}
 \begin{itemize}
-\item the `knee' voltage where the diode turns on, 
+\item the knee voltage where the diode turns on, 
 \item the saturation current, $I_S$, 
 \item the ideality factor, $\gamma$,
 \item the series resistance, $R_S$,
@@ -251,28 +251,42 @@ In order to destroy an LED, you may need to use {\tt singleloop25.vi}, which all
 \textit{Finally, be sure to add the answers to all questions marked by $\square$ from your chosen Exploration section.}
 
 \newpage
+\section{Extension}
+To earn up to an additional 7 points (bringing the total possible points up to 100), you must show evidence of independent thought. This may include (but is not limited to):
+\renewcommand\labelitemi{\textbullet}
+\begin{itemize}
+\item Dive deeper into your chosen exploration. For Exploration 1, this could include researching more about the bridge rectifier and possibly building one during lab.
+\item Explore the relationship in Equations (\ref{eq:ID}) and (\ref{eq:redID}). This may include finding out who first derived the equations and when it is appropriate to use them.
+\item Explain how the 1N4148 diode works. How does it compare to the other diodes available in lab? When might we want to instead use a Schottky diode or a Zener diode?
+\item Explore in depth another question that piqued your interest as you completed this laboratory.
+\end{itemize}
+The number of additional points awarded depends on the quality and extent of your independent contribution.
+
+\newpage
 \phantomsection
 \addcontentsline{toc}{section}{Grading Rubric}
 \markboth{Grading Rubric}{Grading Rubric}
 \hspace{0pt}
 \vfill % used to center table vertically on page
 \begin{table}[ht!]
-\caption{ECE 230L Laboratory 2 Grading Rubric}
+\caption{ECE 230L Laboratory 3 Grading Rubric}
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-Circuit Diagram (all components labeled) 			& 2 \\ \hline
-Sketch and Knee Voltage								& 4 \\ \hline
-Plots of $I_D(V_{DC})$								& 7 \\ \hline
-Series Resistor Value to Prevent Diode Damage		& 2 \\ \hline
-Question 1											& 10 \\ \hline
-Question 2											& 10 \\ \hline
-Question 3											& 10 \\ \hline
-Question 4											& 10 \\ \hline
-Question 5											& 10 \\ \hline
-Exploration											& 30 \\ \hline
-Quality of Thought/Analysis							& 5 \\ \hline \hline
-Total												& 100 \\ \hline
+\textbf{Characterization of Silicon PN-Junction Diode}	& \textbf{15} \\ 
+Circuit Diagram (all components labeled) 				& 2 \\ 
+Series Resistor Value to Prevent Diode Damage			& 2 \\ 
+Knee Voltage											& 2 \\ 
+Sketch of $V_{DC}$ vs. $I$								& 2 \\ 
+Plots of $I_D(V_{DC})$									& 7 \\ \hline
+\textbf{Question 1}										& \textbf{10} \\ \hline
+\textbf{Question 2}										& \textbf{10} \\ \hline
+\textbf{Question 3}										& \textbf{10} \\ \hline
+\textbf{Question 4}										& \textbf{10} \\ \hline
+\textbf{Question 5}										& \textbf{10} \\ \hline
+\textbf{Exploration}									& \textbf{28} \\ \hline
+\textbf{Extension}										& \textbf{7} \\ \hline \hline
+\textbf{Total}											& \textbf{100} \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
