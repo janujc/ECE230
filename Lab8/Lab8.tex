@@ -44,13 +44,15 @@ The objectives of this laboratory session are as follows:
 \markboth{Experimental Explorations}{Experimental Explorations}
 
 \subsection{Thermal Effects on PN-Junction Diode \& MOSFET}
-\textit{To be completed in a group of 2 or 3.}
+\textit{Conducted in groups of 2 or 3 students each.}
 
-\subsection*{Purpose}
+\subsection*{PN-Junction Diode}
+
+\subsubsection*{Purpose}
 
 The purpose of this experiment is to observe the effects on MOSFET characteristics due to thermal variations.
 
-\subsubsection*{PN-Junction Diode}
+\subsubsection*{Procedure}
 \begin{enumerate}
 \item Construct the circuit shown in Fig.~{\ref{fig:PNTest}} on a breadboard.
 \end{enumerate}
@@ -78,16 +80,12 @@ The purpose of this experiment is to observe the effects on MOSFET characteristi
 \end{enumerate}
 
 \newpage
-\subsubsection*{MOSFET}
+\subsection*{MOSFET}
 
-\textit{Conducted in groups of 2 or 3 students each.}
-
-\subsection*{Purpose}
-
+\subsubsection*{Purpose}
 The purpose of this experiment is to measure the gain of a MOSFET amplifier with varying resistive and capacitive loads.
 
-\subsection*{Procedure}
-
+\subsubsection*{Procedure}
 \begin{enumerate}
 \item Construct the circuit shown in Fig.~{\ref{fig:MOSTest}} on a breadboard.
 \end{enumerate}
@@ -128,6 +126,7 @@ Present your findings for both the PN junction diode and the MOSFET under temper
 \subsection{MOSFET Amplifier Gain and Load Limits}
 \textit{To be completed in a group of 2 or 3.}
 
+\subsubsection*{Procedure}
 \begin{enumerate}
 \item Construct the circuit shown in Fig.~\ref{fig:MOS-Gain-Limits} on a breadboard.
 \end{enumerate}
@@ -209,13 +208,13 @@ Present your findings to the class.
 
 \newpage
 \subsection{MOSFET Input and Output Resistance}
-\textit{To be completed in a group of 2.}
+\textit{Conducted in groups of 2 students each.}
 
-\subsection*{Purpose}
+\subsubsection*{Purpose}
 
 To measure the input and output resistances of a discrete MOSFET inverter device.
 
-\subsection*{Procedure}
+\subsubsection*{Procedure}
 
 The Inverter circuit show in in Fig.~\ref{fig:MOS} from the Discrete Digital Circuits laboratory is often referred to as a Buffer circuit. One of the benefits of using a MOSFET between stages of a system is that the MOSFET has a very high input resistance and a very low output resistance. A high input resistance means that not much current enters into the device; a low output resistance means that the device does not affect the loading of the system it is attached to. A MOSFET Buffer, as in Lab 6, has both of these advantages. Hence, in a system, it can ``buffer'' the stages from one other so that the stages acts more or less independently of one another.
 
@@ -265,14 +264,12 @@ Present your findings to the class.
 
 \newpage
 \subsection{MOSFET Inverter Maximum Clock Frequency}
-\textit{To be completed in a group of 2 or 3.}
+\textit{Conducted in groups of 2 or 3 students each.}
 
-\subsection*{Purpose}
-
+\subsubsection*{Purpose}
 The purpose of this experiment is to determine the effect of capacitance at the output on the maximum achievable inverter clock frequency.
 
-\subsection*{Procedure}
-
+\subsubsection*{Procedure}
 \begin{enumerate}
 \item Build the inverter circuit shown in Fig.~\ref{fig:NOT} from the Discrete Digital Circuits laboratory.
 \end{enumerate}
@@ -283,7 +280,7 @@ The purpose of this experiment is to determine the effect of capacitance at the 
 \draw (0,0)		node[nigfete, solderdot, name=N]{};
 \ctikzset{diodes/scale=0.3}
 \draw ($(N.S) + (0,0.2)$) to[short,*-] ++(0.5,0)
-			to[zzD*] ++(0,1.15)
+			to[D*] ++(0,1.15)
 			to[short, -*] ++(-0.5,0);
 \draw (N) circle [radius=25pt];
 \draw ($(N) + (0.9,0)$) node[right] {BS170};
@@ -318,11 +315,11 @@ Present your results to the class.
 \subsection{Zener Diode (Reverse breakdown)}
 \textit{Conducted in groups of 2 or 3 students each.}
 
-\subsection*{Purpose}
+\subsubsection*{Purpose}
 
 The purpose of this experiment is to showcase the use of Reverse breakdown in a practical circuits and to show a circuit using the Zener diode to demonstrate voltage clamping.
 
-\subsection*{Procedure}
+\subsubsection*{Procedure}
 
 One of the parameters that was not measured in Lab 2 was the reverse breakdown voltage of a diode. This is because most diodes have very large reverse bias breakdown voltages, on the order of 100's of Volts. However, some diodes are specifically manufactured to be used in the reverse bias breakdown region. These diodes are called Zener diodes.
 
