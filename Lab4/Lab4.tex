@@ -8,7 +8,7 @@
 \begin{center}
 \textbf{\huge ECE 230L - LAB 4}\\~\\
 \textbf{\large INTRODUCTION TO CIRCUIT SIMULATION USING PSPICE}\\~\\
-\rule{6.5in}{0.5mm}\\
+\rule{6.5in}{0.5mm}
 \end{center}
 
 \tableofcontents
@@ -37,7 +37,7 @@ To create a circuit in a PSpice environment, one must first launch ORCAD:
 \begin{enumerate}
 	\item Open ORCAD Capture CIS
 	\item Create a new project by selecting {\bf File} $\to$ {\bf New} $\to$ {\bf Project}
-	\item Name your project `Lab 3'
+	\item Name your project `Lab 4'
 	\item Choose {\bf Analog or Mixed A/D} under the {\bf Create a New Project Using} menu
 	\item Select {\bf Create a blank project} when prompted
 \end{enumerate}
@@ -105,7 +105,16 @@ To perform a DC analysis of the circuit, create a new simulation profile by sele
 
 Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
 
-%Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:dcAnalRes} shows the result of DC analysis.
+%\begin{figure}[ht!]
+%	\begin{center}
+%		\includegraphics[width=0.6\textwidth]{figures/DCAnalysisSettings.PNG}
+%	\end{center}
+%	\caption{Settings for AC Analysis}
+%	\label{fig:dcSettings}
+%\end{figure}
+
+\newpage
+Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point in time, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:dcAnalRes} shows the result of DC analysis.
 
 \begin{figure}[ht!]
 \begin{center}
@@ -144,6 +153,7 @@ After the voltage source properties have been changed, AC analysis can be perfor
 \end{itemize}
 Press \textbf{Apply} and \textbf{OK} to save the profile settings. They should look like Figure \ref{fig:acSettings}.
 
+\newpage
 \begin{figure}[ht!]
 	\begin{center}
 		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
@@ -152,7 +162,7 @@ Press \textbf{Apply} and \textbf{OK} to save the profile settings. They should l
 	\label{fig:acSettings}
 \end{figure}
 
-Now, begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. % To view the circuit behavior at a particular point, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:acAnalRes} shows the result of AC analysis.
+Now, begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}.
 
 \subsection*{Trace Expressions in PSpice}
 Trace expressions can be used to plot the phase of a desired value, a parameter in units of dB, or plot other useful mathematical operations on circuit parameters. Trace expressions are available under the \textbf{Trace} $\to$ \textbf{Add Trace} menu. Select \textbf{Plot} $\to$ \textbf{Add Plot to Window} and plot the value of V(R1:2) in dB. Use the trace expression DB(V(R1:2)). Next, add another plot to the window and plot the phase of V(R1:2). Use the trace expression P(V(R1:2)). The resulting plots are shown in Figure \ref{fig:acAnalRes}.
@@ -191,14 +201,15 @@ We include the circuit in Figure \ref{fig:trans}.
 	\label{fig:trans}
 \end{figure}
 
-After creating the circuit, create a new simulation profile called ``Transient''. To analyze the new circuit, select \textbf{Time Domain (Transient)} in the \textbf{Analysis Type} drop down menu and use the following parameters:
+After creating the circuit, create a new simulation profile called ``transient''. To analyze the new circuit, select \textbf{Time Domain (Transient)} in the \textbf{Analysis Type} drop down menu and use the following parameters:
 \begin{itemize}
 \item Run to Time: 2u
 \item Start saving data after: 0
 \item Maximum step size: 10n
 \end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. The settings should look like Figure \ref{fig:transSettings}.
 
+\newpage
 \begin{figure}[ht!]
 	\begin{center}
 		\includegraphics[width=0.6\textwidth]{figures/TransientAnalysisSettings.PNG}
@@ -207,7 +218,9 @@ Press \textbf{Apply} and \textbf{OK} to save the profile settings.
 	\label{fig:transSettings}
 \end{figure}
 
-Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. Plot the source voltage, V(R1:1), and V(R1:2).
+Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. 
+
+Plot the source voltage, V(R1:1), and V(R1:2).
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -266,6 +279,7 @@ And use the following parameters:
 \item Stop Frequency: 1Meg
 \item Number of Points per Decade: 10
 \end{itemize}
+\newpage
 \item In the transient analysis, change the voltage source to have the following values:
 \begin{itemize}
 \item V1 = 0, 
