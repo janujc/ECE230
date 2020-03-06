@@ -82,7 +82,7 @@ Using the LabVIEW software installed on your laboratory workstation, obtain the 
 \draw
 (0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
 (0,2)	to[R, l_=$R$]		++(2,0)
-		to[rmeter, t=V] ++(2,0)
+		to[rmeter, t=A] ++(2,0)
 		to[D*, l_=$D$]		++(0,-2)
 		to[short]	++(-4,0)
 ;\end{circuitikz}
@@ -95,6 +95,24 @@ Using the LabVIEW software installed on your laboratory workstation, obtain the 
 \item Sketch a plot of measured $V_{DC}$ vs. $I$ for this circuit.
 \item Now, LabVIEW will be used to more accurately measure the above diode characteristics. The LabVIEW program will automatically limit the maximum value of the current that can pass through the diode. Note that no additional settings of power supply and multimeter are required. LabVIEW will be used to control these digital instruments remotely using the general-purpose interface bus (GPIB) cable connecting the computer with the measurement equipment.
 \item Run the LabVIEW Virtual Instrument (VI) called \texttt{singleloop.vi}. You will have to select the voltage start and stop points carefully, as well as the step size to obtain an accurate $I_D(V_{PN})$ curve for the diode. \textbf{You will want to have enough data so that you can see the graph curving at the end.} The 1N4148 diode data sheet should be consulted before setting the measurement. LabVIEW data can be saved by right clicking on the graph and selecting ``export data.''
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}[scale=2]
+\ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
+\draw
+(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
+(0,2)	to[R, l_=$R$]		++(2,0)
+		to[D*, *-*, l_=$D$]		++(0,-2)
+		to[short]	++(-2,0)
+(2.25,0) node[currarrow, rotate=180]{}
+		to [short] ++(0.75,0)
+		to [rmeter, t=V] ++(0,2)
+		to [short] ++(-0.75,0) node[currarrow, rotate=180]{}
+;\end{circuitikz}
+\caption{PN-Junction Diode Test Circuit with Voltmeter across Diode}
+\end{figure}
+
 \item To account for the accuracy of your voltage source in producing its values as set by LabVIEW, it is important to measure the voltage $V_{PN}$ directly across the diode. Doing so will give you the actual voltage across the diode for each input voltage step used in LabVIEW. This voltage $V_{PN}$, will be plotted versus $I_D$ to obtain the diode I-V curve. To measure the diode voltage $V_{PN}$, you will have to run {\tt singleloop.vi} while measuring voltage in LabVIEW. Measure the voltage across the diode using the same power supply start and stop values as step sizes that you used to measure the current, $I_D$ of the 1N1418 diode. Save this file. This $V_{PN}$ file together with the $I_D$ file you saved will allow you to plot the diode current $I_D$ vs. the diode voltage $V_{PN}$. You should measure several 1N4148 diodes if you are interested in learning about the diode-to-diode variation in the $I_D(V_{PN})$ characteristics. These variations will be reflected as variations in the extracted parameters.
 \item Keep your diode in case you need to re-characterize it later. Repeat the above
 experiment to measure the reverse-bias current-voltage characteristics of your
@@ -107,22 +125,9 @@ satisfied with your results, save one file for later analysis. Make sure to save
 data as a .xls file.
 \end{enumerate}
 
+\newpage
 \section{Theoretical Curve of CV Characteristics of PN-Junction Diode}
-Circuit simulation is an important tool in the analysis and design of microelectronic circuits. Spice is a general-purpose circuit simulation program in which nonlinear dc, nonlinear transient, and linear ac analyses of electronic circuits are carried out. Circuits may contain resistors, capacitors, inductors, mutual inductors, independent voltage and current sources, dependent sources, lossless and lossy transmission lines, switches, diodes, BJTs, JFETs, MESFETs, and MOSFETs. The version of Spice used in the ECE Department at Duke is PSpice. You will be using PSpice over the next several labs, starting next week. Below, we include an introduction to PSpice in the form of a table of model parameters for a typical PN-Junction Diode in PSpice. In the meantime, we include here a few equations used in representing a PN-junction diode.
-
-There are a large number of parameters used in the representation of a PN-junction
-diode, but only the most commonly used parameters will be considered here. The first
-two parameters are related to the representation of the diode current-voltage behavior
-assumed to be in the following form:
-\begin{align}
-I_D(V_{PN}) = I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T} - 1\right) \label{eq:ID}
-\end{align}
-This relationship is written to obtain an empirical fit to experimental data and was not derived from physics-based principles. For $V_{PN} > 3\frac{k_BT}{q}$, which is
-approximately 75 mV at room temperature, Equation (\ref{eq:ID}) reduces to
-\begin{align}
-I_D(V_{PN}) \approx I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T}\right). \label{eq:redID}
-\end{align}
-The values most commonly specified include the following: the saturation current, $I_S$, the emission coefficient, $\gamma$, the series resistance $R_S$, the junction capacitance $C_j$, the transmit time, $\tau_0$ (default = 0 sec), the reverse-bias breakdown voltage, $V_B$, and the reverse-bias breakdown current, $I_D(V_B)$.
+Circuit simulation is an important tool in the analysis and design of microelectronic circuits. Spice is a general-purpose circuit simulation program in which nonlinear dc, nonlinear transient, and linear ac analyses of electronic circuits are carried out. Circuits may contain resistors, capacitors, inductors, mutual inductors, independent voltage and current sources, dependent sources, lossless and lossy transmission lines, switches, diodes, BJTs, JFETs, MESFETs, and MOSFETs. The version of Spice used in the ECE Department at Duke is PSpice. You will be using PSpice over the next several labs, starting next week. Below, we include Table \ref{table:params} as an introduction to PSpice and the model parameters for a typical PN-Junction Diode in PSpice. 
 
 \begin{table}[ht!]
 \caption{Typical PN-Junction Model Parameters}
@@ -138,7 +143,22 @@ $I_D(V_B)$ & Current at Breakdown Voltage & $1.0 \times 10^{-3}$ & A \\ \hline
 $\tau_0$ & Minority-Carrier Lifetime & 0 & S \\ \hline
 $C_j$ & Zero-Bias Depletion Capacitance & 0 & F \\ \hline
 \end{tabular}
+\label{table:params}
 \end{table}
+
+There are a large number of parameters used in the representation of a PN-junction
+diode, but only the most commonly used parameters will be considered here. The first
+two parameters are related to the representation of the diode current-voltage behavior
+assumed to be in the following form:
+\begin{align}
+I_D(V_{PN}) = I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T} - 1\right) \label{eq:ID}
+\end{align}
+This relationship is written to obtain an empirical fit to experimental data and was not derived from physics-based principles. For $V_{PN} > 3\frac{k_BT}{q}$, which is
+approximately 75 mV at room temperature, Equation (\ref{eq:ID}) reduces to
+\begin{align}
+I_D(V_{PN}) \approx I_S \exp\left(\frac{q V_{PN}}{\gamma k_b T}\right). \label{eq:redID}
+\end{align}
+The values most commonly specified include the following: the saturation current, $I_S$, the emission coefficient, $\gamma$, the series resistance $R_S$, the junction capacitance $C_j$, the transmit time, $\tau_0$ (default = 0 sec), the reverse-bias breakdown voltage, $V_B$, and the reverse-bias breakdown current, $I_D(V_B)$.
 
 The ideality factor $\gamma$ in Equation \ref{eq:redID} may be found from the following formula:
 \begin{align}
@@ -155,6 +175,7 @@ The final two parameters we will mention are transit time $\tau_0$ and the zero-
 \newpage
 \section{Explorations}
 \subsection{PN-Junction Diode Half-Wave and Bridge Rectifiers}
+\subsubsection*{Half-Wave Rectifier}
 One application of a PN-junction diode is to allow only the positive-going voltages of a time-varying input-voltage signal to pass to the output. Because a PN-junction diode allows current to flow through a circuit only in the forward direction, it can be used to allow the positive-going portions of an input signal to pass to the output while blocking the negative-going portions of the waveform. This kind of circuit is called a rectifier.
 \begin{figure}[ht!]
 \centering
@@ -180,6 +201,8 @@ resistor value of $\SI{1}{\kilo\ohm}$ at the output.
 \end{itemize}
 \item Repeat the above experiment using a Ge diode.
 \end{enumerate}
+\newpage
+\subsubsection*{Bridge Rectifier}
 It is possible to improve upon the above circuit by using both halves of the sinusoidal input voltage. To do so, more than one diode is required. An intermediate improvement would be to add a second diode: this circuit is referred to generally as Full Wave Rectifier. A common and even better implementation of the Full Wave Rectifier utilizes four diodes: it is referred to as a Bridge Rectifier. (The reason it is even better than a common Full Wave Rectifier is because it does not require a centrally tapped DC reference point.) Figure \ref{fig:bridgeRec} shows a Bridge Rectifier circuit. To provide a new ground for the full-wave rectified circuit, a transformer between the power source and the diodes is required. This allows both the positive- and negative-going portions of the input-voltage waveform to pass to the output node.
 \begin{figure}[ht!]
 \centering
@@ -207,7 +230,7 @@ It is possible to improve upon the above circuit by using both halves of the sin
 
 \newpage
 \subsection{LED Lighting}
-A recent technological application of LEDs can be seen in area of new, efficient lighting. In this Exploration, you will look at exactly how much more efficient consumer LED lights really are as compared to standard incandescent light bulbs. You will need to design a phototransistor circuit and build it on a standard breadboard of testing purposes. You will also measure the I-V characteristics of an LED from the light bulb after taking apart the bulb. The I-V curve of the LED from the bulb will be compared to the Silicon 1N4148 diode you tested in the laboratory exercises.
+A recent technological application of LEDs can be seen in area of new, efficient lighting. In this Exploration, you will look at exactly how much more efficient consumer LED lights really are as compared to standard incandescent light bulbs. You will need to design a phototransistor circuit and build it on a standard breadboard of testing purposes. 
 \begin{enumerate}
 \item First, plug the power measurement device into a standard socket in the power-strip at your lab bench. This unit will indicate how much power a device in drawing when plugged in.
 \item Obtain a standard incandescent light bulb. Screw it in to the desk lamp provided in lab. Now, plug in the lamp into the outlet with power measurement installed. Turn on the light bulb.
