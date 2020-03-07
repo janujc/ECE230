@@ -32,7 +32,7 @@ The objectives of this laboratory session are to introduce you to the basics of 
 %
 % 	ORCAD
 %____________________________________________________________________________
-\section{Setting Up a Circuit Using ORCAD Capture}
+\section{Setting Up a Project Using ORCAD Capture}
 To create a circuit in a PSpice environment, one must first launch ORCAD:
 \begin{enumerate}
 	\item Open ORCAD Capture CIS
@@ -52,47 +52,30 @@ To create a circuit in a PSpice environment, one must first launch ORCAD:
 
 Once the new project has been created, circuit design can begin. Sources, components, ground nodes, and wires can be selected using the {\bf Place} menu.
 
-PSpice will be used to model and perform analyses on the circuit in Figure \ref{fig:initCircuit}.
-\begin{figure}[ht!]
-	\begin{center}
-		\begin{circuitikz}[scale=1.5]
-			\draw 	
-			(0,0) 	to[short] 										++(2,0)
-					node[ground] {}
-					to[short] 										++(2,0)
-					to[C, l_=${C = \SI{1}{\nano\farad}}$]			++(0,2)
-					to[short]		++(-2,0)
-					to[R, l_=${R_1 = \SI{1}{\kilo\ohm}}$]			++(-2,0)
-					to[battery, l_=$V_1$]		++(0,-2)
-			(2,0)	to[R, *-*, l_=${R_2 = \SI{1}{\kilo\ohm}}$]		++(0,2)
-		;\end{circuitikz}
-	\end{center}
-	\caption{Initial Circuit}
-	\label{fig:initCircuit}
-\end{figure}
-
-To create the circuit, 
-\begin{enumerate}
-	\item Add a DC Voltage Source: Place $\to$ PSPice Component $\to$ Source $\to$ Voltage Source $\to$ DC
-	\item Insert Resistors and Capacitors: Place $\to$ PSpice Component $\to$ Passives
-	\item Insert Wires and connect circuit nodes: Place $\to$ Wire
-	\item Insert a Ground: Place $\to$ Ground $\to$ 0/SOURCE
-\end{enumerate}
-
-Note that you can use Ctrl-R to rotate the components. Also, to change values of any component, double click on the component and change the values using the pop-up menu. You may also change values by double clicking directly on the value and typing a new value.
 %____________________________________________________________________________
 %
 %	DC Analysis
 %____________________________________________________________________________
 \newpage
 \section{DC Analysis in PSpice}
+
+PSpice will be used to model and perform analyses on the circuit in Figure \ref{fig:dc}. To create the circuit, follow the steps below:
+\begin{enumerate}
+	\item Add a DC Voltage Source: \textbf{Place $\to$ PSPice Component $\to$ Source $\to$ Voltage Source $\to$ DC}
+	\item Insert Resistors and Capacitors: \textbf{Place $\to$ PSpice Component $\to$ Passives}
+	\item Insert Wires and connect circuit nodes: \textbf{Place $\to$ Wire}
+	\item Insert a Ground: \textbf{Place $\to$ Ground $\to$ 0/SOURCE}
+\end{enumerate}
+
 \begin{figure}[ht!]
 	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/DCAnalysisCircuitCrop.PNG}
+		\includegraphics[width=0.9\textwidth]{figures/DCAnalysisCircuitCrop.PNG}
 	\end{center}
 	\caption{Circuit for DC Analysis}
 	\label{fig:dc}
 \end{figure}
+
+Note that you can use Ctrl-R to rotate the components. Also, to change values of any component, double click on the component and change the values using the pop-up menu. You may also change values by double clicking directly on the value and typing a new value.
 
 To perform a DC analysis of the circuit, create a new simulation profile by selecting \textbf{PSpice} $\to$ \textbf{New Simulation Profile}. Name the new profile `dc' and press \textbf{Create}. Then,  select \textbf{DC Sweep} in the \textbf{Analysis Type} drop down menu and use the following parameters:
 \begin{itemize}
@@ -105,15 +88,6 @@ To perform a DC analysis of the circuit, create a new simulation profile by sele
 
 Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
 
-%\begin{figure}[ht!]
-%	\begin{center}
-%		\includegraphics[width=0.6\textwidth]{figures/DCAnalysisSettings.PNG}
-%	\end{center}
-%	\caption{Settings for AC Analysis}
-%	\label{fig:dcSettings}
-%\end{figure}
-
-\newpage
 Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. To view the circuit behavior at a particular point in time, follow \textbf{Trace} $\to$ \textbf{Add Trace} to select different values to plot. Plot V(R1:1), V(R1:2), I(R1), and I(R2). Figure \ref{fig:dcAnalRes} shows the result of DC analysis.
 
 \begin{figure}[ht!]
@@ -137,7 +111,7 @@ Before performing an AC analysis, a new AC voltage source has to replace the DC 
 
 \begin{figure}[ht!]
 	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
+		\includegraphics[width=0.9\textwidth]{figures/ACAnalysisCircuitCrop.PNG}
 	\end{center}
 	\caption{Circuit for AC Analysis}
 	\label{fig:ac}
@@ -152,15 +126,6 @@ After the voltage source properties have been changed, AC analysis can be perfor
 \item Number of Points per Decade: 10
 \end{itemize}
 Press \textbf{Apply} and \textbf{OK} to save the profile settings. They should look like Figure \ref{fig:acSettings}.
-
-\newpage
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/ACAnalysisSettings.PNG}
-	\end{center}
-	\caption{Settings for AC Analysis}
-	\label{fig:acSettings}
-\end{figure}
 
 Now, begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}.
 
@@ -195,7 +160,7 @@ We include the circuit in Figure \ref{fig:trans}.
 
 \begin{figure}[ht!]
 	\begin{center}
-		\includegraphics[width=0.7\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
+		\includegraphics[width=0.9\textwidth]{figures/TransientAnalysisCircuitCrop.PNG}
 	\end{center}
 	\caption{Circuit for Transient Analysis}
 	\label{fig:trans}
@@ -207,20 +172,11 @@ After creating the circuit, create a new simulation profile called ``transient''
 \item Start saving data after: 0
 \item Maximum step size: 10n
 \end{itemize}
-Press \textbf{Apply} and \textbf{OK} to save the profile settings. The settings should look like Figure \ref{fig:transSettings}.
-
-\newpage
-\begin{figure}[ht!]
-	\begin{center}
-		\includegraphics[width=0.6\textwidth]{figures/TransientAnalysisSettings.PNG}
-	\end{center}
-	\caption{Settings for Transient Analysis}
-	\label{fig:transSettings}
-\end{figure}
+Press \textbf{Apply} and \textbf{OK} to save the profile settings. 
 
 Begin the simulation by selecting \textbf{PSpice} $\to$ \textbf{Run}. 
 
-Plot the source voltage, V(R1:1), and V(R1:2).
+Plot the source voltage, V(R1:1), and V(R1:2). The resulting plot is shown in Figure \ref{fig:transAnalRes}.
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -441,7 +397,7 @@ Correct $R_{TH}$ Value			& 5 \\ \hline
 Circuit Diagram					& 5 \\
 $V_{OC}$ and $I_{SC}$ Labeled	& 5 \\
 Correct $R_{TH}$ Value			& 5 \\ \hline \hline
-Total							& 100 \\ \hline
+\textbf{Total}					& \textbf{100} \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
