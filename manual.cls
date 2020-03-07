@@ -1,4 +1,10 @@
-\ProvidesClass{manual}[30/10/2019]
+%____________________________________________________________________________
+%
+% Class file for Duke ECE 230 Lab Manuals
+%
+% author: Januario Carreiro <jjc70@duke.edu>
+%____________________________________________________________________________
+\ProvidesClass{manual}[07 March 2020]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
@@ -38,7 +44,7 @@
 \renewcommand{\headrulewidth}{0.5mm}
 \renewcommand{\footrulewidth}{0.5mm}
 
-\newcommand{\makeheader}[1]{ % Takes arguments {Lab #} and {Semester Year}
+\newcommand{\makeheader}[1]{ % Takes argument {Lab #}
 	\fancyhead[L]{ECE230L}
 	\fancyhead[C]{}
 	\fancyhead[R]{Duke University}
