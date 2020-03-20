@@ -12,17 +12,22 @@ Conversion from Word to LaTeX was done by Januario Carreiro.
 
 `manual.cls` must be in a parent directory to the Lab folders for the LaTeX documents to compile. Compile LaTeX using 
 
-```
+```shell
 pdflatex [filename].tex
 ```
 
 You may have to compile 3 times in order for the Table of Contents and List of Figures to be populated with correct content.
 
-To get a seperate file containing only the grading rubric, use
+To get a separate file containing only the grading rubric, use
 
-```
+```shell
 python splitGradingRubric.py
 ```
 
-You may have to run `pip install PyPDF2` if you do not have PyPDF2 already installed.
+You can also specify to split the grading rubric of only a specific file, say Lab4.pdf, by using
 
+```
+python splitGradingRubric.py 4
+```
+
+You may have to run `pip install PyPDF2` if you do not have PyPDF2 already installed.
