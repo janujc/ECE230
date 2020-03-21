@@ -44,11 +44,11 @@ The circuit used to measure the drain-current characteristics of the NMOSFET is 
 	\draw (0,0) 	node[nigfete, solderdot](Q1) {};
 	\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
 	\draw (Q1.D) 	to[short] ++(0,2)
-					to[R, l=$R_{DS}$, i<=$I_{\mathrm{DS}}$, a=\SI{100}{\ohm}] ++(4,0)
-					to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
+					to[R, l=$R_{D}$, i<=$I_{\mathrm{D}}$, a=\SI{100}{\ohm}] ++(4,0)
+					to[battery, l=$V_{\mathrm{DD}}$] (4,-3)
 					to[short] ++(-4,0);
 	\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
-					to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{\mathrm{GS}}$] (VGS |- GND)
+					to[battery, l_=$V_{\mathrm{GG}}$, i=$I_{\mathrm{G}}$] (VGS |- GND)
 					to[short] (0,-3);
 	\draw (0.5,2.1)	node[] {$+$};
 	\draw (Q1.east)	node[right=2mm]{$V_{\mathrm{DS}}$};
@@ -64,12 +64,12 @@ The circuit used to measure the drain-current characteristics of the NMOSFET is 
 Use LabVIEW on your laboratory workstation to obtain the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ of the BS170 silicon n-channel MOS field-effect transistor. In the MOSFET characterization under static conditions, the static gate current is zero and, consequently, there are no concerns about the difference between the gate-to-source voltage set in LabVIEW and the actual gate-to-source voltage. To obtain the NMOSFET characteristics, carry out the following steps:
 \begin{enumerate}
 \item Obtain a BS170 NMOSFET and a \SI{100}{\ohm} resistor from the parts bins,
-\item Build a circuit using the E3631A Power Supply's \SI{6}{\volt} source (for $V_{\mathrm{DS}}$) and \SI{+25}{\volt} source (for $V_{\mathrm{GS}}$), and the 33440 Digital Multimeter used as an ammeter. Be sure to correctly identify the NMOSFET gate, drain, and source terminals using the manufacturer's data sheet.
+\item Build a circuit using the E3631A Power Supply's \SI{6}{\volt} source (for $V_{\mathrm{DD}}$) and \SI{+25}{\volt} source (for $V_{\mathrm{GG}}$), and the 33440 Digital Multimeter used as an ammeter. Be sure to correctly identify the NMOSFET gate, drain, and source terminals using the manufacturer's data sheet.
 \item Turn on the Power Supply and Multimeter connected as an ammeter.
 \item Run the LabVIEW Virtual Instrument (VI) program called {\tt doubleloop.vi}. Set the inner-voltage ($V_{\mathrm{DS}}$, Source) loop to run from 0 to 6.0 V with 50 steps, and the outer-voltage ($V_{\mathrm{GS}}$, Source) to run from 2.0 to 3.0 V with 5 steps, to obtain a smooth $I_D$ vs $V_{\mathrm{DS}}$ of the BS170 NMOSFET.
 \item Save your output data. Check your output data with your TA to ensure that the characterizations are representative of BS170 NMOSFETs. If they are not it may be necessary to characterize at least 2 or 3 NMOSFETs. The output file is a list of numbers stepped through and measured by LabVIEW in obtaining the drain-current $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$ characteristics.
-\item Repeat the above experiment for the same inner and outer loops and steps size, but this time, once to measure $V_{\mathrm{DS}}$ vs. $V_{\mathrm{DS~Source}}$ and once to measure $V_{\mathrm{GS}}$ vs. $V_{\mathrm{GS~Source}}$ using {\tt doubleloop.vi}.
-\item Remove the $R_{\mathrm{DS}}$ resistor from the circuit, as shown below. Notice that the $V_{\mathrm{DS}}$ applied at the source is now the same as the $V_{\mathrm{DS}}$ across the MOSFET:
+\item Repeat the above experiment for the same inner and outer loops and steps size, but this time to measure $V_{\mathrm{DS}}$ vs. $V_{\mathrm{DD}}$ and $V_{\mathrm{GS}}$ vs. $V_{\mathrm{GG}}$ using {\tt doubleloop.vi}. You should be using the multimeter as a voltmeter to do so. 
+\item Remove the $R_{\mathrm{D}}$ resistor from the circuit, as shown below. Notice that $V_{\mathrm{DD}}$ is now the same as the $V_{\mathrm{DS}}$:
 \end{enumerate}
 \begin{figure}[ht!]
 	\centering
@@ -78,10 +78,10 @@ Use LabVIEW on your laboratory workstation to obtain the drain-current character
 	\draw (Q1.S) 	to[short, -*] (0,-3) node[ground](GND) {};
 	\draw (Q1.D) 	to[short] ++(0,2)
 					to[short] ++(4,0)
-					to[battery, l=$V_{\mathrm{DS~Source}}$] (4,-3)
+					to[battery, l=$V_{\mathrm{DD}}$] (4,-3)
 					to[short] ++(-4,0);
 	\draw (Q1.G)	to[short] ++(-3,0) coordinate(VGS)
-					to[battery, l_=$V_{\mathrm{GS~Source}}$, i=$I_{GS}$] (VGS |- GND)
+					to[battery, l_=$V_{\mathrm{GG}}$, i=$I_{G}$] (VGS |- GND)
 					to[short] (0,-3);
 	\draw (0.5,2.1)	node[] {$+$};
 	\draw (Q1.east)	node[right=2mm]{$V_{DS}$};
@@ -96,14 +96,14 @@ Use LabVIEW on your laboratory workstation to obtain the drain-current character
 
 \begin{enumerate}
 \setcounter{enumi}{7}
-\item Use {\tt singleloop.vi} to measure $I_D$ for $V_{\mathrm{GS}}$ ranging from 0 to \SI{6.0}{\volt}, with a fixed \SI{3}{V} value for $V_{\mathrm{DS}}$. This will require changing the the $V_{\mathrm{GS~Source}}$ over to the \SI{6}{\volt} output on the E3631A Power Supply, and connecting the $V_{\mathrm{DS~Source}}$ to the E3611A DC Power Supply.
+\item Use {\tt singleloop.vi} to measure $I_D$ for $V_{\mathrm{GS}}$ ranging from 0 to \SI{6.0}{\volt}, with a fixed \SI{3}{V} value for $V_{\mathrm{DS}}$. This will require changing $V_{\mathrm{GG}}$ over to the \SI{6}{\volt} output on the E3631A Power Supply, and connecting $V_{\mathrm{DD}}$ to the E3611A DC Power Supply.
 \end{enumerate}
 
 At this point, you should have 4 saved Excel files: 
 \begin{itemize}
-\item $I_D(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
-\item $V_{\mathrm{DS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
-\item $V_{\mathrm{GS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$
+\item $I_D(V_{\mathrm{DD}}, V_{\mathrm{GS}})$
+\item $V_{\mathrm{DS}}(V_{\mathrm{DD}}, V_{\mathrm{GS}})$
+\item $V_{\mathrm{GS}}(V_{\mathrm{DD}}, V_{\mathrm{GS}})$
 \item $I_D(V_{\mathrm{GS}}, V_{\mathrm{DS}} = \SI{3.0}{\volt})$
 \end{itemize}
 
@@ -258,7 +258,7 @@ Procedure:
 \begin{enumerate}
 \item Give the definitions of the parameters $K_N$ and the transconductance $g_m^\mathrm{sat}$ of the NMOSFET. Comment on their dependence on other NMOSFET parameters and bias voltages.
 \item Give the definition of the NMOSFET channel-length-modulation parameter $\lambda_N$. Describe how it is extracted from the drain-current characteristics $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$.
-\item Plot the dependence of the drain current $I_{D \cdot N}$ on the drain-to-source bias voltage $V_{\mathrm{DS}\cdot N}$ for different values of the gate-to-source bias voltage $V_{\mathrm{GS}}$ on a linear-linear plot. Show all circuit diagrams used to measure this data. Don't forget that what was measured in lab was $I_D(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$ and $V_{\mathrm{DS}}(V_{\mathrm{DS~Source}}, V_{\mathrm{GS}})$. In order to plot $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$, you will need to do a substitution.
+\item Plot the dependence of the drain current $I_{D \cdot N}$ on the drain-to-source bias voltage $V_{\mathrm{DS}\cdot N}$ for different values of the gate-to-source bias voltage $V_{\mathrm{GS}}$ on a linear-linear plot. Show all circuit diagrams used to measure this data. Don't forget that what was measured in lab was $I_D(V_{\mathrm{DD}}, V_{\mathrm{GS}})$ and $V_{\mathrm{DS}}(V_{\mathrm{DD}}, V_{\mathrm{GS}})$. In order to plot $I_D(V_{\mathrm{DS}}, V_{\mathrm{GS}})$, you will need to do a substitution.
 \item Plot the dependence of $\sqrt{I_{D \cdot N}}$ on the gate-to-source bias voltage $ V_{\mathrm{GS} \cdot N}$ in the 0 to \SI{6}{\volt} range for a fixed value of the drain-to-source bias voltage $V_{\mathrm{DS} \cdot N}$ equal to \SI{3}{\volt}. Show all circuit diagrams used to measure this data.
 \item From the above plots, obtain the values of $K_N$, $V_{T \cdot N}$, and $\lambda_N$. Include any additional plots or calculations used to obtain these parameters. Note that the parameter extraction slides on Sakai give two methods for finding $K_N$. For any values where multiple different data sets can be used, remember to take several measurements and average the results. In a table, compare your extracted values with those listed in the manufacturer's data sheet.
 \item What are the major sources of error in the values of the extracted parameters? How can these errors be effectively reduced?
@@ -281,8 +281,8 @@ Procedure:
 Criteria & Points Possible \\ \hline \hline
 \textbf{Raw Lab Data} 							& \textbf{15} \\
 Circuit Diagram 								& 3 \\
-$V_{\mathrm{DS~source}}$ vs $I_{DS}$, $V_{GS}$ plot & 3 \\
-$V_{DS}$ vs $V_{\mathrm{DS~source}}$ and $V_{GS}$ vs $V_{\mathrm{DS~source}}$ plots 	& 6 \\
+$V_{\mathrm{DD}}$ vs $I_{DS}$, $V_{GS}$ plot & 3 \\
+$V_{DS}$ vs $V_{\mathrm{DD}}$ and $V_{GS}$ vs $V_{\mathrm{DD}}$ plots 	& 6 \\
 $I_{DS}$ vs $V_{GS}$ plot for $V_{DS}$ = 3V 		& 3 \\ \hline
 \textbf{Question 1} 							& \textbf{10} \\ \hline
 \textbf{Question 2} 							& \textbf{10} \\ \hline
