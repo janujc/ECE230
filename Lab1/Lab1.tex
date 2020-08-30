@@ -29,38 +29,80 @@ The objectives of this laboratory session are as follows:
 \end{itemize}
 
 \section{ECE 230L Laboratory Introduction}
-In this section of the lab, you will familiarize yourself with the laboratory test and measurement equipment available in the ECE 230L Microelectronic Devices and Circuits laboratory.  Take a few minutes to look over the materials included in your laboratory kit and read the descriptions that follow to get acquainted with the devices you will be using all semester in lab. The laboratory kit include the following instruments:
+In this section of the lab, you will familiarize yourself with the laboratory test and measurement equipment available in the ECE 230L Microelectronic Devices and Circuits laboratory.  Take a few minutes to look over the materials included in your laboratory kit and read the descriptions that follow to get acquainted with the devices you will be using all semester in lab. The laboratory kit includes the following instruments:
 \begin{itemize}
-\item Agilent E3611A DC Power Supply, 
-\item Agilent E3631A Triple Output DC Power Supply, 
-\item Agilent DSO6014A Digitizing Oscilloscope, 
-\item Agilent 33220A Function Generator, 
-\item Agilent 34410A Digital Multimeter, 
+\item UCTRONICS U6225 Power Supply Module, 
+\item Analog Devices M1K ADALM1000,
+\item Jameco Breadboard
+\item AstroAI AM33D Multimeter
 \end{itemize}
 
-\subsection{Agilent E3611A DC Power Supply}
-Examine the controls on its front panel. This instrument is relatively simple to use. It is used to provide DC (constant) voltages and currents. \textbf{It is important to prevent the leads of the DC power supply from touching each other. When the power supply leads touch, a short circuit is formed which can cause serious damage to the power supply.} Consider what would happen if you shorted the wall socket, or a car battery! Short circuits can be dangerous, and special care should be taken to avoid them.
+\subsection{UCTRONICS U6225 Power Supply Module}
+Examine the controls and terminals. This instrument is relatively simple to use. It is used to provide DC (constant) voltages and currents. \textbf{It is important to prevent the leads of the DC power supply from touching each other. When the power supply leads touch, a short circuit is formed which can cause serious damage to the power supply.} Consider what would happen if you shorted the wall socket, or a car battery! Short circuits can be dangerous, and special care should be taken to avoid them.
 
-\subsection{Agilent E3631A Triple Output DC Power Supply}
-Examine the controls on its front panel. This instrument is slightly more complex instrument to use than the Agilent E3611A DC Power Supply. It is capable of providing DC voltages from its three outputs simultaneously. These three outputs are capable of producing constant $0 - (+6)$ V, $(-25) -0$ V, and $0 - (+25)$ V. This instrument is well suited for the use of simultaneous positive and negative supply voltages in advanced circuits. Like the Agilent E3611A DC Power Supply, it is also important to prevent the leads of this DC power supply from touching each other.
+\begin{figure}[ht!]
+\centering
+\begin{tabular}{cc}
+\includegraphics[width=0.4\textwidth]{figures/powerConverterModuleOff.png} & 
+\includegraphics[width=0.4\textwidth]{figures/powerConverterModule.png}
+\end{tabular}
+\caption[UCTRONICS U6225 Power Supply Module]{Left: Power Supply Module off; Right: Power Supply Module with the positive terminal of the battery plugged in to $V_{IN+}$ and the negative terminal plugged in to $V_{IN-}$}
+\label{fig:powerSupply}
+\end{figure}
 
-\subsection{Agilent DSOX1102G Digitizing Oscilloscope}
-The front panel of this instrument is shown in Figure \ref{fig:oscfront}. This instrument is the most versatile of all instruments because it can perform multiple functions simultaneously. For example, it can display a waveform on the screen, measure the peak-to-peak voltage of a waveform, and average the voltage, frequency, period, and many other parameters simultaneously. 
+\subsection{Analog Devices M1K ADALM1000}
+This instrument is shown in Figure \ref{fig:osc}. This instrument is the most versatile of all the instruments shown because it can perform multiple functions simultaneously. Not only can it act as an oscilloscope, it will also be our function generator for this semester.
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/OscFrontPanel.png}
-\caption[Front Panel of Agilent DSOX1102G Digitizing Oscilloscope]{Front Panel of Agilent DSOX1102G Digitizing Oscilloscope}
-\label{fig:oscfront}
+\includegraphics[width=0.5\textwidth]{figures/ADALM1000.png}
+\caption[Analog Devices M1K ADALM1000]{Analog Devices M1K ADALM1000}
+\label{fig:osc}
 \end{center}
 \end{figure}
 
-\subsection{Agilent 33220A Function Generator}
-Examine the controls on its front panel. This instrument has an extensive capability to generate any arbitrary waveform. You will be using this function generator primarily as a voltage source of sinusoidal and square voltage waveforms. 
+You will be interacting with this instrument through a software called Pixelpulse2. Instructions on how to download Pixelpulse2 are included in Section 3.
 
-\subsection{Agilent 34110A Digital Multimeter}
-Examine the controls on its front panel. This instrument is used to measure voltages, currents, and resistances. When configured to measure voltages, it is a voltmeter. Likewise, it may function as an ammeter and an ohmmeter. Remember, to use the multimeter to measure current, the positive lead must be moved to the lower lead slot. 
+\subsection{Jameco Breadboard}
+You've probably seen this exact breadboard model in your previous ECE laboratories. You will be using this breadboard to build most of your circuits. Remember that any components placed in a row will be electrically connected to anything else placed in that row.
 
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.4\textwidth, angle=90]{figures/breadboard.png}
+\caption[Jameco Breadboard]{Jameco Breadboard}
+\label{fig:breadboard}
+\end{center}
+\end{figure}
+
+\subsection{AstroAI AM33D Multimeter}
+This instrument is used to measure voltages, currents, and resistances. When configured to measure voltage, it is a voltmeter. When configured to measure current, it is an ammeter. When configured to measure resistance, it is an ohmmeter. Remember, you may have to change the terminal that the red lead is connected to in order to make certain measurements. 
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.4\textwidth]{figures/multimeter.png}
+\caption[AstroAI AM33D Multimeter]{AstroAI AM33D Multimeter}
+\label{fig:multimeter}
+\end{center}
+\end{figure}
+
+\newpage
+\section{Laboratory Preparation}
+\subsection{Download and Install Pixelpulse2}
+You can find the download link for Pixelpulse2 \href{https://github.com/analogdevicesinc/Pixelpulse2/releases/tag/v1.0.4}{here}. If you are on a Windows device, download {\tt Pixelpulse2\_win\_setup.exe}. If you are on a Mac, download {\tt Pixelpulse2-v1.0.4.dmg.zip}. After following the installation instructions, open Pixelpulse2. Confirm your application looks like the image below.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{figures/Pixelpulse2.png}
+\caption[Pixelpulse2 GUI]{Pixelpulse2 GUI}
+\label{fig:pixelpulse2}
+\end{center}
+\end{figure}
+
+Note that you may have to update your device's firmware the first time you open the application. This should only take a few seconds. Unplug and plug the M1K back in once you receive a message saying that the firmware has been updated.
+
+Also, you may want to check out \href{https://wiki.analog.com/university/tools/m1k/pixelpulse}{the wiki}.
+
+\newpage
 \section{Experimental Exercises}
 \subsection{Practical Voltage and Current Measurements}
 The standard resistor color code is shown on the wall in the laboratory above your lab bench. Most resistors have four colored bands. The first three bands indicate the nominal value of the resistor and the fourth band indicates the tolerance in its value. The first two bands form the mantissa and the third band represents the power of 10. A table of the resistance color code is included below for your convenience.
@@ -108,6 +150,8 @@ to [short] ++(-0.75,0) node[currarrow, rotate=180]{}
 \label{fig:voltcirc}
 \end{center}
 \end{figure}
+
+Note that you may need to use the 2.4 mm screwdriver to loosen and tighten the terminals of the power supply.
 
 The voltmeter reads the voltage across itself, which includes its internal resistance. Because the circuit has only a single branch, the current flowing through the resistor also flows through the voltmeter. In this circuit, the source voltage $V_S = 10$ V and the DC voltage measured by the voltmeter is $V_M$. The current is given by the equation
 \begin{align}
@@ -159,16 +203,16 @@ In the procedure that follows, it is extremely important that you take precise a
 \begin{enumerate}
 \item Select a 100 $\Omega$ resistor. Measure and record its resistance. 
 \item Set the voltage of the DC Voltage Source to 1 V.
-\item Assemble the circuit shown in Figure \ref{fig:ampcirc}. Set the multimeter to the ammeter mode for DC current measurement. Recall that you need to place the test leads in the correct banana jacks on the front panel and to press the proper sequence of softkeys (Hint: you may have to use \fbox{Shift}~). 
+\item Assemble the circuit shown in Figure \ref{fig:ampcirc}. Set the multimeter to the ammeter mode for DC current measurement.
 \item Use the oscilloscope to measure the voltage $V_S$ across the DC power supply (use the ``average'' measurement).
 \item Measure the DC current $I$ using the ammeter. 
 \item Determine the value of $R_M$ from Equation \eqref{eq:amres}. 
 \end{enumerate}
 
 \subsection{Measurements of Time-Dependent Sources}
-In this section, we will be using the function generator to provide a time-dependent voltage waveform which will then be measured using the oscilloscope. \textbf{It is important NOT to let the leads of the function generator touch each other.} If the function generator leads touch each other, either the internal fuse will blow or serious damage to the instrument will occur. It is very important that you keep this in mind at all times. If the internal fuse blows, there are replacement fuses in one of the laboratory supply bins.
+In this section, we will be using the M1K as a function generator to provide a time-dependent voltage waveform which will then be measured using the other channel of the M1K. \textbf{It is important NOT to let the leads of the M1K touch each other.} If the function generator leads touch each other, either the internal fuse will blow or serious damage to the instrument will occur. It is very important that you keep this in mind at all times. If the internal fuse blows, the device will need to be replaced.
 
-The function generator has an internal resistance of 50 $\Omega$. The voltage displayed on its front panel is the voltage that would appear at its terminals if it were connected to a 50 $\Omega$ load. Under open-circuit conditions, the voltage across the terminals of the function generator is twice as large as the value indicated on its front panel. \textbf{This important concept is often misunderstood.}
+The function generator has an internal resistance of 50 $\Omega$. The voltage displayed on its front panel is the voltage that would appear at its terminals if it were connected to a 50 $\Omega$ load. Under open-circuit conditions, the voltage across the terminals of the function generator is twice as large as the value indicated on the Pixelpulse2 software. \textbf{This important concept is often misunderstood.}
 
 \subsubsection{Periodic Pulsed Waveform}
 Asynchronous reset pulses produced by integrated circuit (IC) chips can often be difficult to detect.  These pulses are important, however, and are often used in circuits to trigger a subsequent event, such as a clock ticking or a ``clear'' command to be sent.  The 74HC85 comparator chip is a high-speed Si-gate CMOS (Complementary Metal-Oxide-Semiconductor) device, for example, that produces a fast 250 ns pulse with a 25 ns rise and fall time, respectively.   Such a pulse is very quick and thus hard to detect on the oscilloscope without proper triggering.  In this exercise, you will simulate a pulse similar to the one produced by the 74HC85 chip and learn to trigger and analyze the resultant waveform.
