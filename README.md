@@ -10,7 +10,9 @@ Conversion from Word to LaTeX was done by Januario Carreiro.
 
 ## Instructions
 
-`manual.cls` must be in a parent directory to the Lab folders for the LaTeX documents to compile. Compile LaTeX using 
+You must have a LaTeX distribution installed in order to compile LaTeX documents. If you do not already have a distribution, consider [MiKTeX](https://miktex.org/download).
+
+Note that `manual.cls` must be in a parent directory to the Lab folders for the LaTeX documents to compile. In other words, do not modify the file structure. Compile LaTeX using 
 
 ```shell
 pdflatex [filename].tex
@@ -18,7 +20,7 @@ pdflatex [filename].tex
 
 You may have to compile 3 times in order for the Table of Contents and List of Figures to be populated with correct content.
 
-To get a separate file containing only the grading rubric, use
+In order to create a separate grading rubric file for each Lab manual, use
 
 ```shell
 python splitGradingRubric.py
