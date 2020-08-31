@@ -51,7 +51,7 @@ Examine the controls and terminals. This instrument is relatively simple to use.
 \end{figure}
 
 \subsection{Analog Devices M1K ADALM1000}
-This instrument is shown in Figure \ref{fig:osc}. This instrument is the most versatile of all the instruments shown because it can perform multiple functions simultaneously. Not only can it act as an oscilloscope, it will also be our function generator for this semester.
+This instrument is shown in Figure \ref{fig:osc}. This instrument is the most versatile of all the instruments shown because it can perform multiple functions simultaneously. Not only can it act as an oscilloscope, it will also be our function generator for this semester. You can find documentation about the M1K \href{https://wiki.analog.com/university/tools/m1k}{here}.
 
 \begin{figure}[ht!]
 \begin{center}
@@ -209,38 +209,64 @@ In the procedure that follows, it is extremely important that you take precise a
 \item Determine the value of $R_M$ from Equation \eqref{eq:amres}. 
 \end{enumerate}
 
+\newpage
 \subsection{Measurements of Time-Dependent Sources}
-In this section, we will be using the M1K as a function generator to provide a time-dependent voltage waveform which will then be measured using the other channel of the M1K. \textbf{It is important NOT to let the leads of the M1K touch each other.} If the function generator leads touch each other, either the internal fuse will blow or serious damage to the instrument will occur. It is very important that you keep this in mind at all times. If the internal fuse blows, the device will need to be replaced.
+In this section, we will be using the M1K as a function generator to provide a time-dependent voltage waveform which will then be measured using the other channel of the M1K. \textbf{It is important NOT to let the leads of the M1K touch each other.} If the function generator leads touch each other, either the internal fuse will blow or serious damage to the instrument will occur. If the internal fuse blows, the device will need to be replaced.
 
-The function generator has an internal resistance of 50 $\Omega$. The voltage displayed on its front panel is the voltage that would appear at its terminals if it were connected to a 50 $\Omega$ load. Under open-circuit conditions, the voltage across the terminals of the function generator is twice as large as the value indicated on the Pixelpulse2 software. \textbf{This important concept is often misunderstood.}
+During these next few experiments, you will be using Pixelpulse2 to generate three different waveforms: a sine wave, a triangle wave, and a square wave. 
 
-\subsubsection{Periodic Pulsed Waveform}
-Asynchronous reset pulses produced by integrated circuit (IC) chips can often be difficult to detect.  These pulses are important, however, and are often used in circuits to trigger a subsequent event, such as a clock ticking or a ``clear'' command to be sent.  The 74HC85 comparator chip is a high-speed Si-gate CMOS (Complementary Metal-Oxide-Semiconductor) device, for example, that produces a fast 250 ns pulse with a 25 ns rise and fall time, respectively.   Such a pulse is very quick and thus hard to detect on the oscilloscope without proper triggering.  In this exercise, you will simulate a pulse similar to the one produced by the 74HC85 chip and learn to trigger and analyze the resultant waveform.
-
+{\bf Setup}
 \begin{enumerate}
-\item Set the function generator to produce a pulsed waveform by pressing the \fbox{Pulse} button on the front panel
-\item Set the pulse parameters to produce the following: 
-\begin{itemize}
-\item 250 ns width
-\item 10 Hz
-\item 5 V amplitude
-\item 25 ns edges waveform
-\end{itemize}
-\item Connect the oscilloscope channel-1 probe directly to the leads on the function generator and turn on the output of the function generator.
-\item Under the Trigger menu on the oscilloscope, turn on \fbox{Edge} mode, and adjust the \fbox{Level} knob. It might also be helpful to set the trigger mode to \fbox{Normal} . 
-\item Determine the width of the waveform and its edges. Does it agree with what you expected based on the input pulse parameters? Why or why not? Explain.
-\item \textbf{Capture the resultant waveform on the oscilloscope screen} and save it to document your laboratory experiments.
+\item connect the Ch A terminal and GND to the Ch B terminal and GND
+\item turn on the function generator by clicking on the ``Z'' above Channel A and selecting ``Source Voltage; Measure Current'' from the drop down menu.
 \end{enumerate}
 
-Before you leave, please be sure to \textbf{clean up} the lab station where you worked, putting away all components, wires, probes, and cables as you found them. Also remember to turn off all the equipment you used. There are lab sections that follow you. Please be courteous in your practices.
+\subsubsection{Sinusoidal Waveform}
+\begin{enumerate}
+\item Set the function generator to produce a sine wave by clicking on the button above ``Voltage'' and choosing ``Sine''
+\item Set the sine wave parameters to the following: 
+\begin{itemize}
+\item 10 Hz
+\item 5 V amplitude
+\end{itemize}
+\item Change ``Sample Time'' to ``1 s''
+\item \textbf{Capture the Pixelpulse2 screen for the entire 1 second interval} and save it to document your laboratory experiments.
+\end{enumerate}
+
+\subsubsection{Square Waveform}
+\begin{enumerate}
+\item Set the function generator to produce a square wave by clicking on the button above ``Voltage'' and choosing ``Square''
+\item Set the square wave parameters to the following: 
+\begin{itemize}
+\item 1 kHz
+\item 1.5 V Min
+\item 3.0 V Max
+\item 75\% duty cycle
+\end{itemize}
+\item Change ``Sample Time'' to ``10 ms''
+\item \textbf{Capture the Pixelpulse2 screen for a 5 ms interval} and save it to document your laboratory experiments.
+\end{enumerate}
+
+\subsubsection{Triangle Waveform}
+\begin{enumerate}
+\item Set the function generator to produce a square wave by clicking on the button above ``Voltage'' and choosing ``Triangle''
+\item Set the triangle wave parameters to the following: 
+\begin{itemize}
+\item 25 Hz
+\item 1.0 V Min
+\item 4.0 V Max
+\end{itemize}
+\item Change ``Sample Time'' to ``100 ms''
+\item \textbf{Capture the Pixelpulse2 screen for entire 100 ms interval} and save it to document your laboratory experiments.
+\end{enumerate}
 
 \newpage
 \section{Questions}
 \begin{enumerate}
-\item Define and differentiate between precision, accuracy, and resolution in electrical measurements. What is the ``resolution'' of a digital display? Compare the resolution of the digital display on the front panel of the DC power supply to the display on the front panel of the multimeter. Why must you use the multimeter to set the DC supply to 0.75 V? (The Agilent product manual available online for these instruments may be useful in answering this question.)
-\item Suppose you want to produce a sinusoidal waveform with 5 V peak-to-peak voltage across a 25 $\Omega$ load with the function generator. When you do so, what will be the peak-to-peak voltage actually displayed on the front panel of the function generator and why? (Assume that the function generator has a standard internal 50 $\Omega$ resistance.)
-\item Look up the internal resistances for both the voltmeter and ammeter capabilities for the Agilent 34410A Digital Multimeter used in lab. How do these values compare to the internal resistances you measured in section 3.1? Give percent errors.
-\item In section 3.3, you compensated the oscilloscope probe on the Agilent DSOX1102G oscilloscope at your laboratory bench.  Making the assumption that the 10x scope probe has a 9 M$\Omega$ series impedance (i.e. you can ignore any small probe tip capacitance), determine the maximum value of $C_{\mathrm{comp}}$ from your measurement of $\tau$, the time constant.  Report two $C_{\mathrm{comp}}$ values---one determined when the oscilloscope probe was fully under-compensated and one when the oscilloscope probe was full over-compensated.  Include in your assignment the oscilloscope waveforms you used to determine $\tau$. 
+\item Define and differentiate between precision, accuracy, and resolution in electrical measurements. What is the ``resolution'' of your handheld multimeter's display? Why is it a good idea to use the multimeter in conjunction with the DC supply?
+\item Look up the internal resistances for both the voltmeter and ammeter capabilities for the AstroAI Digital Multimeter in your lab kit. How do these values compare to the internal resistances you measured in section 3.1? Give percent errors.
+\item Suppose you want to produce a 5 V constant voltage across a 500 k$\Omega$ resistor with the M1K. When you do so, what voltage do you expect to measure across your handheld multimeter and why? 
+\item Visit the \href{https://wiki.analog.com/university/tools/m1k}{wiki} for the M1K. Access the hardware manual. What is the maximum voltage that can be output by the M1K? Notice that Analog Devices claims that the precision of the M1K can be as small as 10 $\mu$S. What frequency would this be? In Pixelpulse2, what is the maximum frequency you are able to produce? Why do you think that, in practice, the M1K is limited in frequency to only this value?
 \end{enumerate}
 Submit the answers to these questions along with an extension and all of the other below-listed items in the rubric in your Lab 1 write-up in order to receive all possible points. 
 
@@ -248,74 +274,12 @@ Submit the answers to these questions along with an extension and all of the oth
 \newpage
 \section{Extension}
 To earn up to an additional 7 points (bringing the total possible points up to 100), you must show evidence of independent thought. This may include (but is not limited to):
-\begin{itemize}
-\item The oscilloscopes provided in the ECE 230L laboratory are high quality, expensive, state of the art devices.  However, there are even more expensive ‘scopes available.  What parameters make for a better oscilloscope and why?  Consider in particular sampling rate, speed, MHz, …
-\item When would a compensated probe be necessary when measuring time-varying waveforms?  Give extreme cases and explain how an undercompensated and overcompensated probe would adversely affect the measurement.
-\item Explain in circuit-level detail the functioning of the 10x, \SI{100}{\mega\ohm}, compensated oscilloscope probe.  Be sure to show measured signal, signal output, and the effect of the \SI{100}{\mega\ohm}.  Mention the internal capacitor and why compensation is necessary.
-\item Explore in depth another question that piqued your interest as you completed this laboratory.
-\end{itemize}
+
+In this laboratory, you explored several different devices that you will be using throughout the semester: UCTRONICS U6225 Power Supply Module, Analog Devices M1K ADALM1000, Jameco Breadboard, and AstroAI AM33D Multimeter. Choose one of these devices to explore in greater depth. Consider at least three features of the device you chose to explore. Answers in bullet points are fine. 100 words or less.
+
+You may also choose to explore any other aspect of this laboratory that piqued your interest.
+
 The number of additional points awarded depends on the quality and extent of your independent contribution.
-
-\newpage
-\begin{appendices}
-\section{Oscilloscope Probe Calibration And Related Exercises}
-\subsection{Oscilloscope Probe Calibration}
-Probe compensation is the process of adjusting the $RC$ divider so the probe maintains its attenuation ratio over the probe's rated bandwidth. Make sure you check the probe compensation when you first connect a probe to an oscilloscope input because it may have been adjusted previously to match a different input.   
-
-The Agilent DSOX1102G oscilloscope has a square wave reference signal available on the front panel to use for compensating the probe.
-
-In the procedure that follows, we calibrate the probe.
-\begin{enumerate}
-\item Attach the probe tips to the probe compensation terminal and connect the probe to an input of the scope. Check to make sure the probe is at 10x magnification.
-\item View the square wave reference signal on the screen and make adjustments on the probe capacitance using a small screw driver so that the square waves on the scope screen look square.
-\item Probe compensation is now complete!
-\end{enumerate}
-
-\begin{figure}[ht!]
-\begin{center}
-\centering
-\includegraphics[width=0.9\textwidth]{figures/OscProbeComp.jpeg}
-\caption[Oscilloscope Probe Calibration]{The probe tip attaches to the metal terminal labeled ``Probe Comp''}
-\label{fig:oscprobecomp}
-\end{center}
-\end{figure}
-
-Now, you will full under-compensate and over-compensate the oscilloscope probe to determine the approximate value of the variable compensation capacitor $(C_{\mathrm{comp}})$ which is part of the oscilloscope's 10x probe.
-
-\begin{itemize}
-\item[4.] Measure two instances of the time constant, $\tau$---one when the oscilloscope probe is fully under-compensated and one when the oscilloscope probe is full over-compensated. The oscilloscope waveforms should appear similar to those shown in Figure \ref{fig:oscdifcomp}.
-\end{itemize}
-
-To solve for $\tau = RC$, we use the equation 
-\begin{align}
-\Delta V_C = \Delta V_{\mathrm{max}} \cdot e^{-t / RC}.
-\end{align} 
-However, we must first find $\Delta V_{\mathrm{max}}$. This is the difference between the maximum voltage $V_{\mathrm{max}}$ on the left side of the wave and the stable voltage $V_{\mathrm{stable}}$ on the right side of the wave. This value should be positive for under-compensated probes and negative for over-compensated probes (and 0 for well-compensated probes). Next, we find $\Delta V_C$ for an under-compensated probe by using 
-\begin{align}
-\Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-t / \tau}. \label{eq:tau} \\
-\intertext{Now, we set t = $\tau$}
-\Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-\tau / \tau} \\
-\Delta V_C &= \Delta V_{\mathrm{max}} \cdot e^{-1}
-\intertext{Since $\Delta V_{\mathrm{max}}$ and $e^{-1}$ are known values, we have solved for $\Delta V_C$. Note that for an over-compensated probe, we replace (\ref{eq:tau}) with}
-\Delta V_C &= \Delta V_{\mathrm{max}} \cdot [1 - e^{-t / \tau}].
-\end{align}
-
-Now, we can measure $\tau$ for both an under- and over-compensated scope. We do so by first adding $V_{\mathrm{stable}} + \Delta V_C$ to get the value of the voltage at one time constant. We'll call this value $V_{\tau = 1}$. Finally, we use the oscilloscope's \fbox{Cursor} to measure the time $\tau$ it takes for the wave and $V_{\tau = 1}$ to intersect.
-
-\begin{figure}[ht!]
-\begin{center}
-\begin{tabular}{ccc}
-\includegraphics[width=0.31\textwidth]{figures/overcomp.png} & \includegraphics[width=0.31\textwidth]{figures/wellcomp.png} & 
-\includegraphics[width=0.31\textwidth]{figures/undercomp.png}
-\end{tabular}
-\end{center}
-\caption[Square waves from probes with different compensations]{Square waves from probes with different compensations. From left to right: over-compensated, well-compensated, under-compensated.}
-\label{fig:oscdifcomp}
-\end{figure}
-
-As you can see in Figure \ref{fig:oscdifcomp}, when compensating the probe using the oscilloscope's reference signal, you can have either overshoot or undershoot on the square wave. You can attach the probe tip to the probe compensation terminal and connect the probe to an input of the scope. Viewing the square wave reference signal, make the proper adjustments on the probe using a small screw driver so that the square waves on the scope screen look square. What you are adjusting is a variable capacitor at the tip of the probe. If low-frequency adjustment is not properly made, this will result in high-frequency inaccuracies in your measurements.  It's very important to make sure this compensation capacitor is correctly adjusted.
-\end{appendices}
-
 
 %____________________________________________________________________________
 %
@@ -332,21 +296,22 @@ As you can see in Figure \ref{fig:oscdifcomp}, when compensating the probe using
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{Internal Resistance of a Voltmeter}					& \textbf{12} \\
+\textbf{Internal Resistance of a Voltmeter}			& \textbf{10} \\
 Circuit Diagram												& 4 \\
-Actual measurements for $V_M, V_S$, and $R$					& 4 \\
+Actual measurements for $V_M, V_S$, and $R$			& 4 \\
 Equation and $R_M$ value									& 4 \\ \hline
-\textbf{Ideal vs. Practical DC Ammeter}						& \textbf{12} \\
+\textbf{Ideal vs. Practical DC Ammeter}				& \textbf{11} \\
 Circuit Diagram												& 4 \\
-Actual measurements for $V_M, V_S,$ and $R$					& 4 \\
+Actual measurements for $V_M, V_S,$ and $R$			& 5 \\
 Equation and $R_M$ value									& 4 \\ \hline
-\textbf{Measurements of Time-Dependent Sources}				& \textbf{6} \\
-Observed width of the waveform and its edges				& 3 \\
-Image of waveform 											& 3 \\ \hline
-\textbf{Question 1}											& \textbf{12} \\ \hline
-\textbf{Question 2}											& \textbf{12} \\ \hline
-\textbf{Question 3}											& \textbf{12} \\ \hline
-\textbf{Question 4}											& \textbf{12} \\ \hline
+\textbf{Measurements of Time-Dependent Sources}		& \textbf{12} \\
+Image of sinusoidal waveform								& 4 \\
+Image of square waveform									& 4 \\
+Image of triangle waveform 								& 4 \\ \hline
+\textbf{Question 1}											& \textbf{15} \\ \hline
+\textbf{Question 2}											& \textbf{15} \\ \hline
+\textbf{Question 3}											& \textbf{15} \\ \hline
+\textbf{Question 4}											& \textbf{15} \\ \hline
 \textbf{Extension}											& \textbf{7} \\ \hline
 \textbf{Total}												& \textbf{100} \\ \hline
 \end{tabular}
