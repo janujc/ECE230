@@ -1,0 +1,156 @@
+\documentclass[12pt]{../manual}
+%____________________________________________________________________________
+%
+%	TITLE AND TABLE OF CONTENTS
+%____________________________________________________________________________
+\begin{document}
+\makeheader{Lab 2}
+\begin{center}
+\textbf{\huge ECE 230L - LAB 2}\\~\\
+\textbf{\large SILICON WAFER CHARACTERIZATION \\
+RESISTIVITY, CARRIER CONCENTRATION, MOBILITY}\\~\\
+\rule{6.5in}{0.5mm}\\
+\end{center}
+
+\tableofcontents
+
+\newpage
+%____________________________________________________________________________
+%
+%	BODY
+%____________________________________________________________________________
+\phantomsection
+\section*{Calculating Resistivity from Probe Measurement}
+\addcontentsline{toc}{section}{Calculating Resistivity from Probe Measurement}
+\markboth{Pre-Lab}{Pre-Lab}
+
+The four-point probe Van der Pauw method that was used in the SMIF provided a sheet resistance value.  This value was calculated by the instrument by providing a small current $(I)$ through the 4 probes which are equally spaced on the sample and measured the voltage $(V)$ across the two inner probes.  The $V/I$ values reported by the instrument are in units of Ohms $(\Omega)$.  These values are called the sample's sheet resistance.  For thick semiconductor samples like the ones measured in the SMIF---where the thickness of the wafer $(W)$ is much smaller than the width and length of the sample---the resistivity of the sample is given by the equation
+\begin{align}
+\rho = \frac{V}{I} t
+\end{align}
+where $V/I$ is the sample's sheet resistance $(\Omega)$ and $t$ is the sample's thickness (cm).
+
+\newpage
+\section{Objectives of this Laboratory}
+The objectives of this laboratory session are as follows:
+\begin{itemize}
+\item Using wafer thickness, determine the resistivity of Silicon wafers
+\item Determine Carrier Concentration of Silicon Wafers
+\item Determine $\mu$ of Silicon Wafers
+\item Obtain class data and average class values
+\item Determine number and values of doped wafers used---determine $\sigma$ of each
+\end{itemize}
+~\\ Below, we have included a table with all of the symbols used in this lab manual and their definitions for your convenience.
+\def\arraystretch{1.5}
+\begin{table}[ht!]
+\caption{Relevant notation used throughout lab manual}
+\centering
+\begin{tabular}{|c|l|l|} \hline
+Symbol 	& Definition							& Unit		\\ \hline
+$R$ 	& Resistance 							& $\Omega$	\\ \hline
+$L$		& Length								& cm		\\ \hline
+$A$		& Area									& cm$^2$	\\ \hline
+$t$		& Thickness								& cm		\\ \hline
+$I$		& Current								& A			\\ \hline
+$V$		& Voltage								& V			\\ \hline	
+$\rho$ 	& Sample resistivity 					& $\Omega \mbox{-cm}$ \\ \hline
+$e$ 	& Magnitude of the electronic charge 	& C 		\\ \hline
+$\mu_p$ & Hole mobility 						& cm$^2 / V_s$ \\ \hline
+$\mu_n$ & Electron mobility 					& cm$^2 / V_s$ \\ \hline
+$n,p$ 	& Carrier concentration 				& cm$^{-3}$	\\ \hline
+$N_A$	& Acceptor Concentration 				& cm$^{-3}$	\\ \hline
+$N_D$ 	& Donor Concentration 					& cm$^{-3}$	\\ \hline
+$N_I$	& Impurity Concentration 				& cm$^{-3}$	\\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\section{Determining Carrier Concentration for Resistivity Data}
+
+All of the samples measured in the SMIF were p-type Boron doped.  To determine the carrier concentration, $N_A$, a few assumptions need to be made.  
+
+Assumptions:
+\begin{enumerate}
+\item $\mu_p = 480 \mbox{ cm}^2/V_s$ (see Table 5.1, pp. 158 in Neaman text)
+\item $N_D=0$
+\item Complete ionization 
+\end{enumerate}
+
+Along with these assumptions, we can use
+\begin{align}
+\rho = \frac{1}{e(\mu_nn + \mu_pp)}
+\end{align}
+
+to determine carrier concentration. Here, $e$ is the magnitude of the electronic charge, which is always $1.6 \times 10^{-19}$ C.
+
+Given the above assumptions, the equation for $\rho$ reduces to
+\begin{align}
+\rho = \frac{1}{e \mu_p N_A}.
+\end{align}
+
+\begin{itemize}
+\item[$\square$] Calculate the carrier concentration, $N_A$, for the entire class data set. Since we are assuming that $N_D = 0$, the $N_A$ value is exactly the impurity concentration, $N_I$. 
+\end{itemize}
+
+\section{Plot of Resistivity vs. Impurity Concentration}
+
+Plots of resistivity, $\rho$ versus impurity concentration, $N_I$ are called Irwin curves.  They are used to estimate the carrier concentrations of samples once the sample's resistivity is known.
+
+\begin{itemize}
+\item[$\square$] Plot on a log-log scale the resistivity, $\rho$ versus impurity concentration, $N_I$ (in this case, the same as the carrier concentration, $N_A$) for the class data set.  Your plot should resemble Figure 5.4 on pp. 165 of the Neamen text.  Remember that the SMIF samples were all p-type (Boron) doped.  This plot should have many values of $\rho$ and $N_I$ based on the class data.
+\item[$\square$] Determine a curve-fit to this data from the above plot including $\pm$ error ranges.  Justify the $\pm$ error ranges used.  Does the expected error range vary with carrier concentration?
+\end{itemize}
+
+\newpage
+\section{Estimating expected Resistivity given a Carrier Concentration}
+
+With a plot of resistivity, $\rho$, versus impurity concentration, $N_I$, it should be possible to extract either $\rho$ or $N_I$ given the other.
+
+\begin{itemize}
+\item[$\square$] For a Si p-type (Boron) doped Carrier Concentration, $N_A$ of $1 \times 10^{17} \mbox{ cm}^3$, what range of Resistivity, $\rho$, values would you expect to obtain from this sample? Use your class averaged data plot and curve-fit from Section 3 to answer this question. Note that a range of resistivity is specified, so the $\pm$ error range must be used.
+\end{itemize}
+
+\section{Device Performance based on Doping and Sample Data}
+
+The resistance, $R$, of a sample can be determined based on its resistivity, $\rho$, given the sample cross-sectional area, $A$, and length, $L$. The equation for determining Resistance from resistivity is the following (see Neaman Section 5.1.3 pp. 164):
+\begin{align}
+R = \frac{\rho L}{A}
+\end{align}
+
+\begin{itemize}
+\item[$\square$] For a die-sized portion of a wafer just like the ones measured in class, with cross-sectional area $A = 10^{-6} \mbox{ cm}^2$ and length $L = 0.001$ cm of the Si p-type (Boron) doped sample above---with Carrier Concentration $N_A$ of $1 \times 10^{15} \mbox{cm}^3$ and a resistivity range as determined in Section 4 based on class-measured data---in an applied voltage of 5 V, determine the range of expected currents that would flow through this die.
+\end{itemize}
+
+~\\Submit the answers to the questions marked by a square $(\square)$ along with all of the other below-listed items in the rubric in your Lab X write-up. 
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{Grading Rubric}
+\markboth{Grading Rubric}{Grading Rubric}
+\hspace{0pt}
+\vfill
+\begin{table}[ht!]
+\caption{ECE 230L Laboratory 2 Grading Rubric}
+\centering
+\begin{tabular}{l|c} \hline
+Criteria & Points Possible \\ \hline \hline
+\textbf{Determining Carrier Concentration for Resistivity Data} & \textbf{10} \\ 
+Data set & 10 \\ \hline
+\textbf{Plot of Resistivity vs. Impurity Concentration (Irwin curve)} & \textbf{50} \\ 
+            Plot & 10 \\ 
+            Curve-fit & 10 \\ 
+            $\pm$ error range specified & 15\\ 
+              Justification for error range	& 15 \\ \hline
+\textbf{Estimating expected Resistivity given Carrier Concentration} & \textbf{20} \\ 
+Range of resistivities specified & 15 \\ \hline
+\textbf{Device Performance based on Doping and Sample Data} & \textbf{20} \\ 
+              Current range specified from data & 15 \\ \hline \hline
+\textbf{Total}	& \textbf{100} \\ \hline
+\end{tabular}
+\end{table}
+\vfill
+%____________________________________________________________________________
+%
+%	End{PROBLEMS}
+%____________________________________________________________________________
+\end{document}
