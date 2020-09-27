@@ -80,11 +80,14 @@ Using the multimeter, obtain the $I_D(V_{PN})$ static current and voltage charac
 \begin{circuitikz}[scale=2]
 \ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
 \draw
-(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
-(0,2)	to[R, l_=$R$]		++(2,0)
-		to[rmeter, t=A] ++(2,0)
-		to[D*, l_=$D$]		++(0,-2)
-		to[short]	++(-4,0)
+(0,4) 	to[battery, l_=$V_{S}$, i=$i_S$] ++(0,-4)
+(0,4) -- (2,4)
+(2,4) 	to[R, l^=$R_1$] (2,2)
+(2,2) 	to[R, l_=$R_3$] (4,2)
+(4,2)	to[rmeter, t=A] (4,0)
+(4,0)	to[D*, l_=$D$]	(2,0)
+(2,0)	to[R, l_=$R_2$, v^<=$V_{DC}$] (2,2)
+(2,0) -- (0,0)
 ;\end{circuitikz}
 \caption{PN-Junction Diode Test Circuit}
 \label{fig:diodeTest}
@@ -99,17 +102,19 @@ Using the multimeter, obtain the $I_D(V_{PN})$ static current and voltage charac
 
 \item To account for the accuracy of your voltage source in producing its values as set by the Power Supply Module, it is important to measure the voltage $V_{PN}$ directly across the diode. Doing so will give you the actual voltage across the diode for each input voltage step from the Power Supply Module. This voltage, $V_{PN}$, will be plotted versus $I_D$ to obtain the diode I-V curve later. Repeat steps 3 and 4 but record the voltage $V_{PN}$ across the diode and plot $V_{DC}$ vs. $V_{PN}$ instead. Your circuit should look like Figure 3 below. Be sure to use the same start and stop values as well as step size as before.
 
-\newpage
 \begin{figure}[ht!]
 \centering
 \begin{circuitikz}[scale=2]
 \ctikzset{resistors/scale=1.5,batteries/scale=1.5,instruments/scale=1.5,diodes/scale=1.5}
 \draw
-(0,2) 	to[battery, l^=$V_{DC}$, i=$i_D$] ++(0,-2)
-(0,2)	to[R, l_=$R$]		++(2,0)
-		to[D*, *-*, l_=$D$]		++(0,-2)
-		to[short]	++(-2,0)
-(2.25,0) node[currarrow, rotate=180]{}
+(0,4) 	to[battery, l_=$V_{S}$, i=$i_S$] ++(0,-4)
+(0,4) -- (2,4)
+(2,4) 	to[R, l^=$R_1$] (2,2)
+(2,2) 	to[R, l_=$R_3$] (4,2)
+(4,2)	to[D*, *-*, l_=$D$] (4,0)
+(4,0) -- (0,0)
+(2,0)	to[R, l_=$R_2$, v^<=$V_{DC}$] (2,2)
+(4.25,0) node[currarrow, rotate=180]{}
 		to [short] ++(0.75,0)
 		to [rmeter, t=V] ++(0,2)
 		to [short] ++(-0.75,0) node[currarrow, rotate=180]{}
@@ -177,13 +182,15 @@ The final two parameters we will mention are transit time $\tau_0$ and the zero-
 One application of a PN-junction diode is to allow only the positive-going voltages of a time-varying input-voltage signal to pass to the output. Because a PN-junction diode allows current to flow through a circuit only in the forward direction, it can be used to allow the positive-going portions of an input signal to pass to the output while blocking the negative-going portions of the waveform. This kind of circuit is called a rectifier.
 \begin{figure}[ht!]
 \centering
-\begin{circuitikz}[scale=1.9]
+\begin{circuitikz}[scale=2]
 \ctikzset{resistors/scale=1.5,batteries/scale=1.5,diodes/scale=1.5}
 \draw
-(0,2) 	to[battery, l^=${v_S=V_P\sin\omega t}$, i=$i_D$] ++(0,-2)
-(0,2)	to[D*, l_=$D$]		++(4,0)
-		to[R, l_=$R$, v^=$v_o$]		++(0,-2)
-		to[short]	++(-4,0)
+(0,2) 	node[msport,circuitikz/RF/scale=-2](ADC1){Ch. A}
+(4,2) 	node[msport,circuitikz/RF/scale=2](ADC2){Ch. B}
+(0,0) 	node[msport,circuitikz/RF/scale=-2](ADC3){V}
+(2,2) 	to[D*, l_=$D$, i_<=$i_{\mathrm{Ch. A}}$] (ADC1.left)
+(2,2) -- (ADC2.left)
+(2,2)	to[R, l_=$R$, v^=$V_O$] (2,0) -- (ADC3.left)
 ;\end{circuitikz}
 \caption{PN-Junction Diode Half-Wave Rectifier}
 \label{fig:halfRec}
