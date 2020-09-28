@@ -188,7 +188,7 @@ One application of a PN-junction diode is to allow only the positive-going volta
 (0,2) 	node[msport,circuitikz/RF/scale=-2](ADC1){Ch. A}
 (4,2) 	node[msport,circuitikz/RF/scale=2](ADC2){Ch. B}
 (0,0) 	node[msport,circuitikz/RF/scale=-2](ADC3){2.5 V}
-(2,2) 	to[D*, l_=$D$, i_<=$i_{\mathrm{Ch. A}}$] (ADC1.left)
+(ADC1.left) to[D*, l_=$D$, i>_=$i_{\mathrm{Ch. A}}$] (2,2)
 (2,2) -- (ADC2.left)
 (2,2)	to[R, l_=$R$, v^=$V_O$] (2,0) -- (ADC3.left)
 ;\end{circuitikz}
