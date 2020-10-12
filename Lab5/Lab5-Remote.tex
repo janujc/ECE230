@@ -1,0 +1,238 @@
+%____________________________________________________________________________
+%
+% author: Januario Carreiro <jjc70@duke.edu>
+% created: 7 March 2020
+%____________________________________________________________________________
+\documentclass[12pt]{../manual} 
+%____________________________________________________________________________
+%
+%	TITLE AND TABLE OF CONTENTS
+%____________________________________________________________________________
+\begin{document}
+\makeheader{Lab 5}
+\begin{center}
+\textbf{\huge ECE 230L - LAB 5}\\~\\
+\textbf{\large Signal Transmission}\\~\\
+\rule{6.5in}{0.5mm}\\
+\end{center}
+
+\textit{Note: Lab this week includes a pre-lab. This pre-lab is to be completed before your scheduled lab section. A link to the pre-lab can be found in the Laboratory Schedule tab of the class page on Sakai.}
+
+\tableofcontents
+
+\listoffigures
+%____________________________________________________________________________
+%
+%	BODY
+%____________________________________________________________________________
+\newpage
+\section{Objectives of this Laboratory}
+The objectives of this laboratory session are as follows:
+\begin{itemize}
+\item to explore how signals are transmitted,
+\item to build a transmitter and receiver and have them communicate, and
+\item to evaluate the limitations of data transmission using infrared signals
+\end{itemize}
+
+\section{Data Transmission Using Infrared Signals}
+The purpose of this exploration is to build a wireless signal transmitter using the knowledge of LEDs and Field-Effect Transistors you have gained in lab. The ultimate goal of this exploration is to build a simple electronic system that transmits music from a portable music player through a wireless channel using light. To do so, you will build a circuit that takes the electrical signal and changes the brightness of an LED with the sound of the music. A receiver circuit using a phototransistor will take this light signal and convert it into sound.
+
+\subsection{Music Transmitter}
+Equipment:
+\begin{itemize}
+\item \SI{100}{\ohm} resistors (x5)
+\item IR LED (Light Emitting Diode) (x1)
+\item Red LED (Light Emitting Diode) (x1)
+\item BS170 MOSFET (x1)
+\item \SI{50}{\kilo\ohm} Potentiometer (x1)
+\item \SI{47}{\micro\farad} Capacitor (x1)
+\item Wire with headphone plug (x1)
+\item Battery snap for 9V battery (x1)
+\item \SI{9}{\volt} battery (x1)
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+\item Build the circuit shown in Figure \ref{fig:mystery}. From your knowledge of MOSFETs,
+LEDs, and current-limiting resistors from this lab and previous labs, determine in which order these 3 circuit elements (i.e. a BS170 MOSFET, a Red LED, and \SI{100}{\ohm} resistor) should be connected to produce an LED whose brightness varies with the amplitude of the input music signal or function generator time-varying signal that will be attached to the 1/8'' mini headphone jack. Think about how the BS170 MOSFET should be oriented (Drain and Source pins) in order to be properly biased to turn on when a voltage at the Gate is applied.
+\end{enumerate}
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\draw (0,0)		to[R, a=$R_4$] ++(0,3)
+				to[pR, a=$P_1$, name=P] ++(0,3)
+				to[R, a=$R_3$] ++(0,3)
+				to[short, *-] ++(-12,0)
+				to[battery, l=$V_S$, a=\SI{9}{\volt}] ++(0,-9)
+				to[short, -*] ++(12,0);	
+\draw (3,6)		node[fourport, t={\bf \Huge ?}, name=A] {};
+\draw (-8,0)	to[short, *-] ++(0, 1.5)
+				to[R, a=$R_1$] ++(0,3)
+				to[C, a=$C_1$, v^<=$~$] ++(3,0)
+				to[R, a=$R_2$] ++(3,0) -- (P.wiper);
+\draw (-1.5,4.5)to[short, *-] ++(0,1.5)
+				to[short] (A.west);
+\draw (0,9)		to[short] ++(3,0)
+				to[short] (A.north);
+\draw (0,0)		to[short] ++(3,0)
+				to[short] (A.south);
+\draw (-8,1.5)	to[short, *-o] ++(-1,0);
+\draw (-8,4.5)	to[short, *-o] ++(-1,0);
+\draw (-9,4)	node[] {$+$};
+\draw (-9,2)	node[] {$-$};
+\draw[red,thin,dashed] (-10.5,5) rectangle (-8.5,1);
+\draw (-9.5,3.25) node[] {$1/8$''};
+\draw (-9.5,2.75) node[] {mini plug};
+\end{circuitikz}
+\caption{Music Transmitter Circuit with Mystery Load Elements}
+\label{fig:mystery}
+\end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Once you have devised a circuit topology for the 3 unknown elements in the above circuit, test the circuit using a red LED.
+\item If you are using a portable music player, such as an iPod, first listen to it through headphones and make sure it is producing loud and clear music or speech. 
+\item Plug the headphone jack into your device (or attach it carefully to the function generator with alligator clips) to produce the signal that will serve as the circuit input.
+\item Attach the wires from the headphone jack to your circuit where the {\tt 1/8'' mini plug} is indicated in the figure.
+\item Turn up the volume on your music player (or the amplitude of the function generator). Rotate the stem of the potentiometer on the transmitter circuit. The red LED should be on.
+\item If the LED is not on, your circuit may not be designed or wired properly. Immediately disconnect one of the battery snap leads from the breadboard of the transmitter. Troubleshoot your circuit as necessary by checking all connections with an oscilloscope or multimeter.
+\item Once the circuit is working and the LED lights up, replace the red LED with an infrared LED. Now it is time to wirelessly transmit your optical signal and convert it back into sound.
+\end{enumerate}
+
+\newpage
+\subsection{Music Receiver}
+Equipment:
+\begin{itemize}
+\item \SI{10}{\micro\farad} capacitors (x3)
+\item Phototransistor (x1)
+\item LM 386 op-amp (x1)
+\item \SI{24}{\kilo\ohm} resistor (x1)
+\item Speaker (x1)
+\item Battery snap for 9V battery (x1)
+\item \SI{9}{\volt} battery (x1)
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+\item Build the receiver circuit outlined in Figure \ref{fig:rec}. Keep in mind that the IR LED from the transmitter you just built will need to be positioned about 1/2'' from the phototransistor in this receiver circuit. 
+\end{enumerate}
+
+\begin{figure}[ht!]
+\centering
+\begin{circuitikz}
+\draw (0,0)		node[dipchip, num pins=8, hide numbers, external pins width=0, name=O] {};
+\draw (0,0) 	node[op amp, xscale=0.4, yscale=0.4, name=Amp] {};
+\node [right, font=\tiny] at (O.bpin 1) {1};
+\node [right, font=\tiny] at (O.bpin 4) {4};
+\node [left, font=\tiny] at (O.bpin 6) {6};
+\node [left, font=\tiny] at (O.bpin 7) {7};
+\node [left, font=\tiny] at (O.bpin 8) {8};
+\draw (O.bpin 2) -| (Amp.-);
+\draw (O.bpin 3) -| (Amp.+);
+\draw (Amp.out)	|- (O.bpin 5);
+\draw (O.pin 1)		to[short] ++(-0.5,0) 
+					to[short] ++(0,1.5) node[name=A] {}; 
+\draw(O.pin 8)		to[short] ++(0.5,0) 
+					to[short] ++(0,1.5) 
+					to[C, a=$C_2$, v^<=$~$] (A);
+\draw (O.pin 3)		to[short] ++(-1,0)
+					to[C, a=$C_1$, -*] ++(-3,0) node[name=B] {};
+\draw (O.pin 5)		to[short] ++(1,0)
+					to[C, l=$C_3$] ++(3,0)
+					to[loudspeaker, name=L] ++(0,-3) node[name=C] {};
+\node [left] at (L.south) {SPK};
+\draw (B)			to[R, a=$R_1$] ++(0,3) node[name=D] {}
+					to[short] ++(-3,0) node[name=E] {}
+					to[battery, l=$V_S$, a=\SI{9}{\volt}] (E |- C)
+					to[short] ++(3,0) node[name=F] {}
+					to[short] (C);
+\draw (O.pin 6)		to[short] ++(1,0)
+					to[short] ++(0,4) node[name=Z] {}
+					to[short] (Z -| D)
+					to[short, -*] (D);
+\draw (O.pin 2)		to[short] ++(-1,0) 
+					to[xing] ++(0,-1.115) node[name=G] {} 
+					to[short, -*] (G |- C);
+\draw (O.pin 4)		to[short] ++(-0.5,0) node[name=H] {}
+					to[short, -*] (H |- C);
+\draw ($(F)!0.5!(B)$) node[npn, photo, name=T] {};
+\draw (T.C)			to[short] (B);
+\draw (T.E) 		to[short, -*] (F);
+\draw ($(T) - (0.18,0)$) circle [radius=20pt];
+\node [right=2mm] at (T.nobase) {$Q_1$};
+\node [waves, scale=0.7, right] at(L.north) {};
+\end{circuitikz}
+\caption{Music Receiver Circuit}
+\label{fig:rec}
+\end{figure}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item To test the receiver circuit, use a standard TV remote control if you have access to one. Most TV remotes emit an IR light to signal the control box. With the receiver circuit you just built, you can ``hear'' a TV remote control signal by converting it from IR at the remote to an audible signal at your receiver's speaker. Aim a TV remote at the phototransistor on your receiver circuit and listen for the signal. Different remotes will have different signal patterns.
+\end{enumerate}
+
+\subsection{Wireless Transmission and Reception}
+\begin{enumerate}
+\item Position the infrared LED from your working transmitter circuit such that it is pointing at and is about 1/2'' from the phototransistor of the music receiver that you just built.
+\item You should hear music coming out of the speaker in the receiver. If you do not hear any sound from the speaker, you will need to troubleshoot your IR music transmitter-receiver system.
+\item Once the wireless transmitter and receiver and working together, you can test the limits of your system by increasing or decreasing the signal volume with the volume control on your music device (or function generator), by adjusting the potentiometer in your transmitter circuit, and by varying the distance of the IR LED from the phototransistor. Audio quality may be limited by the quality of the speaker being used---some tones may be diminished or altered. You can also interrupt the signal with your hand by preventing IR light to transmit between transmitter and receiver. The presence of external light sources may also affect the sound quality. Lastly, the IR LED is not the only LED that will transmit light that the receiver picks up. You can use a colored LED to do the same job, although it may not do as good a job as the IR light does in sending a wireless signal to the phototransistor.
+\end{enumerate}
+
+\subsection{Wireless Transmission with M1K}
+We will be using the M1K and PixelPulse2 to transmit and receive signals.
+\begin{enumerate}
+\item Replace the {\tt 1/8'' mini plug} with Ch. A and GND of the M1K.
+\item On PixelPulse2, set Ch. A to Source Voltage.
+\item Produce a sine wave. Set $V_{\mathrm{max}}$ to \SI{4}{\volt}, $V_{\mathrm{min}}$ to \SI{0}{\volt}, and the frequency to any value between \SI{20}{\hertz} and \SI{20}{\kilo\hertz}.
+\item Test Circuit. Confirm the LED is blinking.
+\item Stop the output of Ch. A.
+\item Replace the {\tt speaker} with Ch. B and GND of the M1K.
+\item On PixelPulse2, make sure Ch. B is set to Measure Voltage.
+\item Restart the output of Ch. A.
+\item Take screen capture of signal being output by Ch. A and measured by Ch. B.
+\end{enumerate}
+
+\newpage
+\section{Questions}
+\begin{enumerate}
+\item In lab, the BS170 MOSFET is used. Define the parameters $K_N$ and the transconductance $g_m^\mathrm{sat}$ of the NMOSFET. Comment on their dependence on other NMOSFET parameters and bias voltages.
+\item In lab, the LM 386 op-amp is used. In general, why are op-amps used in circuits? In the case of the LM 386 specifically, what is the gain? Can this value be changed? If so, how? Also, what kinds of loads can this op-amp drive? 
+\item How can one improve the quality of the receiver circuit? Would placing a capacitor between power and ground improve or worsen the quality? Why?
+\item Why do we set the M1K to produce a signal between \SI{20}{\hertz} and \SI{20}{\kilo\hertz}? Do we have to change the resistance of the potentiometer based on whether we are in the lower range or upper range of that bound?
+\item What does it mean to change the volume? What does it mean to change the pitch? In our receiver circuit, what is one thing we could do to decrease the volume? In our transmitter circuit, what is a different thing we could do to decrease the volume?
+\end{enumerate}
+
+%____________________________________________________________________________
+%
+%	GRADING RUBRIC
+%____________________________________________________________________________
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{Grading Rubric}
+\markboth{Grading Rubric}{Grading Rubric}
+\hspace{0pt}
+\vfill % used to center table vertically on page
+\begin{table}[ht!]
+\caption{ECE 230L Laboratory 5 Grading Rubric}
+\centering
+\begin{tabular}{l|c} \hline
+Criteria & Points Possible \\ \hline \hline
+\textbf{Music Transmitter} 						& \textbf{20} \\
+Photo of Transmitter Circuit					& 10 \\
+Reasoning behind ``mystery elements'' order		& 10 \\ \hline
+\textbf{Music Receiver} 						& \textbf{10} \\
+Photo of Receiver Circuit						& 10 \\ \hline
+\textbf{Wireless Transmission with M1K} 		& \textbf{10} \\
+Screen Capture of M1K							& 10 \\ \hline
+\textbf{Question 1} 							& \textbf{10} \\ \hline
+\textbf{Question 2} 							& \textbf{10} \\ \hline
+\textbf{Question 3} 							& \textbf{10} \\ \hline
+\textbf{Question 4} 							& \textbf{10} \\ \hline
+\textbf{Question 5} 							& \textbf{10} \\ \hline
+\textbf{Quality of thought/analysis} 			& \textbf{10} \\ \hline \hline
+\textbf{Total} 									& \textbf{100} \\ \hline
+\end{tabular}
+\end{table}
+\vfill % used to center table vertically on page
+\end{document}
