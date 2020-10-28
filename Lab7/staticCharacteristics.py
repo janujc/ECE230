@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 length = 250
-maxAx = 5.4
+maxAx = 4.5
 
 x = np.arange(0,maxAx,maxAx/length)
 y = np.arange(0,maxAx,maxAx/length)
