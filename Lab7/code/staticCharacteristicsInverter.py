@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-csvFile = 'staticCharacteristicsInverter.csv'
+csvFile = 'data/staticCharacteristicsInverter.csv'
 
 data = pd.read_csv(csvFile)
 inputVoltage = data.INPUT
@@ -43,5 +43,5 @@ plt.xlabel('$V_{in}$ (V)')
 plt.ylabel('$V_{out}$ (V)')
 plt.plot(x, VOLA, 'k--', x, VOHA, 'k--', VILA, y, 'k--', VIHA, y, 'k--')
 plt.plot(inputVoltage, outputVoltage)
-plt.savefig("staticCharacteristicsInverter.png")
+plt.savefig('figures/staticCharacteristicsInverter.png')
 plt.show()
