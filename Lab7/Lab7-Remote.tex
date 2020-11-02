@@ -23,21 +23,21 @@
 \section{Objectives of this Laboratory}
 The objectives of this laboratory session are as follows:
 \begin{itemize}
-\item Measure the static and switching characteristics of discrete (transistors, resistors, and capacitors) MOS inverter circuits,
-\item Measure the static voltage-transfer characteristics of CMOS NOR and NAND gates,
-\item Determine experimentally the truth tables of CMOS integrated-circuit gates, and
-\item Measure the switching characteristics of CMOS NOR and NAND gates
+\item Determine experimentally the truth tables of Discrete Diode Logic Gates,
+\item Determine experimentally the truth tables of Discrete MOS Inverter Circuit,
+\item Measure the static and switching characteristics of a discrete MOS Inverter Circuit, and
+\item Create and experimentally determine the truth table of a Discrete NAND Gate
 \end{itemize}
 
 \section{Discrete Diode Logic OR and AND Gates}
-Diodes can be used to significantly reduce circuit cost, complexity, and save precious board space. By implementing discrete-device logic instead of using OR and AND gates, whole integrated circuits (ICs) can be replaced in a circuit. In general, ICs with 50\% or fewer gates being used stand to gain by being replaced by discrete components. Diode logic takes advantage of the diode properties to build useful circuits that can reduce component count and simplify circuits. A few simpler components can be inserted to perform the same function of large integrated circuits more cheaply and more directly. Often, it is more convenient to build a logic gate then use a pre-manufactured chip. When more than a few inputs are desired, building your own logic gates can be the only way to get the desired number. For instance, a 7-input OR gate is easily implemented just by adding more diodes to a basic 2-input gate. You may not always have the ICs that you need available, and ordering them and then waiting for the delivery takes time. You will always have resistors and diodes, and this is another reason for using logic gates made from discrete components.
+Diodes can be used to significantly reduce circuit cost, complexity, and save precious board space. By implementing discrete-device logic instead of using OR and AND gates, whole integrated circuits (ICs) can be replaced in a circuit. In general, ICs with 50\% or fewer gates being used stand to gain by being replaced by discrete components. Diode logic takes advantage of the diode properties to build useful circuits that can reduce component count and simplify circuits. A few simpler components can be inserted to perform the same function of large integrated circuits more cheaply and more directly. Often, it is more convenient to build a logic gate than use a pre-manufactured chip. When more than a few inputs are desired, building your own logic gates can be the only way to get the desired number. For instance, a 7-input OR gate is easily implemented just by adding more diodes to a basic 2-input gate. You may not always have the ICs that you need available, and ordering them and then waiting for the delivery takes time. You will always have resistors and diodes, and this is another reason for using logic gates made from discrete components.
 
 \newpage
 \subsection{Diode OR Gate}
 Consider the diode as a simple switch. It is closed (ON) when the voltage on the anode or p-side is higher than that on the cathode or n-side. Current flows in the direction of the arrow in the diode's schematic symbol. The logic symbol of an OR gate and its discrete diode implementation are shown in Figure \ref{fig:OR}. In an OR gate, the output is `1' if either of the inputs are `1'. In other words, if either of the inputs has a high voltage, its diode will conduct and current will flow to the output. A high voltage will appear across the resistor, equal to the input voltage minus a voltage drop across the silicon diode. If both of the inputs are `0', then neither of the diodes will conduct and the gate?s output voltage will be zero. 
 
 \begin{itemize}
-\item[$\square$] Wire the diode OR gate using 1N4148 Si diodes on a breadboard and verify its truth table by applying 0 and \SI{5}{\volt} (4 combinations) to the inputs A and B. Measure the value of the output voltage. Note the diode voltage drop and its effect on the output voltage.
+\item[$\square$] Wire the diode OR gate using 1N4148 Si diodes on a breadboard and verify its truth table by applying 0 and \SI{5}{\volt} (4 combinations) to the inputs A and B. To apply 0V, wire the input to ground. Measure the value of the output voltage. Note the diode voltage drop and its effect on the output voltage.
 \end{itemize}
 
 \begin{figure}[ht!]
@@ -62,6 +62,10 @@ Consider the diode as a simple switch. It is closed (ON) when the voltage on the
 \caption{OR Gate Symbol and Discrete Diode Implementation}
 \label{fig:OR}
 \end{figure}
+
+\begin{itemize}
+\item[$\square$] Repeat the exercise above with a Ge Diode and note the diode voltage drop and its effect on the output table. Which circuit is "better"?
+\end{itemize}
 
 Note that `$+$' is used to represent the OR operation. Hence, in Figure \ref{fig:OR} we have 
 \begin{align}
@@ -126,13 +130,13 @@ An inverting function cannot be implemented with diodes and resistors alone. A t
 \draw (N) circle [radius=25pt];
 \draw ($(N) + (0.9,0)$) node[right] {BS170};
 \draw (N.S)	to[short] ++(0,-1) node[ground,  below] {};
-\draw (N.D) to[short, -*] ++(0,0.5) node[name=A] {}
-			to[short, -o] ++(1.5,0) node[right] {B};
-\draw (A) 	to[R, l=$R_L$, a=\SI{240}{\kilo\ohm}] ++(0,2) node[vdd] {$V_\mathrm{DD}$};
+\draw (N.D) to[short, -*] ++(0,0.5) node[anchor=east, name=A] {}
+			to[R, l=$R_L$, a=\SI{240}{\kilo\ohm}] ++(0,2) node[vdd] {$V_\mathrm{DD}$};
+\draw (A) 	to[short, -o] ++(1.5,0) node[right] {B};
 \draw (N.G) to[short, -o] ++(-1,0) node[left] {A};
 \end{circuitikz}
 \end{tabular}
-\caption{Inverter Gate Symbol and Discrete Diode Implementation}
+\caption{Inverter Gate Symbol and Discrete MOS Implementation}
 \label{fig:MOS}
 \end{figure}
 
@@ -141,45 +145,42 @@ We usually denote negation with a bar above a character. Hence, in Figure \ref{f
 B = \overline{A}
 \end{align}
 
-The static voltage and switching characteristics of an inverter can be characterized and serve as a measure of the inverter's overall performance. The voltages $V_\mathrm{OL}$ and $V_\mathrm{OH}$ are always between 0 and $V_\mathrm{DD}$. The static voltage characteristics of an inverter is shown in Figure \ref{fig:stat}. The switching characteristics of an inverter is shown in Figure \ref{fig:switch}.
+The static voltage and switching characteristics of an inverter can be characterized and serve as a measure of the inverter's overall performance. The voltages $V_\mathrm{OL}$ and $V_\mathrm{OH}$ are always between 0 and $V_\mathrm{DD}$. The static voltage characteristics of an inverter is shown in Figure \ref{fig:static}. The switching characteristics of an inverter is shown in Figure \ref{fig:switch}.
 
 \begin{enumerate}
-\item Wire the diode Inverter gate using a BS170 MOSFET on a breadboard and verify its
-truth table by applying 0 and 5 V (2 combinations) to the input A. Measure the value of
-the output voltage. Note the voltage drops across the inverter circuit and their effect on
-the output voltage.
-\item Using LabVIEW, measure the static voltage-transfer characteristics (SVTC)
-VOUT(VIN) for this inverter implemented with the NMOSFET BS170, RL = 240 k?,
-and VDD = 5 V. Determine VOL and VOH.
-\item Measure the static power-supply-current IDD (VIN ) when VIN = VOL and when VIN
-= VOH (both for RL = 240k) (2 cases). Calculate the static power dissipation in this
-inverter for VIN = VOL and VIN = VOH. (2 cases) (Hint: P = IV.)
-\item Measure the output-voltage waveform vOU T (t) for a square-wave input-voltage
-waveform with VPP = 5V and f = 1 kHz obtained from the function generator. Observe
-the input and output waveforms on the oscilloscope simultaneously. Determine the
-high-to-low transition time (tp.HL) and the low-to-high transition time (tp.LH). Turn up the
-input frequency of the square wave keeping the maximum input voltage equal to VPP =
-5V. At what frequency does the output waveform begin to degrade? Be as quantitative
-as possible.
+\item Wire the diode Inverter gate using a BS170 MOSFET on a breadboard as shown in Figure \ref{fig:MOS} and verify its truth table by applying \SI{0}{\volt} and \SI{5}{\volt} to the input A. Construct $R_{L}$ using a combination of resistors in parallel and in series. You should be able to come within \SI{10}{\ohm} of $R_L$ with 4 resistors. Measure the value of the output voltage. Note the voltage drops across the inverter circuit and their effect on the output voltage.
+\item Using the M1K, measure the static voltage-transfer characteristics (SVTC)
+$V_\mathrm{OUT}(VIN)$ for this inverter implemented with the NMOSFET BS170 with the same configurations as above. Think about where you need to connect Ch. A and Ch. B from the M1K to the circuit. Set Ch. A to voltage source, triangle wave, $V_\mathrm{PP}$, and \SI{10}{\hertz}. Connect Ch. A GND and Ch. B GND to the GND of the Power Source GND. Save a screenshot of the graphs on Pixelpulse 2 and determine $V_\mathrm{OL}$ and $V_\mathrm{OH}$.
+\item Measure the output-voltage waveform $V_\mathrm{OUT}(t)$ for a square-wave input-voltage waveform with $V_\mathrm{PP}$ = \SI{5}{\volt} and f = \SI{1}{\kilo\hertz} with the M1K. Observe the input and output waveforms on the oscilloscope simultaneously. Save a screenshot of the graphs on the Pixelpulse 2. Determine the high-to-low transition time (tp.HL) and the low-to-high transition time (tp.LH). Turn up the input frequency of the square wave keeping the maximum input voltage equal to $V_\mathrm{PP}$ = \SI{5}{\volt}. At what frequency does the output waveform begin to degrade? Be as quantitative
+as possible. Save a screenshot of the graphs.
 \end{enumerate}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=0.7\textwidth]{staticCharInv.png}
+\includegraphics[width=0.7\textwidth]{./figures/staticCharacteristicsInverter.png}
 \caption{Static Voltage Characteristics of Inverter Circuit}
+\label{fig:static}
 \end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.6\textwidth]{./figures/switchCharInv.png}
+\caption{Switching Characteristics of Inverter Circuit}
+\label{fig:switch}
+\end{figure}
+
 
 \newpage
 \section{Exploration}
 In this exploration, you will use what you have learned about discrete logic circuits to complete the following:
 \begin{enumerate}
 \item Build a NAND gate from the combination of discrete AND gates using diodes and Inverter gates using NMOSFET transistors.
-\item One very useful application of an Inverter gate is the Inverter Ring Oscillator shown in Figure \ref{fig:ring}. You will build a self-sustaining Ring Oscillator and measure its output square-wave frequency. (A similar circuit can be built using NAND gates chained together. You have all the knowledge you need to build this circuit, too. Hint: to build a Ring Oscillator with NAND gates, one of the two inputs needs be set to Ground. Most designers choose either the A or B input to be grounded for each NAND gate in the chain in this application.)
-\item (Optional) Another very useful implementation of NAND gates is the Debounced Switch or SR Latch. A Debounce Switch prevents pushbutton switching events from triggering more than On/Off occurrence in a circuit. Deboucing inputs is critical in many logic circuit applications. A Debounce Swtich or SR Latch can be completely constructed using discrete NAND gate logic when wired as shown in Figure \ref{fig:SR}. This exercise is left as an optional activity.
+\item One very useful application of an Inverter gate is the Inverter Ring Oscillator shown in Figure \ref{fig:ring}. You will not need to build a ring oscillator but will need an understanding of this application.
+\item Another very useful implementation of NAND gates is the Debounced Switch or SR Latch. A Debounce Switch prevents pushbutton switching events from triggering more than On/Off occurrence in a circuit. Deboucing inputs is critical in many logic circuit applications. A Debounce Swtich or SR Latch can be completely constructed using discrete NAND gate logic when wired as shown in Figure \ref{fig:SR}. You will not need to build a Debounced Switch or SR Latch but will need an understanding of these applications.
 \end{enumerate}
 
 \subsection{Discrete NAND Gate}
-Using a combination of the AND and NOT gates built above, build a discrete NAND gate. Draw a circuit diagram of the circuit you designed and verify the NAND gate truth table. 
+Using a combination of the AND gates using diodes and Inverter gates using NMOSFET transistors built above, build a discrete NAND gate. Draw a circuit diagram of the circuit you designed and verify the NAND gate truth table. 
 
 \begin{figure}[ht!]
 \centering
@@ -223,14 +224,7 @@ The output of the Ring Oscillator should be a square wave of amplitude 0 to VDD.
 \label{fig:ring}
 \end{figure}
 
-\begin{enumerate}
-\item Build the Ring Oscillator in Figure \ref{fig:ring} using an odd number of the discrete NMOSFET BS170 Inverters shown in Figure \ref{fig:MOS}. Observe the output waveform. Notice that no input excitation at the first inverter is needed; the circuit should oscillate at a high frequency when the inverters are on (i.e. when VDD is applied to each discrete MOSFET inverter). Zoom out to view at least 4 periods of the ring oscillator output when determining its period of oscillation.
-\item Measure the period of the ring oscillator output square wave. This period is the time required for the logic transition to propagate around all three devices.
-\item The transition or propagation time for one gate in this ring oscillator is one-third of the observed period when 3 inverters are used. Determine the transition time of one of the inverters built by dividing the total transition time by 3. (More accurate transition times can be obtained by using additional odd numbers of inverters for this measurement.)
-\end{enumerate}
-
-\newpage
-\subsection{(Optional) Debounced Switch}
+\subsection{Debounced Switch}
 In many applications, especially in digital circuits, you need a manual switch to
 set the logic state at some point in the circuit. The issue is that switch can often
 ``bounce'' upon actuation. A bouncy switch is one that produces multiple
@@ -240,13 +234,6 @@ stabilizing. The bounce is due to inductive ringing rather than mechanical
 toggling. We use an SR latch to debounce the switch in hardware by latching
 the state of the switch as a digital signal. Once the ringing stops, we can safely
 assume that the signal has been latched successfully.
-
-\begin{enumerate}
-\item Place a double-pole single-throw switch on a breadboard.
-\item Construct the circuit shown in Figure \ref{fig:DPST} and power it with $+\SI{5}{\volt}$.
-\item Observe the switch output on an oscilloscope when the input switch is
-toggled ``On.'' Capture an occurrence of the switch bouncing phenomenon on the oscilloscope screen and save it.
-\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
@@ -266,13 +253,6 @@ toggled ``On.'' Capture an occurrence of the switch bouncing phenomenon on the o
 \newpage
 The issue of switch bounce can be corrected through the use of a pair of NAND
 gates.
-
-\begin{enumerate}
-\item Using the NAND gate you built above with discrete AND and Inverter
-gates, build the circuit shown in Figure \ref{fig:modDPST}.
-\item Verify its operation. Compare its output to that of the ordinary switch.
-Capture an occurrence of the switching phenomenon for this circuit on the ?scope screen and save it.
-\end{enumerate}
 
 \begin{figure}[ht!]
 \centering
@@ -338,9 +318,15 @@ The latch is the most basic memory element in digital electronics, but it is sel
 \end{figure}
 
 \newpage
-\subsection{Extension}
+\section{Questions}
+\begin{enumerate}
+\item Explain how a ring oscillator works to create a signal without the need for any input
+\item If the period for a three-stage ring oscillator is 17.4 ms, what is the propagation/transition time for one gate? (HINT: gate = stage) 
+\item What signal frequency would the oscillator in Question 2 be producing?
+\item What is switch bounce and how does it occur?
+\item How does a SR latch work to debounce a switch?
+\end{enumerate}
 
-The Extension for this lab exercise is as follows:
 
 %____________________________________________________________________________
 %
@@ -358,39 +344,38 @@ The Extension for this lab exercise is as follows:
 \centering
 \begin{tabular}{l|c} \hline
 Criteria & Points Possible \\ \hline \hline
-\textbf{Diode OR Gate}			& \textbf{10} \\
-Circuit Diagram 				& 2 \\
-Truth Table Verified			& 2 \\
-Variable diode drop values given for different diodes & 3 \\
-Justification of whether circuit is ``better'' & 3 \\ \hline
-\textbf{Diode AND Gate}			& \textbf{8} \\
-Circuit Diagram 				& 2 \\
+\textbf{Diode OR Gate}			& \textbf{16} \\
+Circuit Diagram 				& 3 \\
 Truth Table Verified			& 3 \\
-Diode Drop Value Noted			& 3 \\ \hline
-\textbf{Discrete MOS Inverter Circuit}		& \textbf{49} \\
-Circuit Diagram 				& 2 \\
-Truth Table Verified			& 2 \\
+Variable diode drop values given for Si Diode & 3 \\
+Variable diode drop values given for Ge Diode & 3 \\
+Justification of whether circuit is ``better'' & 4 \\ \hline
+\textbf{Diode AND Gate}			& \textbf{9} \\
+Circuit Diagram 				& 3 \\
+Truth Table Verified			& 3 \\
+Diode Drop Values Noted			& 3 \\ \hline
+\textbf{Discrete MOS Inverter Circuit}		& \textbf{44} \\
+Circuit Diagram 				& 3 \\
+Truth Table Verified			& 3 \\
 Voltage Lost Across Circuit 	& 3 \\
-$V_\mathrm{OL}$ from V-V {\tt singleloop.vi} graph 	& 5 \\
-$V_\mathrm{OH}$ from V-V {\tt singleloop.vi} graph	& 5 \\
-$I_\mathrm{DD}(V_\mathrm{in} = V_\mathrm{OL})$ & 3 \\
-$I_\mathrm{DD}(V_\mathrm{in} = V_\mathrm{OH})$ & 3 \\
-$P(V_\mathrm{in} = V_\mathrm{OL})$ & 2 \\
-$P(V_\mathrm{in} = V_\mathrm{OH})$ & 2 \\
-Image of $V_\mathrm{out}$ when square wave is applied & 3 \\
-Degraded image of $V_\mathrm{out}$ when square wave is applied & 3 \\
-High-to-Low Transition Time $(t_\mathrm{p \cdot HL})$ & 3 \\
-Low-to-high transition time $(t_\mathrm{p \cdot LH})$ & 3 \\
-Degradation frequency with explanation & 3 \\
+Image of Pixelpulse 2 when triangle wave is applied & 5 \\
+$V_\mathrm{OL}$ from Pixelpulse 2 graph 	& 3 \\
+$V_\mathrm{OH}$ from Pixelpulse 2 graph	& 3 \\
+Image of Pixelpulse 2 when square wave is applied & 5 \\
+High-to-Low Transition Time $(t_\mathrm{p \cdot HL})$ & 5 \\
+Low-to-high transition time $(t_\mathrm{p \cdot LH})$ & 5 \\
+Degraded image of Pixelpulse 2 when square wave is applied & 5 \\
+Degradation frequency with explanation & 4 \\ \hline
+{\bf Exploration: Discrete NAND Gate w/ Applications} & {\bf 6} \\
 Discrete NAND gate circuit diagram & 3 \\
-NAND Truth Table verified & 4 \\ \hline
-{\bf Exploration: Discrete NAND Gate w/ Applications} & {\bf 12} \\
-NAND Gate Truth Table Verified & 3 \\
-Ring Oscillator Circuit Diagram & 3 \\
-Period of oscillator for N inverters & 3 \\
-Period of oscillator for 1 inverter & 3 \\ \hline
-{\bf Quality of thought/analysis} & {\bf 5} \\ \hline \hline
-{\bf Total}						& {\bf 84} \\ \hline
+NAND Gate Truth Table Verified & 3 \\ \hline
+{\bf Questions} & {\bf 25} \\ 
+Question 1 & 5 \\
+Question 2 & 5 \\
+Question 3 & 5 \\
+Question 4 & 5 \\
+Question 5 & 5 \\ \hline \hline
+{\bf Total}						& {\bf 100} \\ \hline
 \end{tabular}
 \end{table}
 \vfill % used to center table vertically on page
